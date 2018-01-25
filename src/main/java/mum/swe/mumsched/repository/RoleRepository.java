@@ -7,4 +7,5 @@ import mum.swe.mumsched.model.Role;
 
 @Repository("roleRepository")
 public interface RoleRepository extends JpaRepository<Role, Long>{
+
 }
