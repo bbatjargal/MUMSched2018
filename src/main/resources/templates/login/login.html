@@ -1,22 +1,16 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-  <title>MUMSched - Login page</title>
-  <!-- Bootstrap core CSS-->
-  <link href="/public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-  <!-- Custom fonts for this template-->
-  <link href="/public/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-  <!-- Custom styles for this template-->
-  <link href="/public/css/login.css" rel="stylesheet" />
-</head>
-
-<body class="bg-dark">
-  <div class="container">
+<!DOCTYPE html >
+<html layout:decorator="shared/loginlayout"
+	xmlns:th="http://www.thymeleaf.org">
+	<head>
+    	<title>Login page</title>
+	</head>
+<body>
+	<th:block layout:fragment="header">
+  		<link href="/public/css/login.css" rel="stylesheet" />
+	</th:block>
+	
+	<th:block layout:fragment="content">
+	
     <div class="card card-login mx-auto mt-5">
       <div class="card-header">Login</div>
       <div class="card-body">
@@ -49,12 +43,11 @@
         </div>
       </div>
     </div>
-  </div>
-  <!-- Bootstrap core JavaScript-->
-  <script src="/public/vendor/jquery/jquery.min.js"></script>
-  <script src="/public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- Core plugin JavaScript-->
-  <script src="/public/vendor/jquery-easing/jquery.easing.min.js"></script>
+  
+	</th:block>
+	
+	<th:block layout:fragment="footer">
+	</th:block>
+	
 </body>
-
 </html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html layout:decorator="shared/mainlayout"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Entry</title>
+</head>
+<body>
+	<th:block layout:fragment="content">
+	<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th class="text-center">Name</th>
+						<th class="text-center">Date</th>
+						<th class="text-center">FPP</th>
+						<th class="text-center">FPP CPT</th>
+						<th class="text-center">FPP OPT</th>
+						<th class="text-center">MPP</th>
+						<th class="text-center">MPP CPT</th>
+						<th class="text-center">MPP OPT</th>
+						<th class="text-center">&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${entryList.empty}">
+						<td colspan="9">No Entry</td>
+					</tr>
+					<tr th:each="item : ${entryList}">
+						<td th:text="${item.id}"></td>
+						<td th:text="${item.name}" class="text-center"></td>
+						<td th:text="${item.entryDate}" class="text-center"></td>
+						<td th:text="${item.fpp}" class="text-center"></td>
+						<td th:text="${item.fppCPT}" class="text-center"></td>
+						<td th:text="${item.fppOPT}" class="text-center"></td>
+						
+						<td th:text="${item.mpp}" class="text-center"></td>
+						<td th:text="${item.mppCPT}" class="text-center"></td>
+						<td th:text="${item.mppOPT}" class="text-center"></td>
+						<td class="text-center">
+							<a role="button" class="btn btn-primary"
+								th:href="@{/entry/edit/{id}(id=${item.id})}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;Edit</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+	</th:block>
+</body>
+</html>

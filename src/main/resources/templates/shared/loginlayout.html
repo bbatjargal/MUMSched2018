@@ -1,52 +1,31 @@
-<!doctype html>
-<html class="no-js" lang=""  xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-        <title>Tatatunga.ai</title>
-        <meta name="description" content="" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">MUMSched</title>
+  <!-- Bootstrap core CSS-->
+  <link href="/public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Custom fonts for this template-->
+  <link href="/public/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+  <!-- Custom styles for this template-->
+  <link href="/public/css/login.css" rel="stylesheet" />
+  <th:block layout:fragment="header"></th:block>	
+</head>
 
-		<link rel="stylesheet" href="/public/css/bootstrap.min.css">
-		<link rel="stylesheet" href="/public/css/font-awesome.min.css">
-		 
-		        
-			          
-        
-		<th:block layout:fragment="header"></th:block>	
-    </head>
-    <body>     
-<nav class="navbar navbar-inverse" role="navigation"  data-spy="" data-offset-top="197" style="margin-bottom: 0px;">
-         <div class="container">
-            <div class="navbar-header">
-               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-               <span class="sr-only">Toggle navigation</span>
-               <span class="icon-bar"></span>
-               <span class="icon-bar"></span>
-               <span class="icon-bar"></span>
-               </button>
-               <a class="navbar-brand logo" href="/"><img src="/public/images/header.svg" height="30"></a>
-            </div>
-         </div>
-      </nav>
+<body class="bg-dark">
+  <div class="container">
+		<th:block layout:fragment="content"></th:block>
+  </div>
+  <!-- Bootstrap core JavaScript-->
+  <script src="/public/vendor/jquery/jquery.min.js"></script>
+  <script src="/public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="/public/vendor/jquery-easing/jquery.easing.min.js"></script>
+	<th:block layout:fragment="footer"></th:block>	
+</body>
 
-    <section>
-    	<div class="table-container" style="width:100%;">
-    	
-		    <div class="row table-row">
-		    	<div class="col-md-12 table-col"  id="page-wrapper" layout:fragment="content">
-				</div>
-		    </div>
-    	</div>
-					
-    </section>  
-    
-        <script src="/public/js/vendor/jquery-1.11.2.min.js"></script>
-	    <script src="/public/js/vendor/bootstrap.min.js"></script>
-	    <script src="/content/js/tatautil.js"></script> 
-		
-		<th:block layout:fragment="footer"></th:block>	
-       
-    </body>
 </html>
