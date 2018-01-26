@@ -16,4 +16,6 @@ public interface EntryService {
 
 	void delete(Entry entry);
 
+	boolean hasExistsEntryName(String name, long id);
+
 }

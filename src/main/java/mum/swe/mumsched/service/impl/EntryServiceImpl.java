@@ -20,13 +20,13 @@ public class EntryServiceImpl implements EntryService {
 	
 	@Override
 	public Iterable<Entry> getList(){
-		return entryRepo.findAll();
+		return entryRepo.fillAllOrderBy("name");
 	}
 	
-//	@Override
-//	public boolean hasEntryByName(String name, Long excludeId) {
-//		return entryRepo.hasEntryByName(name, excludeId);
-//	}
+	@Override
+	public boolean hasExistsEntryName(String name, long excludedId) {
+		return entryRepo.hasExistsEntryName(name, excludedId);
+	}
 	
 	@Override
 	public Entry findEntryById(Long id) {

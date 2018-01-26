@@ -1,9 +1,5 @@
 package mum.swe.mumsched.controller;
 
-import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mum.swe.mumsched.helper.AjaxResult;
+import mum.swe.mumsched.helper.MessageHelper;
 import mum.swe.mumsched.model.Entry;
 import mum.swe.mumsched.service.EntryService;
 
@@ -33,6 +31,8 @@ import mum.swe.mumsched.service.EntryService;
 @RequestMapping(path = "/entry")
 @Controller
 public class EntryController {
+	private static final String NOT_FOUND_MESSAGE = "validate.notFoundP";
+	
 	@Autowired
 	EntryService service;
 
@@ -55,42 +55,46 @@ public class EntryController {
 	}
 	
 	@PostMapping("/save")
-	public String save(@Valid Entry entry, BindingResult result, Model model) {
+	public String save(@Valid Entry entry, BindingResult result, Model model, RedirectAttributes ra) {
 		boolean hasError = result.hasErrors();
 		
 		if(!hasError) {
+			// check exists if update
+			if(entry.getId() > 0 && service.findEntryById(entry.getId()) == null){
+				result.addError(new FieldError("Entry", "name", 
+						MessageHelper.getMessage(NOT_FOUND_MESSAGE, new Object[] {MessageHelper.getMessage("field.entry")})));
+				hasError = true;
+			}
+			
 			// check total fpp
 			if(entry.getFpp() != entry.getFppCPT() + entry.getFppOPT()){
-				result.addError(new FieldError("Entry", "fpp", "not valid"));
+				result.addError(new FieldError("Entry", "fpp", MessageHelper.getMessage("validate.invalid")));
 				hasError = true;
 			}
 			
 			// check total mpp
 			if(entry.getMpp() != entry.getMppCPT() + entry.getMppOPT()){
-				result.addError(new FieldError("Entry", "mpp", "not valid"));
+				result.addError(new FieldError("Entry", "mpp", MessageHelper.getMessage("validate.invalid")));
 				hasError = true;
 			}
 			
-			// TODO valid exists entry name
-			// new
-			if(entry.getId() == 0) {
-				//TODO valid unique by name
-//				if(service.findEntry(entry.getName()) != null) {
-//					result.addError(new FieldError("Entry", "name", "not valid"));
-//					hasError = true;
-//				}
-			}
-			// update
-			else {
-				
+			//valid unique entry name
+			if(service.hasExistsEntryName(entry.getName(), entry.getId())) {
+				result.addError(new FieldError("Entry", "name", MessageHelper.getMessage("validate.alreadyExists")));
+				hasError = true;
 			}
 		}
 		
+		// has error
 		if(hasError)
 		{
 			return "entry/update"; 
 		}
 		
+		// redirect message
+		 MessageHelper.addRedirectMessage(ra, entry.getId() == 0 ? MessageHelper.MSG_CreateSuccess : MessageHelper.MSG_UpdateSuccess, null);
+		
+		// save entry
 		service.save(entry);
 		
 		return "redirect:/entry/";
@@ -103,13 +107,13 @@ public class EntryController {
 		Entry entry = service.findEntryById(id);
 		
 		if(entry == null) {
-			// TODO show message in client
+			return AjaxResult.fail(MessageHelper.getMessage(NOT_FOUND_MESSAGE, new Object[] {MessageHelper.getMessage("field.entry")}));
 		}
 		
 		// TODO valid reference
 		
-		//service.delete(entry);
+		service.delete(entry);
 		
-        return AjaxResult.success("Something wrong!!!");
+        return AjaxResult.success(MessageHelper.getRemoveSuccess());
     }
 }
