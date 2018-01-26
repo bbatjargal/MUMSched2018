@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -24,7 +25,7 @@ public class Entry {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
-	@NotEmpty()
+	@NotEmpty
 	@Size(max=10)
 	private String name;
 
@@ -32,11 +33,16 @@ public class Entry {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate entryDate;
 	
+	@Min(1)
 	private int mpp;
+	@Min(1)
 	private int fpp;
 	
+	@Min(1)
 	private int mppCPT;
 	private int mppOPT;
+	
+	@Min(1)
 	private int fppCPT;
 	private int fppOPT;
 	

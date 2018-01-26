@@ -45,6 +45,8 @@ var dialog = new function() {
 			  layout: 'center',
 			  type: type === undefined ? 'info' : type,
 			  text: message,
+			  timeout: timeout == undefined ? 1000 : timeout,
+			  progressBar: false
 		}).show(); 
 	},
 	this.alert = function (message){
@@ -58,6 +60,9 @@ var dialog = new function() {
 	},
 	this.error = function (message){
 		this.showMessage(message, 'error');
+	},
+	this.info = function (message){
+		this.showMessage(message, 'info');
 	}
 };
 

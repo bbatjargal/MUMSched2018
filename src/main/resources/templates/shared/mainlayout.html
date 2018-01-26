@@ -322,7 +322,12 @@
 	    });
 	});
 	</script>
-	
+	<th:block th:if="${message != null}">
+		<input type="hidden" th:value="${message}" name="msg" />
+		<script>
+			dialog.info($("[name=msg]").val());
+		</script>
+	</th:block>
 </body>
 
 </html>
