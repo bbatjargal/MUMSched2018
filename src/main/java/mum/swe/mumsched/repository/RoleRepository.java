@@ -5,6 +5,10 @@ import org.springframework.stereotype.Repository;
 
 import mum.swe.mumsched.model.Role;
 
+/**
+ * @author Batjargal Bayarsaikhan (Alex)
+ * Jan 23, 2018
+ */
 @Repository("roleRepository")
 public interface RoleRepository extends JpaRepository<Role, Long>{
 	public Role findByName(String name);

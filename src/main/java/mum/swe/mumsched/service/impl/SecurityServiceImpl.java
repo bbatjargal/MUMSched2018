@@ -13,6 +13,10 @@ import org.springframework.stereotype.Service;
 
 import mum.swe.mumsched.service.SecurityServices;
 
+/**
+ * @author Batjargal Bayarsaikhan (Alex)
+ * Jan 23, 2018
+ */
 @Service("securityService")
 public class SecurityServiceImpl implements SecurityServices{
     @Autowired

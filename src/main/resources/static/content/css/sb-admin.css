@@ -19,6 +19,7 @@ body.fixed-nav {
   padding-top: 56px;
 }
 
+.validation-message { color: red; margin-bottom: 0; }
 .content-wrapper {
   min-height: calc(100vh - 56px);
   padding-top: 1rem;

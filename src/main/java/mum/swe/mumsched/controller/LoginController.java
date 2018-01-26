@@ -20,8 +20,13 @@ import mum.swe.mumsched.model.User;
 import mum.swe.mumsched.service.RoleService;
 import mum.swe.mumsched.service.SecurityServices;
 import mum.swe.mumsched.service.UserService;
+import mum.swe.mumsched.validator.UserValidator;
 import mum.swe.mumsched.view.ForgotPasswordView;
 
+/**
+ * @author Batjargal Bayarsaikhan (Alex)
+ * @date Jan 24, 2018
+ */
 @Controller
 public class LoginController {
 
@@ -30,6 +35,9 @@ public class LoginController {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private UserValidator userValidator;
+    
     @Autowired
     private SecurityServices securityService;
 
@@ -46,10 +54,12 @@ public class LoginController {
 	}	
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public String registration(@Valid @ModelAttribute("user") User user, 
+    public String registration(@ModelAttribute("user") User user, 
     		BindingResult bindingResult, Model model) {
-		
-		if(hasError(bindingResult, user)) {
+
+    	userValidator.validate(user, bindingResult);
+    	
+        if (bindingResult.hasErrors()) {
 			model.addAttribute("user", user);
             return "login/signup";			
 		}
@@ -83,20 +93,25 @@ public class LoginController {
         return "login/forgotpasswordSent";
     }	
     
-    private boolean hasError(BindingResult bindingResult, User user) {
-    	
-    	if(bindingResult.hasErrors()) return true;
-        
-        if(!user.getPassword().equals(user.getPasswordConfirm())) { 
-			bindingResult.rejectValue("passwordConfirm", "error.user", "The passwords are not match.");
-			return true;
-        }
-        
-		User userExists = userService.findByUsername(user.getUsername());
-		if (userExists != null) {
-			bindingResult.rejectValue("username", "error.user", "User name is already registered.");
-        	return true;
-		}
-		return false;
-    }
+//    private boolean hasError(BindingResult bindingResult, User user) {
+//    	
+//    	if(bindingResult.hasErrors()) return true;
+//
+//        if(user.getPassword() == null || user.getPassword().trim().isEmpty()) { 
+//			bindingResult.rejectValue("password", "error.user", "Please provide password.");
+//			return true;
+//        }
+//    	
+//        if(!user.getPassword().equals(user.getPasswordConfirm())) { 
+//			bindingResult.rejectValue("passwordConfirm", "error.user", "The passwords are not match.");
+//			return true;
+//        }
+//        
+//		User userExists = userService.findByUsername(user.getUsername());
+//		if (userExists != null) {
+//			bindingResult.rejectValue("username", "error.user", "User name is already registered.");
+//        	return true;
+//		}
+//		return false;
+//    }
 }

@@ -13,7 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 import mum.swe.mumsched.model.User;
 import mum.swe.mumsched.service.UserService;
 
-
+/**
+ * @author Batjargal Bayarsaikhan (Alex)
+ * @date Jan 24, 2018
+ */
 @Controller
 public class HomeController {
 

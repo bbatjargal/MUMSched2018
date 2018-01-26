@@ -16,6 +16,10 @@ import mum.swe.mumsched.model.Role;
 import mum.swe.mumsched.model.User;
 import mum.swe.mumsched.repository.UserRepository;
 
+/**
+ * @author Batjargal Bayarsaikhan (Alex)
+ * Jan 23, 2018
+ */
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService{
 	
