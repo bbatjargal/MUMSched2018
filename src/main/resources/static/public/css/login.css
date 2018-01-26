@@ -461,6 +461,10 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
   max-width: 25rem;
 }
 
+.card-resetpass {
+  max-width: 35rem;
+}
+
 .card-register {
   max-width: 40rem;
 }

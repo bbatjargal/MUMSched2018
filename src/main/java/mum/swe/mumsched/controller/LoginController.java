@@ -20,6 +20,7 @@ import mum.swe.mumsched.model.User;
 import mum.swe.mumsched.service.RoleService;
 import mum.swe.mumsched.service.SecurityServices;
 import mum.swe.mumsched.service.UserService;
+import mum.swe.mumsched.view.ForgotPasswordView;
 
 @Controller
 public class LoginController {
@@ -42,7 +43,7 @@ public class LoginController {
 	public String signup(Model model){
         model.addAttribute("user", new User());
         return "login/signup";
-	}		
+	}	
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String registration(@Valid @ModelAttribute("user") User user, 
@@ -61,6 +62,26 @@ public class LoginController {
 
         return "redirect:/";
     }
+	
+	@RequestMapping(value="/forgot-password", method = RequestMethod.GET)
+	public String forgotPassword(Model model){
+        model.addAttribute("formView", new ForgotPasswordView());
+        return "login/forgotpassword";
+	}			
+
+    @RequestMapping(value = "/forgot-password", method = RequestMethod.POST)
+    public String forgotPasswordForm(@Valid @ModelAttribute("formView") ForgotPasswordView formView, 
+    		BindingResult bindingResult, Model model) {
+    	
+		if(bindingResult.hasErrors()) {
+			model.addAttribute("formView", formView);
+            return "login/forgotpassword";			
+		}
+
+		model.addAttribute("email", formView.getEmail());
+
+        return "login/forgotpasswordSent";
+    }	
     
     private boolean hasError(BindingResult bindingResult, User user) {
     	
