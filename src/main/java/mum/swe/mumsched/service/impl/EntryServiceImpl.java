@@ -3,6 +3,7 @@ package mum.swe.mumsched.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import mum.swe.mumsched.model.Entry;
@@ -20,7 +21,7 @@ public class EntryServiceImpl implements EntryService {
 	
 	@Override
 	public Iterable<Entry> getList(){
-		return entryRepo.fillAllOrderBy("name");
+		return entryRepo.fillAllWithSort(new Sort("name"));
 	}
 	
 	@Override

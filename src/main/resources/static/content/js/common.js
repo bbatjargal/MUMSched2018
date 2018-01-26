@@ -63,6 +63,14 @@ var dialog = new function() {
 	},
 	this.info = function (message){
 		this.showMessage(message, 'info');
+	},
+	this.showAjaxMessage = function(ajaxResult){
+		if(!ajaxResult.isSuccess){
+			this.error(ajaxResult.message);
+			return;
+		}
+		
+		this.success(ajaxResult.message);
 	}
 };
 

@@ -2,6 +2,7 @@ package mum.swe.mumsched.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -14,12 +15,8 @@ import mum.swe.mumsched.model.Entry;
  */
 @Repository
 public interface EntryRepository extends CrudRepository<Entry, Long> {
-	
-//	@Query("select s from Student s where s.email = :email")
-//	public Student findStudentByEmail(@Param("email") String email);
-	
-	@Query("SELECT e FROM Entry e ORDER BY :orderBy")
-	public Iterable<Entry> fillAllOrderBy(@Param("orderBy") String orderBy);
+	@Query("SELECT e FROM Entry e")
+	public Iterable<Entry> fillAllWithSort(Sort sort);
 	
 	@Query("SELECT CASE  WHEN count(e)> 0 THEN true ELSE false END FROM Entry e WHERE e.name = :name AND e.id <> :excludedId")
 	public boolean hasExistsEntryName(@Param("name") String name, @Param("excludedId") Long excludedId);

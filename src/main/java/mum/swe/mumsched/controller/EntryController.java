@@ -3,6 +3,7 @@ package mum.swe.mumsched.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -18,9 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mum.swe.mumsched.helper.AjaxResult;
-import mum.swe.mumsched.helper.MessageHelper;
 import mum.swe.mumsched.model.Entry;
 import mum.swe.mumsched.service.EntryService;
+import mum.swe.mumsched.service.MessageByLocaleService;
 
 
 /**
@@ -35,6 +36,9 @@ public class EntryController {
 	
 	@Autowired
 	EntryService service;
+	
+	@Autowired
+	MessageByLocaleService msgService;
 
 	@GetMapping("/")
 	public String entryList(Model model) {
@@ -62,25 +66,25 @@ public class EntryController {
 			// check exists if update
 			if(entry.getId() > 0 && service.findEntryById(entry.getId()) == null){
 				result.addError(new FieldError("Entry", "name", 
-						MessageHelper.getMessage(NOT_FOUND_MESSAGE, new Object[] {MessageHelper.getMessage("field.entry")})));
+						msgService.getMessage(NOT_FOUND_MESSAGE, new Object[] {msgService.getMessage("field.entry")})));
 				hasError = true;
 			}
 			
 			// check total fpp
 			if(entry.getFpp() != entry.getFppCPT() + entry.getFppOPT()){
-				result.addError(new FieldError("Entry", "fpp", MessageHelper.getMessage("validate.invalid")));
+				result.addError(new FieldError("Entry", "fpp", msgService.getMessage("validate.invalid")));
 				hasError = true;
 			}
 			
 			// check total mpp
 			if(entry.getMpp() != entry.getMppCPT() + entry.getMppOPT()){
-				result.addError(new FieldError("Entry", "mpp", MessageHelper.getMessage("validate.invalid")));
+				result.addError(new FieldError("Entry", "mpp", msgService.getMessage("validate.invalid")));
 				hasError = true;
 			}
 			
 			//valid unique entry name
 			if(service.hasExistsEntryName(entry.getName(), entry.getId())) {
-				result.addError(new FieldError("Entry", "name", MessageHelper.getMessage("validate.alreadyExists")));
+				result.addError(new FieldError("Entry", "name", msgService.getMessage("validate.alreadyExists")));
 				hasError = true;
 			}
 		}
@@ -92,7 +96,8 @@ public class EntryController {
 		}
 		
 		// redirect message
-		 MessageHelper.addRedirectMessage(ra, entry.getId() == 0 ? MessageHelper.MSG_CreateSuccess : MessageHelper.MSG_UpdateSuccess, null);
+		msgService.addRedirectMessage(ra, entry.getId() == 0 ? 
+				 msgService.MSG_CreateSuccess: msgService.MSG_UpdateSuccess, null);
 		
 		// save entry
 		service.save(entry);
@@ -100,20 +105,19 @@ public class EntryController {
 		return "redirect:/entry/";
 	}
 	
-	@RequestMapping(value="/delete/{id}", method=RequestMethod.POST, 
-            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping("/delete/{id}")
     @ResponseBody
     public AjaxResult deleteSmartphone(@PathVariable Long id) {
 		Entry entry = service.findEntryById(id);
 		
 		if(entry == null) {
-			return AjaxResult.fail(MessageHelper.getMessage(NOT_FOUND_MESSAGE, new Object[] {MessageHelper.getMessage("field.entry")}));
+			return AjaxResult.fail(msgService.getMessage(NOT_FOUND_MESSAGE, new Object[] {msgService.getMessage("field.entry")}));
 		}
 		
 		// TODO valid reference
 		
 		service.delete(entry);
 		
-        return AjaxResult.success(MessageHelper.getRemoveSuccess());
+        return AjaxResult.success(msgService.getRemoveSuccess());
     }
 }

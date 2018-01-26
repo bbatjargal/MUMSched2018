@@ -68,16 +68,13 @@
 				$(deleteLink).click(function(event) {
 					dialog.confirmDefault(function () {
 					    	post($(event.target).attr("href"), function(ajaxResult) {
-						    		if(!ajaxResult.isSuccess){
-						    			dialog.error(ajaxResult.message);
-						    			return;
-						    		}
-						    		
-								// remove deleted row
+					    		if(ajaxResult.isSuccess){
+					    			// remove deleted row
 								$(event.target).closest("tr").remove();
-								
-								dialog.success(ajaxResult.message);
-							},);
+					    		}
+					    		
+							dialog.showAjaxMessage(ajaxResult);
+						});
 				    });
 					
 					event.preventDefault();
