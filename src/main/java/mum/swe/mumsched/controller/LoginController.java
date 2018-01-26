@@ -2,7 +2,6 @@ package mum.swe.mumsched.controller;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -54,7 +53,7 @@ public class LoginController {
             return "login/signup";			
 		}
 		
-		Role role = roleService.findByName(RoleEnum.ROLE_ADMIN.toString());		
+		Role role = roleService.findByName(RoleEnum.ROLE_STUDENT.toString());		
 		user.setRoles(new HashSet<Role>(Arrays.asList(role)) );
         userService.save(user);
 

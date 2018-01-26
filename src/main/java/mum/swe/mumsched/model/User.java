@@ -12,6 +12,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -19,11 +22,17 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
+	@Email(message = "*Please provide a valid Email")
+	@NotEmpty(message = "*Please provide an email")
     private String username;
+	
+	@NotEmpty(message = "*Please provide password")
     private String password;
-    
+
+	@NotEmpty(message = "*Please provide first name")
     private String firstName;
+	@NotEmpty(message = "*Please provide last name")
     private String lastName;
     
     @Transient
