@@ -7,10 +7,13 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+/**
+ * @author Batjargal Bayarsaikhan (Alex)
+ * @date Jan 25, 2018
+ */
 @Entity
 @Table(name = "faculties")
 public class Faculty {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

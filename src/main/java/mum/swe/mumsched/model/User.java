@@ -15,6 +15,10 @@ import javax.persistence.Transient;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+/**
+ * @author Batjargal Bayarsaikhan (Alex)
+ * @date Jan 23, 2018
+ */
 @Entity
 @Table(name = "users")
 public class User {
@@ -27,7 +31,6 @@ public class User {
 	@NotEmpty(message = "*Please provide an email")
     private String username;
 	
-	@NotEmpty(message = "*Please provide password")
     private String password;
 
 	@NotEmpty(message = "*Please provide first name")

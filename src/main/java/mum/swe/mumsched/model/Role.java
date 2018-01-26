@@ -9,6 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+/**
+ * @author Batjargal Bayarsaikhan (Alex)
+ * @date Jan 23, 2018
+ */
 @Entity
 @Table(name = "roles")
 public class Role {
