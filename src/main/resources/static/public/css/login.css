@@ -19,6 +19,15 @@ body.fixed-nav {
   padding-top: 56px;
 }
 
+.divleft { 
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    font-size: 18px;
+}
+.divleft span{
+	color: white;	
+}
 .content-wrapper {
   min-height: calc(100vh - 56px);
   padding-top: 1rem;

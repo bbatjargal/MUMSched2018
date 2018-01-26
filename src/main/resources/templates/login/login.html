@@ -12,7 +12,7 @@
 	<th:block layout:fragment="content">
 	
     <div class="card card-login mx-auto mt-5">
-      <div class="card-header">Login</div>
+      <div class="card-header" th:text="#{form.login.title}"></div>
       <div class="card-body">
         <form action="/login" method="POST">
         	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
