@@ -9,6 +9,10 @@ import mum.swe.mumsched.model.Entry;
 import mum.swe.mumsched.repository.EntryRepository;
 import mum.swe.mumsched.service.EntryService;
 
+/**
+ * @author Brian Nguyen
+ * @date Jan 25, 2018
+ */
 @Service
 public class EntryServiceImpl implements EntryService {
 	@Autowired
@@ -19,13 +23,23 @@ public class EntryServiceImpl implements EntryService {
 		return entryRepo.findAll();
 	}
 	
+//	@Override
+//	public boolean hasEntryByName(String name, Long excludeId) {
+//		return entryRepo.hasEntryByName(name, excludeId);
+//	}
+	
 	@Override
-	public Entry findEntry(String name) {
-		return entryRepo.findByName(name);
+	public Entry findEntryById(Long id) {
+		return entryRepo.findOne(id);
 	}
 	
 	@Override
 	public Entry save(Entry entry) {
 		return entryRepo.save(entry);
+	}
+	
+	@Override
+	public void delete(Entry entry) {
+		entryRepo.delete(entry);
 	}
 }
