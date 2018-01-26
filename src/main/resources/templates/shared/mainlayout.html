@@ -16,6 +16,12 @@
   <link href="/content/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
   <!-- Custom styles for this template-->
   <link href="/content/css/sb-admin.css" rel="stylesheet" />
+  <!-- token using for ajax request -->
+  <meta name="_csrf" th:content="${_csrf.token}"/>
+  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+  <!-- noty -->
+  <link href="/content/noty/noty.css" rel="stylesheet" />
+  <link href="/content/noty/bootstrap-v4.css" rel="stylesheet" />
   <th:block layout:fragment="header"></th:block>	
 </head>
 
@@ -291,6 +297,10 @@
     <!-- Custom scripts for this page-->
     <script src="/content/js/sb-admin-datatables.min.js"></script>
     <script src="/content/js/sb-admin-charts.min.js"></script>
+    <!-- common -->
+    <script src="/content/js/common.js"></script>
+    <!-- noty -->
+    <script src="/content/noty/noty.min.js"></script>
   </div>
   
   
