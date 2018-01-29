@@ -10,7 +10,7 @@
 		<form action="#" th:action="@{/entry/save}" th:object="${entry}" method="post">
 			<input type="hidden" th:field="*{id}"/>
 			<fieldset>
-		         <legend th:text="${entry.id == 0 ? 'New Entry' : 'Update Entry'}"></legend>
+		         <legend><span th:text="${entry.id == 0} ? #{cmd.new} : #{cmd.update}"></span> <span th:text="#{field.entry}">Entry</span></legend>
 		         <div class="form-row">
 				    <div class="col-md-6 mb-3">
 				      <label for="name" th:text="#{field.name}">Name</label>
@@ -19,7 +19,7 @@
 				      <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
 				    </div>
 				    <div class="col-md-6 mb-3">
-				      <label for="entryDate" >Entry Date</label>
+				      <label for="entryDate" th:text="#{field.entryDate}">Entry Date</label>
 				      <input type="date" class="form-control" id="entryDate" placeholder="entryDate address" th:field="*{entryDate}" required/>
 				      <div class="invalid-feedback" th:if="${#fields.hasErrors('entryDate')}" th:errors="*{entryDate}"></div>
 				    </div>
@@ -39,7 +39,7 @@
 				      <div class="invalid-feedback" th:if="${#fields.hasErrors('fppOPT')}" th:errors="*{fppOPT}"></div>
 				    </div>
 				    <div class="col-md-4 mb-3">
-				      <label for="fpp" >Total FPP</label>
+				      <label for="fpp" th:text="#{field.total}">Total FPP</label>
 				      <input type="number" class="form-control" id="fpp" placeholder="FPP" th:field="*{fpp}" 
 				      	th:classappend="${#fields.hasErrors('fpp')}? 'is-invalid'" readonly/>
 				      <div class="invalid-feedback" th:if="${#fields.hasErrors('fpp')}" th:errors="*{fpp}"></div>
@@ -60,29 +60,53 @@
 				      <div class="invalid-feedback" th:if="${#fields.hasErrors('mppOPT')}" th:errors="*{mppOPT}"></div>
 				    </div>
 				    <div class="col-md-4 mb-3">
-				      <label for="mpp" >Total MPP</label>
+				      <label for="mpp" th:text="#{field.total}">Total MPP</label>
 				      <input type="number" class="form-control" id="mpp" placeholder="mpp" th:field="*{mpp}" 
 				      	th:classappend="${#fields.hasErrors('mpp')}? 'is-invalid'" readonly>
 				      <div class="invalid-feedback" th:if="${#fields.hasErrors('mpp')}" th:errors="*{mpp}"></div>
 				    </div>
 				  </div>
 				  <div class="form-row">
-		         	<button type="submit" class="btn btn-primary">Save</button>
+				   	<div class="col-md-9 mb-3">
+					  	<label for="facultyList" >Faculty</label>
+					  	 <select class="form-control" id="facultyList" name="facultyList" 
+	                          multiple="multiple" 
+	                          th:field="*{facultyList}">
+	                          <option th:each="val : ${allFacultyList}" 
+	                                  th:value="${val.id}" 
+	                                  th:text="${val.name}"></option>
+	                      </select>
+                      </div>
+				  </div>
+				  <div class="form-row">
+		         	<button type="submit" class="btn btn-primary" th:text="#{cmd.save}">Save</button>
 		         	&nbsp;
-		         	<a class="btn btn-primary" href="/entry/" >Back to List</a>
+		         	<a class="btn btn-primary" href="/entry/"  th:text="#{cmd.backToList}">Back to List</a>
 		         </div>
 		    </fieldset>
 		</form>
 	</th:block>
 	<th:block layout:fragment="footer">
 		<script>
+			function updateTotalFPP(){
+				$("#fpp").val(parseInt($("#fppCPT").val()) + parseInt($("#fppOPT").val()));
+			}
+			
+			function updateTotalMPP(){
+				$("#mpp").val(parseInt($("#mppCPT").val()) + parseInt($("#mppOPT").val()));
+			}
+		
 			$(document).ready(function() {
+				// update
+				updateTotalFPP();
+				updateTotalMPP();
+				
 				$(".fpp").change(function(){
-					$("#fpp").val(parseInt($("#fppCPT").val()) + parseInt($("#fppOPT").val()));
+					updateTotalFPP()
 				});
 				
 				$(".mpp").change(function(){
-					$("#mpp").val(parseInt($("#mppCPT").val()) + parseInt($("#mppOPT").val()));
+					updateTotalMPP();
 				});
 			});
 		</script>

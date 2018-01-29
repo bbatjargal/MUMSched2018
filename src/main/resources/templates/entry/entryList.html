@@ -9,23 +9,24 @@
 		<legend>Entry</legend>
 		<div class="button-margin">
 			<a role="button" class="btn btn-primary"
-				th:href="@{/entry/addNew}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;New Entry</a>
+				th:href="@{/entry/add}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;New Entry</a>
 		</div>
 		<div class="mb-1" >&nbsp;</div>
 		<table class="table table-bordered table-striped">
 			<thead>
 				<tr>
 					<th rowspan="2" class="text-center" style="vertical-align: middle !important;" th:text="#{field.name}">Name</th>
-					<th rowspan="2" class="text-center" style="vertical-align: middle !important;">Date</th>
+					<th rowspan="2" class="text-center" style="vertical-align: middle !important;" th:text="#{field.entryDate}">Date</th>
 					<th colspan="3" class="text-center" style="vertical-align: middle !important;">FPP</th>
 					<th colspan="3" class="text-center" style="vertical-align: middle !important;">MPP</th>
+					<th rowspan="2" class="text-center" style="vertical-align: middle !important;">Faculties</th>
 					<th rowspan="2" class="text-center" style="vertical-align: middle !important;">&nbsp;</th>
 				</tr>
 				<tr>
-					<th class="text-center">Total</th>
+					<th class="text-center" th:text="#{field.total}">Total</th>
 					<th class="text-center">CPT</th>
 					<th class="text-center">OPT</th>
-					<th class="text-center">Total</th>
+					<th class="text-center" th:text="#{field.total}">Total</th>
 					<th class="text-center">CPT</th>
 					<th class="text-center">OPT</th>
 				</tr>
@@ -45,15 +46,16 @@
 					<td th:text="${item.mpp}" class="text-right"></td>
 					<td th:text="${item.mppCPT}" class="text-right"></td>
 					<td th:text="${item.mppOPT}" class="text-right"></td>
+					<td th:text="${item.facutiesName}" class="text-center"></td>
 					<td class="text-center">
 						<!-- <a role="button" class="btn btn-primary"
 							th:href="@{/entry/edit/{id}(id=${item.id})}"><span class="glyphicon glyphicon-add" aria-hidden="true"></span>Faculties</a>
 						&nbsp; -->
 						<a role="button" class="btn btn-primary"
-							th:href="@{/entry/edit/{id}(id=${item.id})}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Edit</a>
+							th:href="@{/entry/edit/{id}(id=${item.id})}"  th:text="#{cmd.edit}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Edit</a>
 						&nbsp;
-						<a role="button" class="btn btn-primary"
-							th:href="@{/entry/delete/{id}(id=${item.id})}">
+						<a role="button" class="btn btn-primary" cmd="delete"
+							th:href="@{/entry/delete/{id}(id=${item.id})}"  th:text="#{cmd.delete}">
 							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Delete</a>
 					</td>
 				</tr>
@@ -63,7 +65,7 @@
 	<th:block layout:fragment="footer">
 		<script>
 			$(document).ready(function() {
-				var deleteLink = $("a:contains('Delete')");
+				var deleteLink = $("[cmd='delete']");
 
 				$(deleteLink).click(function(event) {
 					dialog.confirmDefault(function () {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import mum.swe.mumsched.model.Entry;
@@ -21,7 +22,7 @@ public class EntryServiceImpl implements EntryService {
 	
 	@Override
 	public Iterable<Entry> getList(){
-		return entryRepo.fillAllWithSort(new Sort("name"));
+		return entryRepo.fillAllWithSort(new Sort(Direction.DESC, "entryDate"));
 	}
 	
 	@Override

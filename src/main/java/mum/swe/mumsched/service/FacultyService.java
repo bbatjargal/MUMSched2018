@@ -1,5 +1,7 @@
 package mum.swe.mumsched.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -13,5 +15,12 @@ public interface FacultyService {
 	Faculty save(Faculty faculty);
 	Faculty findOne(Long id);
 	void delete(Long id);
-	Page<Faculty> findAll(Pageable pageable);  
+	Page<Faculty> findAll(Pageable pageable);
+	
+	
+	/**
+	 * @author Brian Nguyen
+	 * @return
+	 */
+	List<Faculty> findAll();  
 }

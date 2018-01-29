@@ -1,11 +1,16 @@
 package mum.swe.mumsched.model;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -18,6 +23,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 /**
  * @author Brian Nguyen
  * @date Jan 24, 2018
+ */
+/**
+ * @author Brian Nguyen
+ * @date Jan 28, 2018
  */
 @Entity
 public class Entry {
@@ -45,6 +54,16 @@ public class Entry {
 	@Min(1)
 	private int fppCPT;
 	private int fppOPT;
+	
+	@ManyToMany()
+	private Set<Faculty> facultyList = new HashSet<Faculty>(0);
+	
+	
+	public String getFacutiesName() {
+		return getFacultyList().stream()
+				.map(m->m.getName())
+				.collect(Collectors.joining(", "));
+	}
 	
 	public long getId() {
 		return id;
@@ -99,5 +118,13 @@ public class Entry {
 	}
 	public void setFppOPT(int fppOPT) {
 		this.fppOPT = fppOPT;
+	}
+
+	public Set<Faculty> getFacultyList() {
+		return facultyList;
+	}
+
+	public void setFacultyList(Set<Faculty> facultyList) {
+		this.facultyList = facultyList;
 	}
 }
