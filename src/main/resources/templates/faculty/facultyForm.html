@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html layout:decorator="shared/mainlayout"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>New Entry</title>
+</head>
+<body>
+	<th:block layout:fragment="content">
+		<form th:action="@{/faculty}" th:object="${faculty}" method="post">
+			<input type="hidden" th:field="*{id}" />
+			<fieldset>
+				<legend>Update profile</legend>
+				<div class="form-row">
+					<div class="col-md-6">
+						<div class="form-group row">
+							<label class=" col-sm-3 col-form-label">First name:</label>
+							<div class="col-sm-8">
+								<input class="form-control" id="txtFirstName" type="text"
+									name="user.firstName" aria-describedby="nameHelp"
+									placeholder="Enter first name" th:field="*{user.firstName}"
+									readonly="readonly" />
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group row">
+							<label class="col-sm-3 col-form-label">Last name:</label>
+							<div class="col-sm-8">
+								<input class="form-control" id="txtLastName" type="text"
+									aria-describedby="nameHelp" placeholder="Enter last name"
+									th:field="*{user.lastName}" readonly="readonly" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="col-md-6">
+						<div class="form-group row">
+							<label class="col-sm-3 col-form-label">Courses:</label>
+							<div class="col-sm-3">
+							  	<select class="form-control" id="courseCombo" name="courseCombo">
+									<option value="">Select Course</option>
+									<option th:each="course : ${courses}" th:value="${course.id}"
+										th:text="${course.code}+' : '+${course.name}"></option>
+								</select>  	
+						
+							</div>
+							<button type="submit" class="btn btn-primary">Add</button>
+						</div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="col-md-6">
+						<div class="form-group row">
+							<table class="table table-bordered table-striped">
+								<thead>
+									<tr>
+										<th class="text-center">Course code</th>
+										<th class="text-center">Course name</th>
+									</tr>
+								</thead>
+								<tbody>
+
+								</tbody>
+							</table>
+
+						</div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="col-md-6">
+						<div class="form-group row">
+							<label class="col-sm-3 col-form-label">Sections:</label>
+							<div class="col-sm-3"> <select
+								class="form-control" id="blockCombo" name="blockCombo">
+								<option value="">Select Block</option>
+								<option th:each="user : ${user}" th:value="${user.firstname}"
+									th:text="${user.lastname}+' : '+${user.lastname}"></option>
+							</select> 
+							</div>
+							<div class="col-sm-3">
+							<select class="form-control" id="testOrder1"
+								name="testOrder">
+								<option value="">Select Course</option>
+								<option th:each="user : ${user}" th:value="${user.firstname}"
+									th:text="${user.lastname}+' : '+${user.lastname}"></option>
+							</select>
+							</div>
+							<button type="submit" class="btn btn-primary">Add</button>
+							
+						</div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="col-md-6">
+						<div class="form-group row">
+							<table class="table table-bordered table-striped">
+								<thead>
+									<tr>
+										<th class="text-center">Block</th>
+										<th class="text-center">Course</th>
+									</tr>
+								</thead>
+								<tbody>
+
+
+								</tbody>
+							</table>
+
+						</div>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+	</th:block>
+	<th:block layout:fragment="footer">
+		<script>
+			
+		</script>
+
+	</th:block>
+</body>
+</html>
