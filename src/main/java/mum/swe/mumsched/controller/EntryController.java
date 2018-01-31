@@ -3,8 +3,7 @@ package mum.swe.mumsched.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.http.MediaType;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,13 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mum.swe.mumsched.helper.AjaxResult;
 import mum.swe.mumsched.model.Entry;
 import mum.swe.mumsched.service.EntryService;
+import mum.swe.mumsched.service.FacultyService;
 import mum.swe.mumsched.service.MessageByLocaleService;
 
 
@@ -38,6 +37,9 @@ public class EntryController {
 	EntryService service;
 	
 	@Autowired
+	FacultyService facultyService;
+	
+	@Autowired
 	MessageByLocaleService msgService;
 
 	@GetMapping("/")
@@ -46,45 +48,48 @@ public class EntryController {
 		return "entry/entryList";
 	}
 	
-	@GetMapping("/addNew")
+	@GetMapping("/add")
 	public String newEntry(Model model) {
+		model.addAttribute("allFacultyList", facultyService.findAll());
 		model.addAttribute("entry", new Entry());
 		return "entry/update";
 	}
 	
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("allFacultyList",facultyService.findAll());
 		model.addAttribute("entry", service.findEntryById(id));
 		return "entry/update";
 	}
 	
 	@PostMapping("/save")
-	public String save(@Valid Entry entry, BindingResult result, Model model, RedirectAttributes ra) {
-		boolean hasError = result.hasErrors();
+	public String save(@Valid Entry entry, BindingResult bindingResult, Model model, RedirectAttributes ra) {
+		boolean hasError = bindingResult.hasErrors();
 		
+		// validate business rules
 		if(!hasError) {
 			// check exists if update
 			if(entry.getId() > 0 && service.findEntryById(entry.getId()) == null){
-				result.addError(new FieldError("Entry", "name", 
+				bindingResult.addError(new FieldError("Entry", "name", 
 						msgService.getMessage(NOT_FOUND_MESSAGE, new Object[] {msgService.getMessage("field.entry")})));
 				hasError = true;
 			}
 			
 			// check total fpp
 			if(entry.getFpp() != entry.getFppCPT() + entry.getFppOPT()){
-				result.addError(new FieldError("Entry", "fpp", msgService.getMessage("validate.invalid")));
+				bindingResult.addError(new FieldError("Entry", "fpp", msgService.getMessage("validate.invalid")));
 				hasError = true;
 			}
 			
 			// check total mpp
 			if(entry.getMpp() != entry.getMppCPT() + entry.getMppOPT()){
-				result.addError(new FieldError("Entry", "mpp", msgService.getMessage("validate.invalid")));
+				bindingResult.addError(new FieldError("Entry", "mpp", msgService.getMessage("validate.invalid")));
 				hasError = true;
 			}
 			
 			//valid unique entry name
 			if(service.hasExistsEntryName(entry.getName(), entry.getId())) {
-				result.addError(new FieldError("Entry", "name", msgService.getMessage("validate.alreadyExists")));
+				bindingResult.addError(new FieldError("Entry", "name", msgService.getMessage("validate.alreadyExists")));
 				hasError = true;
 			}
 		}
@@ -92,12 +97,13 @@ public class EntryController {
 		// has error
 		if(hasError)
 		{
+			model.addAttribute("allFacultyList", facultyService.findAll());
 			return "entry/update"; 
 		}
 		
 		// redirect message
 		msgService.addRedirectMessage(ra, entry.getId() == 0 ? 
-				 msgService.MSG_CreateSuccess: msgService.MSG_UpdateSuccess, null);
+				 MessageByLocaleService.MSG_CreateSuccess: MessageByLocaleService.MSG_UpdateSuccess, null);
 		
 		// save entry
 		service.save(entry);
@@ -107,7 +113,7 @@ public class EntryController {
 	
 	@PostMapping("/delete/{id}")
     @ResponseBody
-    public AjaxResult deleteSmartphone(@PathVariable Long id) {
+    public AjaxResult delete(@PathVariable Long id) {
 		Entry entry = service.findEntryById(id);
 		
 		if(entry == null) {

@@ -1,5 +1,7 @@
 package mum.swe.mumsched.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +29,11 @@ public class FacultyServiceImpl  implements FacultyService {
 	@Override
 	public Page<Faculty> findAll(Pageable pageable) {
 		return facultyRepository.findAll(pageable);
+	}
+	
+	@Override
+	public List<Faculty> findAll() {
+		return facultyRepository.findAll();
 	}
 
 	@Override

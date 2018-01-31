@@ -1,9 +1,14 @@
 package mum.swe.mumsched.model;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -19,8 +24,13 @@ public class Faculty {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
+    private String name;
+    
     @OneToOne
     private User user;
+    
+    @ManyToMany(mappedBy="facultyList")
+    private Set<Entry> entryList = new HashSet<Entry>(0);
 
 	public Long getId() {
 		return id;
@@ -36,5 +46,21 @@ public class Faculty {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Set<Entry> getEntryList() {
+		return entryList;
+	}
+
+	public void setEntryList(Set<Entry> entryList) {
+		this.entryList = entryList;
 	}
 }
