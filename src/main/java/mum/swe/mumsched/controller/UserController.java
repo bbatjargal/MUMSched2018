@@ -1,5 +1,7 @@
 package mum.swe.mumsched.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
@@ -29,8 +31,9 @@ public class UserController {
     private UserValidator userValidator;
 	
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public String users(Model model,  Pageable pageable) {
+    public String users(Model model, Principal currentUser,  Pageable pageable) {
 		model.addAttribute("users", userService.findAll(pageable));
+		model.addAttribute("username", currentUser.getName());
 		return "user/list";
     }
 
@@ -66,4 +69,32 @@ public class UserController {
 		userService.delete(id);
 		return "redirect:/users";
 	}	
+	
+	@RequestMapping(value="/adminprofile", method = RequestMethod.GET)
+	public String adminProfile(Principal currentUser, Model model) {
+		model.addAttribute("user", userService.findByUsername(currentUser.getName()));
+		return "user/adminprofile";
+	}
+	
+	@RequestMapping(value = "/adminprofile", method = RequestMethod.POST)
+	public String adminProfile(@ModelAttribute("user") User user, 
+			BindingResult result, Principal currentUser, Model model)  {
+
+		User userRecord = userService.findByUsername(currentUser.getName());
+		
+    	userValidator.validateAdmin(user, result);
+    	
+        if (result.hasErrors()) {
+			model.addAttribute("user", user);
+			return "user/adminprofile";
+		}
+        
+        userRecord.setFirstName(user.getFirstName());
+        userRecord.setLastName(user.getLastName());
+        userRecord.setPassword(user.getPassword());
+        
+		user = userService.save(userRecord);
+		model.addAttribute("user", userRecord);
+		return "user/adminprofile";
+	}
 }

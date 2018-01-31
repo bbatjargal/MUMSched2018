@@ -43,7 +43,7 @@ public class UserValidator implements Validator {
 			if (!matcher.matches()) {  
 				errors.rejectValue("username", "form.signup.email.incorrect");  
 			}else {
-		        if (userService.findByUsername(user.getUsername()) != null) {
+		        if (user.getId() == null && userService.findByUsername(user.getUsername()) != null) {
 		            errors.rejectValue("username", "form.signup.userDuplicated");
 		        }
 			}
@@ -52,6 +52,18 @@ public class UserValidator implements Validator {
         
         if(user.getId() == null)
         	ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
+
+        if (!user.getPasswordConfirm().equals(user.getPassword())) {
+            errors.rejectValue("passwordConfirm", "form.signup.passwordConfirm");
+        }
+    }
+    
+
+    public void validateAdmin(Object o, Errors errors) {
+        User user = (User) o;
+
+        //ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty");
+        //ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "NotEmpty");
 
         if (!user.getPasswordConfirm().equals(user.getPassword())) {
             errors.rejectValue("passwordConfirm", "form.signup.passwordConfirm");

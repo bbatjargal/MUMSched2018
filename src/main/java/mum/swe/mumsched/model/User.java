@@ -33,9 +33,7 @@ public class User {
 	
     private String password;
 
-	@NotEmpty(message = "*Please provide first name")
     private String firstName;
-	@NotEmpty(message = "*Please provide last name")
     private String lastName;
     
     @Transient
