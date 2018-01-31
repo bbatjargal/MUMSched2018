@@ -23,16 +23,8 @@ public class FacultyController {
 	private FacultyService facultyService;
 	
 	@RequestMapping(value="/faculties", method=RequestMethod.GET)
-	public String facultyProfileList(Model model,Pageable pageable) {	
-		model.addAttribute("faculties", facultyService.findAll(pageable));
-		return "faculty/facultyList";
-	}
-	
-	@RequestMapping(value="/facultyUpdate/{id}", method = RequestMethod.GET)
-	public String facultyUpdate(@PathVariable Long id, Model model, Principal currentUser){	
-		//List<Map<String, Object>> listCat =   CourseRepository();
-//	    model.addAttribute("listCat",listCat);
-		model.addAttribute("faculty", facultyService.findOne(id));
+	public String facultyProfile(Model model,Pageable pageable, Principal currentUser) {	
+		model.addAttribute("faculty", facultyService.findByUsername(currentUser.getName()));
 		return "faculty/facultyForm";
 	}
 }
