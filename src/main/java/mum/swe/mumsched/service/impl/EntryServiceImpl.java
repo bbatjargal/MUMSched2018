@@ -36,6 +36,16 @@ public class EntryServiceImpl implements EntryService {
 	}
 	
 	@Override
+	public boolean hasStudentRef(Entry entry) {
+		return false;
+	}
+	
+	@Override
+	public boolean hasSectionRef(Entry entry) {
+		return false;
+	}
+	
+	@Override
 	public Entry save(Entry entry) {
 		return entryRepo.save(entry);
 	}

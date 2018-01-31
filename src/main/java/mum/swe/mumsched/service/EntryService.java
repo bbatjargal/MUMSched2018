@@ -18,4 +18,8 @@ public interface EntryService {
 
 	boolean hasExistsEntryName(String name, long excludedId);
 
+	boolean hasStudentRef(Entry entry);
+
+	boolean hasSectionRef(Entry entry);
+
 }

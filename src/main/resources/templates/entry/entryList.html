@@ -6,10 +6,14 @@
 </head>
 <body>
 	<th:block layout:fragment="content">
-		<legend>Entry</legend>
-		<div class="button-margin">
-			<a role="button" class="btn btn-primary"
-				th:href="@{/entry/add}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;New Entry</a>
+		<div class="row">
+			<div class="col"><legend>Entries</legend></div>
+			<div class="col text-right">
+				<div class="button-margin">
+					<a role="button" class="btn btn-primary"
+						th:href="@{/entry/add}"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;New Entry</a>
+				</div>
+			</div>
 		</div>
 		<div class="mb-1" >&nbsp;</div>
 		<table class="table table-bordered table-striped">
@@ -48,15 +52,13 @@
 					<td th:text="${item.mppOPT}" class="text-right"></td>
 					<td th:text="${item.facutiesName}" class="text-center"></td>
 					<td class="text-center">
-						<!-- <a role="button" class="btn btn-primary"
-							th:href="@{/entry/edit/{id}(id=${item.id})}"><span class="glyphicon glyphicon-add" aria-hidden="true"></span>Faculties</a>
-						&nbsp; -->
 						<a role="button" class="btn btn-primary"
-							th:href="@{/entry/edit/{id}(id=${item.id})}"  th:text="#{cmd.edit}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Edit</a>
+							th:href="@{/entry/edit/{id}(id=${item.id})}">
+							<i class="fa fa-pencil" aria-hidden="true"></i></a>
 						&nbsp;
 						<a role="button" class="btn btn-primary" cmd="delete"
-							th:href="@{/entry/delete/{id}(id=${item.id})}"  th:text="#{cmd.delete}">
-							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Delete</a>
+							th:href="@{/entry/delete/{id}(id=${item.id})}">
+							<i class="fa fa-trash" aria-hidden="true"></i></a>
 					</td>
 				</tr>
 			</tbody>
