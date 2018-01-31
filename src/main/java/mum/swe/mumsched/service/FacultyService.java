@@ -14,4 +14,6 @@ public interface FacultyService {
 	Faculty findOne(Long id);
 	void delete(Long id);
 	Page<Faculty> findAll(Pageable pageable);  
+	
+	Faculty findByUsername(String userName);
 }

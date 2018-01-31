@@ -14,4 +14,6 @@ public interface StudentService {
 	Student findOne(Long id);
 	void delete(Long id);
 	Page<Student> findAll(Pageable pageable);  
+	
+	Student findByUsername(String userName);
 }

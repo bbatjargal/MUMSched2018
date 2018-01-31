@@ -38,4 +38,9 @@ public class FacultyServiceImpl  implements FacultyService {
 	public void delete(Long id) {
 		facultyRepository.delete(id);
 	}
+
+	@Override
+	public Faculty findByUsername(String userName) {
+		return facultyRepository.findByUsername(userName);
+	}
 }
