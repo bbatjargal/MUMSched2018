@@ -3,11 +3,13 @@ package mum.swe.mumsched.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -29,7 +31,10 @@ public class Faculty {
     private User user;
     
     @ManyToMany(mappedBy="facultyList")
-    private Set<Entry> entryList = new HashSet<Entry>(0);
+    private Set<Entry> entryList;
+    
+    @OneToMany(mappedBy="faculty", cascade=CascadeType.ALL)
+	private Set<Section> sectionList = new HashSet<Section>(0);
 
 	public Long getId() {
 		return id;

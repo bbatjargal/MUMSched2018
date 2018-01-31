@@ -6,11 +6,16 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -29,6 +34,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @date Jan 28, 2018
  */
 @Entity
+@Table(name="entry")
 public class Entry {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -56,8 +62,11 @@ public class Entry {
 	private int fppOPT;
 	
 	@ManyToMany()
-	private Set<Faculty> facultyList = new HashSet<Faculty>(0);
+	@JoinTable(name = "entry_faculty", joinColumns = @JoinColumn(name = "entry_id"), inverseJoinColumns = @JoinColumn(name = "faculty_id"))
+	private Set<Faculty> facultyList;
 	
+	@OneToMany(mappedBy="entry", cascade=CascadeType.ALL)
+	private Set<Block> blockList;
 	
 	public String getFacutiesName() {
 		return getFacultyList().stream()
