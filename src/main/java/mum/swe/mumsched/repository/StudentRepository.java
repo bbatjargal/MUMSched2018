@@ -14,6 +14,6 @@ import mum.swe.mumsched.model.Student;
 @Repository("studentRepository")
 public interface StudentRepository extends JpaRepository<Student, Long> {
 	
-	@Query("select s from mum.swe.mumsched.Student s left join mum.swe.mumsched.model.User u on s.id = u.id where u.userName = :userName")
+	@Query("select s from mum.swe.mumsched.model.Student s join s.user u where u.username = :userName")
 	public Student findByUsername(@Param("userName") String userName);
 }
