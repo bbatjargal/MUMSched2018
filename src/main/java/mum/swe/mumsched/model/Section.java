@@ -32,4 +32,44 @@ public class Section {
 	private Course course;
 	
 	private String roomLocation;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public Block getBlock() {
+		return block;
+	}
+
+	public void setBlock(Block block) {
+		this.block = block;
+	}
+
+	public Faculty getFaculty() {
+		return faculty;
+	}
+
+	public void setFaculty(Faculty faculty) {
+		this.faculty = faculty;
+	}
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+
+	public String getRoomLocation() {
+		return roomLocation;
+	}
+
+	public void setRoomLocation(String roomLocation) {
+		this.roomLocation = roomLocation;
+	}
 }

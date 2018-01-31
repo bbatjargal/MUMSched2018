@@ -34,9 +34,6 @@ public class Block {
 	@JoinColumn(name="entry_id")
 	private Entry entry;
 	
-	@Column(name="entry_id", insertable = false, updatable = false)
-	private int entry_id;
-	
 	@OneToMany(mappedBy="block", cascade=CascadeType.ALL)
 	private Set<Section> sectionList;
 	
@@ -52,4 +49,60 @@ public class Block {
 	@NotNull
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate toDate;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public Entry getEntry() {
+		return entry;
+	}
+
+	public void setEntry(Entry entry) {
+		this.entry = entry;
+	}
+
+	public Set<Section> getSectionList() {
+		return sectionList;
+	}
+
+	public void setSectionList(Set<Section> sectionList) {
+		this.sectionList = sectionList;
+	}
+
+	public int getMonth() {
+		return month;
+	}
+
+	public void setMonth(int month) {
+		this.month = month;
+	}
+
+	public String getNameOfMonth() {
+		return nameOfMonth;
+	}
+
+	public void setNameOfMonth(String nameOfMonth) {
+		this.nameOfMonth = nameOfMonth;
+	}
+
+	public LocalDate getFromDate() {
+		return fromDate;
+	}
+
+	public void setFromDate(LocalDate fromDate) {
+		this.fromDate = fromDate;
+	}
+
+	public LocalDate getToDate() {
+		return toDate;
+	}
+
+	public void setToDate(LocalDate toDate) {
+		this.toDate = toDate;
+	}
 }
