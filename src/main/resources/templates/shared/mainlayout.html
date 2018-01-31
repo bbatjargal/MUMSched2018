@@ -40,18 +40,60 @@
             <span class="nav-link-text" th:text="#{menu.dashboard}"></span>
           </a>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+        <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item" data-toggle="tooltip" data-placement="right" title="Profile">
+          <a class="nav-link" href="/adminprofile">
+            <i class="fa fa-fw fa-user"></i>
+            <span class="nav-link-text">My profile</span>
+          </a>
+        </li>  
+          <li sec:authorize="hasRole('ROLE_FACULTY')" class="nav-item" data-toggle="tooltip" data-placement="right" title="Profile">
+          <a class="nav-link" href="/facultyprofile">
+            <i class="fa fa-fw fa-user"></i>
+            <span class="nav-link-text">My profile</span>
+          </a>
+        </li>  
+          <li sec:authorize="hasRole('ROLE_STUDENT')" class="nav-item" data-toggle="tooltip" data-placement="right" title="Profile">
+          <a class="nav-link" href="/studentprofile">
+            <i class="fa fa-fw fa-user"></i>
+            <span class="nav-link-text">My profile</span>
+          </a>
+        </li> 
+        <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
           <a class="nav-link" href="/users">
             <i class="fa fa-fw fa-users"></i>
             <span class="nav-link-text">Users</span>
           </a>
         </li>
-          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profile">
-          <a class="nav-link" href="/faculties">
-            <i class="fa fa-fw fa-user"></i>
-            <span class="nav-link-text">My profile</span>
+        <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+          <a class="nav-link" href="/users">
+            <i class="fa fa-fw fa-address-card-o"></i>
+            <span class="nav-link-text">Faculties</span>
           </a>
-        </li>        
+        </li> 
+          <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item" data-toggle="tooltip" data-placement="right" title="Profile">
+          <a class="nav-link" href="/studentprofile">
+            <i class="fa fa-fw fa-clock-o"></i>
+            <span class="nav-link-text">Entries</span>
+          </a>
+        </li>   
+          <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item" data-toggle="tooltip" data-placement="right" title="Profile">
+          <a class="nav-link" href="/studentprofile">
+            <i class="fa fa-fw fa-th-large"></i>
+            <span class="nav-link-text">Blocks</span>
+          </a>
+        </li>  
+          <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item" data-toggle="tooltip" data-placement="right" title="Profile">
+          <a class="nav-link" href="/studentprofile">
+            <i class="fa fa-fw fa-book"></i>
+            <span class="nav-link-text">Sections</span>
+          </a>
+        </li>    
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profile">
+          <a class="nav-link" href="/studentprofile">
+            <i class="fa fa-fw fa-calendar"></i>
+            <span class="nav-link-text">Schedules</span>
+          </a>
+        </li> 
       </ul>
       <ul class="navbar-nav sidenav-toggler">
         <li class="nav-item">
