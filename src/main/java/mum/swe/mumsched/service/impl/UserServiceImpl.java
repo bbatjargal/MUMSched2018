@@ -56,6 +56,10 @@ public class UserServiceImpl  implements UserService {
 		}
 		if(!user.getPassword().isEmpty())
 			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		else if(user.getId() != null) {
+			User userdb = userRepository.findOne(user.getId());
+			user.setPassword(userdb.getPassword());
+		}
 		
 		user = userRepository.save(user);
 

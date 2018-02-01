@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import mum.swe.mumsched.model.User;
+import mum.swe.mumsched.service.DashboardService;
 import mum.swe.mumsched.service.UserService;
+import mum.swe.mumsched.view.DashboardView;
 
 /**
  * @author Batjargal Bayarsaikhan (Alex)
@@ -23,6 +25,9 @@ public class HomeController {
 	@Autowired
 	private UserService userService;
 	
+    @Autowired
+    private DashboardService dashboardService;
+	
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView home(Principal currentUser, HttpServletRequest request) {     
     	
@@ -33,9 +38,15 @@ public class HomeController {
 			User user = userService.findByUsername(currentUser.getName());		
 			modelAndView.addObject("userName", "Welcome " + user.getUsername() + "!");    		
     	}
-	
-		//User user = new User();
-		//modelAndView.addObject("user", user);
+
+    	DashboardView dv = new DashboardView();
+    	dv.setCountFaculties(dashboardService.countFaculties());
+    	dv.setCountStudents(dashboardService.countStudents());
+    	dv.setCountCourses(dashboardService.countCourses());
+    	dv.setCountSections(dashboardService.countSections());
+    	
+
+		modelAndView.addObject("dashboard", dv);    
 		modelAndView.setViewName("home/index");
 		return modelAndView;
     }
