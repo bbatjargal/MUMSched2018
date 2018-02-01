@@ -33,6 +33,46 @@ public class Course {
 	@Size(max=10)
 	private String name;
 	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Set<Section> getSectionList() {
+		return sectionList;
+	}
+
+	public void setSectionList(Set<Section> sectionList) {
+		this.sectionList = sectionList;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	@NotEmpty
 	@Size(max=50)
 	private String description;
