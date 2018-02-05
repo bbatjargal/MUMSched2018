@@ -50,14 +50,6 @@ public class Faculty {
 		this.user = user;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public Set<Entry> getEntryList() {
 		return entryList;
 	}
