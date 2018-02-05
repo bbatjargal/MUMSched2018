@@ -25,8 +25,6 @@ public class Faculty {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    private String name;
-    
     @OneToOne
     private User user;
     
