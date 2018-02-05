@@ -1,10 +1,14 @@
 package mum.swe.mumsched.model;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +16,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import mum.swe.mumsched.enums.MonthEnum;
 
 /**
  * @author Batjargal Bayarsaikhan (Alex)
@@ -21,17 +27,40 @@ import javax.persistence.Table;
 @Table(name = "faculties")
 public class Faculty {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    
-    @OneToOne
-    private User user;
-    
-    @ManyToMany(mappedBy="facultyList")
-    private Set<Entry> entryList;
-    
-    @OneToMany(mappedBy="faculty", cascade=CascadeType.ALL)
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
+	@OneToOne
+	private User user;
+
+	@Enumerated(EnumType.STRING)
+	@ElementCollection
+	private List<MonthEnum> monthEnums;
+
+	public List<MonthEnum> getMonthEnums() {
+		return monthEnums;
+	}
+
+	public void setMonthEnums(List<MonthEnum> monthEnums) {
+		this.monthEnums = monthEnums;
+	}
+
+	@OneToMany
+	private List<Course> courses;
+
+	public List<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
+	}
+
+	@ManyToMany(mappedBy = "facultyList", cascade = CascadeType.ALL)
+	private Set<Entry> entryList;
+
+	@OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL)
 	private Set<Section> sectionList = new HashSet<Section>(0);
 
 	public Long getId() {

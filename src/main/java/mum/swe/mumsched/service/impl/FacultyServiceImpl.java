@@ -22,8 +22,7 @@ public class FacultyServiceImpl  implements FacultyService {
 
     @Override
     public Faculty save(Faculty faculty) {
-		return facultyRepository.save(faculty);
-		
+		return facultyRepository.save(faculty);	
     }
 
 	@Override

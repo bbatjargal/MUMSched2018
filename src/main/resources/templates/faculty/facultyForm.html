@@ -7,8 +7,9 @@
 </head>
 <body>
 	<th:block layout:fragment="content">
-		<form th:action="@{/faculty}" th:object="${faculty}" method="post">
+		<form th:action="@{/updateFaculty}" th:object="${faculty}" method="post">
 			<input type="hidden" th:field="*{id}" />
+			<input type="hidden" th:field="*{user.id}" />
 			<fieldset>
 				<legend>Update profile</legend>
 				<div class="form-row">
@@ -39,53 +40,26 @@
 						<div class="form-group row">
 							<label class=" col-sm-3 col-form-label">First name:</label>
 							<div class="col-sm-8">	
-							    <select  class="form-control col-sm-12" multiple>
-							       <option th:each="role: ${T(mum.swe.mumsched.enums.MonthEnum).values()}" th:value="${role.code}" 
-							       	th:text="${role}"></option>
+							    <select th:field="*{monthEnums}" class="form-control col-sm-12" multiple>
+							       <option th:each="monthEnum: ${T(mum.swe.mumsched.enums.MonthEnum).values()}" th:value="${monthEnum}" 
+							       	th:text="${monthEnum}"></option>
 							    </select>						
 							</div>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group row">
-							<label class="col-sm-3 col-form-label">Last name:</label>
+							<label class="col-sm-3 col-form-label">Courses:</label>
 							<div class="col-sm-8">
-								<select class="form-control" id="courseCmbId" name="courseCmbName" multiple>
+								<select class="form-control" id="courseCmbId" name="courseCmbName" th:field="*{courses}" multiple>
 									<option th:each="course : ${courses}" th:value="${course.id}"
 										th:text="${course.code}+' : '+${course.name}"></option>
 								</select>  
 							</div>
 						</div>
 					</div>
-				</div>
-			<!--  	<div class="form-row">
-					<div class="col-md-6">
-						<div class="form-group row">
-							<label class="col-sm-3 col-form-label">Courses:</label>
-							<div class="col-sm-4">
-							  	<select class="form-control" id="courseCombo" name="courseCombo">
-									<option value="">Select Course</option>
-									<option th:each="course : ${courses}" th:value="${course.id}"
-										th:text="${course.code}+' : '+${course.name}"></option>
-								</select>  	
-						
-							</div>
-							
-							
-						</div>
-						<div class="col-md-6">
-							  	<select class="form-control" id="courseCombo" name="courseCombo">
-									<option value="">Select Course</option>
-									<option th:each="course : ${courses}" th:value="${course.id}"
-										th:text="${course.code}+' : '+${course.name}"></option>
-								</select>  	
-						
-							</div>
-					</div>
-				</div>
-	-->
-		
-			<button type="submit" class="btn btn-primary">Add</button>
+				</div>	
+			<button type="submit" class="btn btn-primary">Save</button>
 			</fieldset>
 		</form>
 	</th:block>
