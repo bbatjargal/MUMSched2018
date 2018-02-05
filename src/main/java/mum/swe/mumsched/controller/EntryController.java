@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mum.swe.mumsched.helper.AjaxResult;
 import mum.swe.mumsched.model.Entry;
+import mum.swe.mumsched.service.CourseService;
 import mum.swe.mumsched.service.EntryService;
 import mum.swe.mumsched.service.FacultyService;
 import mum.swe.mumsched.service.MessageByLocaleService;
@@ -31,13 +32,15 @@ import mum.swe.mumsched.service.MessageByLocaleService;
 @RequestMapping(path = "/entry")
 @Controller
 public class EntryController {
-	private static final String NOT_FOUND_MESSAGE = "validate.notFoundP";
 	
 	@Autowired
 	EntryService service;
 	
 	@Autowired
 	FacultyService facultyService;
+	
+	@Autowired
+	CourseService courseService;
 	
 	@Autowired
 	MessageByLocaleService msgService;
@@ -51,6 +54,7 @@ public class EntryController {
 	@GetMapping("/add")
 	public String newEntry(Model model) {
 		model.addAttribute("allFacultyList", facultyService.findAll());
+		model.addAttribute("allCourseList",courseService.findAll());
 		model.addAttribute("entry", new Entry());
 		return "entry/update";
 	}
@@ -58,6 +62,7 @@ public class EntryController {
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("allFacultyList",facultyService.findAll());
+		model.addAttribute("allCourseList",courseService.findAll());
 		model.addAttribute("entry", service.findEntryById(id));
 		return "entry/update";
 	}
@@ -70,26 +75,26 @@ public class EntryController {
 		if(!hasError) {
 			// check exists if update
 			if(entry.getId() > 0 && service.findEntryById(entry.getId()) == null){
-				bindingResult.addError(new FieldError("Entry", "name", 
-						msgService.getMessage(NOT_FOUND_MESSAGE, new Object[] {msgService.getMessage("field.entry")})));
+				bindingResult.reject("name", null,
+						msgService.getMessage(MessageByLocaleService.NOT_FOUND_MESSAGE, new Object[] {msgService.getMessage("field.entry")}));
 				hasError = true;
 			}
 			
 			// check total fpp
 			if(entry.getFpp() != entry.getFppCPT() + entry.getFppOPT()){
-				bindingResult.addError(new FieldError("Entry", "fpp", msgService.getMessage("validate.invalid")));
+				bindingResult.reject("fpp", null, msgService.getMessage("validate.invalid"));
 				hasError = true;
 			}
 			
 			// check total mpp
 			if(entry.getMpp() != entry.getMppCPT() + entry.getMppOPT()){
-				bindingResult.addError(new FieldError("Entry", "mpp", msgService.getMessage("validate.invalid")));
+				bindingResult.reject("mpp", null, msgService.getMessage("validate.invalid"));
 				hasError = true;
 			}
 			
 			//valid unique entry name
 			if(service.hasExistsEntryName(entry.getName(), entry.getId())) {
-				bindingResult.addError(new FieldError("Entry", "name", msgService.getMessage("validate.alreadyExists")));
+				bindingResult.rejectValue("name", null, msgService.getMessage("validate.alreadyExists"));
 				hasError = true;
 			}
 		}
@@ -117,10 +122,13 @@ public class EntryController {
 		Entry entry = service.findEntryById(id);
 		
 		if(entry == null) {
-			return AjaxResult.fail(msgService.getMessage(NOT_FOUND_MESSAGE, new Object[] {msgService.getMessage("field.entry")}));
+			return AjaxResult.fail(msgService.getMessage(MessageByLocaleService.NOT_FOUND_MESSAGE, new Object[] {msgService.getMessage("field.entry")}));
 		}
 		
-		// TODO valid reference
+//		// TODO valid reference
+//		if(service.hasBlockByRef(entry)) {
+//			return AjaxResult.fail(msgService.getMessage(MessageByLocaleService.HAS_REF_MESSAGE, new Object[] {msgService.getMessage("field.block")}));
+//		}
 		
 		service.delete(entry);
 		

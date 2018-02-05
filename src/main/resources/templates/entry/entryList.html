@@ -24,7 +24,8 @@
 					<th colspan="3" class="text-center" style="vertical-align: middle !important;">FPP</th>
 					<th colspan="3" class="text-center" style="vertical-align: middle !important;">MPP</th>
 					<th rowspan="2" class="text-center" style="vertical-align: middle !important;">Faculties</th>
-					<th rowspan="2" class="text-center" style="vertical-align: middle !important;">&nbsp;</th>
+					<th rowspan="2" class="text-center" style="vertical-align: middle !important;">Courses</th>
+					<th rowspan="2" class="text-center" style="vertical-align: middle !important;" style="width:120px;">&nbsp;</th>
 				</tr>
 				<tr>
 					<th class="text-center" th:text="#{field.total}">Total</th>
@@ -51,6 +52,7 @@
 					<td th:text="${item.mppCPT}" class="text-right"></td>
 					<td th:text="${item.mppOPT}" class="text-right"></td>
 					<td th:text="${item.facutiesName}" class="text-center"></td>
+					<td th:text="${item.coursesName}" class="text-center"></td>
 					<td class="text-center">
 						<a role="button" class="btn btn-primary"
 							th:href="@{/entry/edit/{id}(id=${item.id})}">
@@ -67,22 +69,7 @@
 	<th:block layout:fragment="footer">
 		<script>
 			$(document).ready(function() {
-				var deleteLink = $("[cmd='delete']");
-
-				$(deleteLink).click(function(event) {
-					dialog.confirmDefault(function () {
-					    	post($(event.target).attr("href"), function(ajaxResult) {
-					    		if(ajaxResult.isSuccess){
-					    			// remove deleted row
-								$(event.target).closest("tr").remove();
-					    		}
-					    		
-							dialog.showAjaxMessage(ajaxResult);
-						});
-				    });
-					
-					event.preventDefault();
-				});
+				addDelete("[cmd='delete']");
 			});
 		</script>
 	</th:block>

@@ -65,11 +65,21 @@ public class Entry {
 	@JoinTable(name = "entry_faculty", joinColumns = @JoinColumn(name = "entry_id"), inverseJoinColumns = @JoinColumn(name = "faculty_id"))
 	private Set<Faculty> facultyList;
 	
+	@ManyToMany()
+	@JoinTable(name = "entry_course", joinColumns = @JoinColumn(name = "entry_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
+	private Set<Course> courseList;
+	
 	@OneToMany(mappedBy="entry", cascade=CascadeType.ALL)
 	private Set<Block> blockList;
 	
 	public String getFacutiesName() {
 		return getFacultyList().stream()
+				.map(m->m.getName())
+				.collect(Collectors.joining(", "));
+	}
+	
+	public String getCoursesName() {
+		return getCourseList().stream()
 				.map(m->m.getName())
 				.collect(Collectors.joining(", "));
 	}
@@ -135,5 +145,13 @@ public class Entry {
 
 	public void setFacultyList(Set<Faculty> facultyList) {
 		this.facultyList = facultyList;
+	}
+
+	public Set<Course> getCourseList() {
+		return courseList;
+	}
+
+	public void setCourseList(Set<Course> courseList) {
+		this.courseList = courseList;
 	}
 }

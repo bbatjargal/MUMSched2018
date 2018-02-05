@@ -1,17 +1,3 @@
-function post(url,fnSuccess, fnError){
-	$.post({
-		url : url,
-		beforeSend : function(xhr) {
-			// authen token
-			xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"),$("meta[name='_csrf']").attr("content"));
-			xhr.setRequestHeader("Accept","application/json");
-			xhr.setRequestHeader("Content-Type","application/json");
-		},
-		success : fnSuccess,
-		error: fnError
-	});
-}
-
 var dialog = new function() {
 	this.confirm = function (message, fnYes, fnNo){
 		var n = new Noty({
@@ -74,6 +60,37 @@ var dialog = new function() {
 	}
 };
 
+// common funcs
+function post(url,fnSuccess, fnError){
+	$.post({
+		url : url,
+		beforeSend : function(xhr) {
+			// authen token
+			xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"),$("meta[name='_csrf']").attr("content"));
+			xhr.setRequestHeader("Accept","application/json");
+			xhr.setRequestHeader("Content-Type","application/json");
+		},
+		success : fnSuccess,
+		error: fnError
+	});
+}
+
+function addDelete(selector){
+	$(selector).click(function(event) {
+		dialog.confirmDefault(function () {
+		    	post($(selector).attr("href"), function(ajaxResult) {
+		    		if(ajaxResult.isSuccess){
+		    			// remove deleted row
+					$(event.target).closest("tr").remove();
+		    		}
+		    		
+				dialog.showAjaxMessage(ajaxResult);
+			});
+	    });
+		
+		event.preventDefault();
+	});
+}
 
 
 

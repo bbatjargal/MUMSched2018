@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
@@ -32,6 +33,9 @@ public class Course {
 	@NotEmpty
 	@Size(max=10)
 	private String name;
+	
+	@ManyToMany(mappedBy="courseList")
+	private Set<Entry> entryList;
 	
 	public Long getId() {
 		return id;
@@ -71,6 +75,14 @@ public class Course {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Set<Entry> getEntryList() {
+		return entryList;
+	}
+
+	public void setEntryList(Set<Entry> entryList) {
+		this.entryList = entryList;
 	}
 
 	@NotEmpty

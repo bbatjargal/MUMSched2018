@@ -5,6 +5,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import mum.swe.mumsched.enums.MonthEnum;
 import mum.swe.mumsched.model.Block;
 import mum.swe.mumsched.repository.BlockRepository;
 import mum.swe.mumsched.service.BlockService;
@@ -16,21 +17,21 @@ import mum.swe.mumsched.service.BlockService;
 @Service
 public class BlockServiceImpl implements BlockService {
 	@Autowired
-	BlockRepository BlockRepo;
+	BlockRepository blockRepo;
 	
 	@Override
 	public Iterable<Block> getList(){
-		return BlockRepo.fillAllWithSort(new Sort(Direction.DESC, "BlockDate"));
+		return blockRepo.fillAllWithSort(new Sort(Direction.DESC, "entry"));
 	}
 	
 	@Override
 	public Block findBlockById(Long id) {
-		return BlockRepo.findOne(id);
+		return blockRepo.findOne(id);
 	}
 	
 	@Override
-	public boolean hasExistsBlock(long entryId, String nameOfYear, long excludedId) {
-		return false;
+	public boolean hasExistsBlock(long entryId, MonthEnum month, long excludedId) {
+		return blockRepo.hasExistsBlock(entryId, month, excludedId);
 	}
 	
 	@Override
@@ -40,11 +41,11 @@ public class BlockServiceImpl implements BlockService {
 	
 	@Override
 	public Block save(Block Block) {
-		return BlockRepo.save(Block);
+		return blockRepo.save(Block);
 	}
 	
 	@Override
 	public void delete(Block Block) {
-		BlockRepo.delete(Block);
+		blockRepo.delete(Block);
 	}
 }

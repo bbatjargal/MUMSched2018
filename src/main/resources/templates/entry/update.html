@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>New Entry</title>
+<title>Entry</title>
 </head>
 <body>
 	<th:block layout:fragment="content">
@@ -73,6 +73,18 @@
 	                          multiple="multiple" 
 	                          th:field="*{facultyList}">
 	                          <option th:each="val : ${allFacultyList}" 
+	                                  th:value="${val.id}" 
+	                                  th:text="${val.name}"></option>
+	                      </select>
+                      </div>
+				  </div>
+				  <div class="form-row">
+				   	<div class="col-md-9 mb-3">
+					  	<label for="courseList" >Course</label>
+					  	 <select class="form-control" id="courseList" name="courseList" 
+	                          multiple="multiple" 
+	                          th:field="*{courseList}">
+	                          <option th:each="val : ${allCourseList}" 
 	                                  th:value="${val.id}" 
 	                                  th:text="${val.name}"></option>
 	                      </select>

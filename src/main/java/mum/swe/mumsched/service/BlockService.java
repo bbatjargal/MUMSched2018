@@ -1,5 +1,6 @@
 package mum.swe.mumsched.service;
 
+import mum.swe.mumsched.enums.MonthEnum;
 import mum.swe.mumsched.model.Block;
 
 /**
@@ -12,7 +13,7 @@ public interface BlockService {
 
 	Block findBlockById(Long id);
 
-	boolean hasExistsBlock(long entryId, String nameOfYear, long excludedId);
+	boolean hasExistsBlock(long entryId, MonthEnum month, long excludedId);
 
 	Block save(Block Block);
 

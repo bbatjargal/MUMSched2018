@@ -14,6 +14,10 @@ public interface MessageByLocaleService {
 	public static String MSG_CreateSuccess = "create.success";
 	public static String MSG_UpdateSuccess = "update.success";
 	public static String MSG_RemoveSuccess = "remove.success";
+	
+	public static final String NOT_FOUND_MESSAGE = "validate.notFoundP";
+	public static final String HAS_REF_MESSAGE = "validate.hasRefP";
+	public static final String MUST_BE_GREATER_THAN_MESSAGE = "validate.mustBeGreaterThanP";
 
     public String getMessage(String id);
 

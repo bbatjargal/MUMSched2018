@@ -7,6 +7,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +20,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import mum.swe.mumsched.enums.MonthEnum;
 
 /**
  * @author Brian Nguyen
@@ -37,10 +41,9 @@ public class Block {
 	@OneToMany(mappedBy="block", cascade=CascadeType.ALL)
 	private Set<Section> sectionList;
 	
-	
-	private int month;
-	@NotEmpty
-	private String nameOfMonth;
+	@Enumerated
+    @Column(columnDefinition = "smallint")
+	private MonthEnum month;
 	
 	@NotNull
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -74,20 +77,12 @@ public class Block {
 		this.sectionList = sectionList;
 	}
 
-	public int getMonth() {
+	public MonthEnum getMonth() {
 		return month;
 	}
 
-	public void setMonth(int month) {
+	public void setMonth(MonthEnum month) {
 		this.month = month;
-	}
-
-	public String getNameOfMonth() {
-		return nameOfMonth;
-	}
-
-	public void setNameOfMonth(String nameOfMonth) {
-		this.nameOfMonth = nameOfMonth;
 	}
 
 	public LocalDate getFromDate() {
