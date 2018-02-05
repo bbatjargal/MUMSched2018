@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -60,6 +61,9 @@ public class Entry {
 	@Min(1)
 	private int fppCPT;
 	private int fppOPT;
+	
+	@OneToOne
+	private Schedule schedule;
 	
 	@ManyToMany()
 	@JoinTable(name = "entry_faculty", joinColumns = @JoinColumn(name = "entry_id"), inverseJoinColumns = @JoinColumn(name = "faculty_id"))

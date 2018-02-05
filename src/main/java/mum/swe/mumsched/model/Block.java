@@ -38,6 +38,10 @@ public class Block {
 	@JoinColumn(name="entry_id")
 	private Entry entry;
 	
+	@ManyToOne()
+	@JoinColumn(name="schedule_id")
+	private Schedule schedule;
+	
 	@OneToMany(mappedBy="block", cascade=CascadeType.ALL)
 	private Set<Section> sectionList;
 	
@@ -99,5 +103,13 @@ public class Block {
 
 	public void setToDate(LocalDate toDate) {
 		this.toDate = toDate;
+	}
+
+	public Schedule getSchedule() {
+		return schedule;
+	}
+
+	public void setSchedule(Schedule schedule) {
+		this.schedule = schedule;
 	}
 }
