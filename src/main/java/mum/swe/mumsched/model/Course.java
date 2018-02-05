@@ -36,9 +36,6 @@ public class Course {
 	
 	@ManyToMany(mappedBy="courseList")
 	private Set<Entry> entryList;
-
-	@OneToMany
-	private Set<Entry> entryList;
 	
 	public Long getId() {
 		return id;
