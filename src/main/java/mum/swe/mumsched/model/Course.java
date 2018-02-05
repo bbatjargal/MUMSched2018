@@ -1,15 +1,9 @@
 package mum.swe.mumsched.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -23,9 +17,6 @@ public class Course {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
-	@OneToMany(mappedBy="course", cascade=CascadeType.ALL)
-	private Set<Section> sectionList = new HashSet<Section>(0);
-	
 	@NotEmpty
 	@Size(max=10)
 	private String code;
@@ -33,9 +24,9 @@ public class Course {
 	@NotEmpty
 	@Size(max=10)
 	private String name;
-	
-	@ManyToMany(mappedBy="courseList")
-	private Set<Entry> entryList;
+
+	@Size(max=50)
+	private String description;
 	
 	public Long getId() {
 		return id;
@@ -43,14 +34,6 @@ public class Course {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Set<Section> getSectionList() {
-		return sectionList;
-	}
-
-	public void setSectionList(Set<Section> sectionList) {
-		this.sectionList = sectionList;
 	}
 
 	public String getCode() {
@@ -76,16 +59,4 @@ public class Course {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	public Set<Entry> getEntryList() {
-		return entryList;
-	}
-
-	public void setEntryList(Set<Entry> entryList) {
-		this.entryList = entryList;
-	}
-
-	@NotEmpty
-	@Size(max=50)
-	private String description;
 }

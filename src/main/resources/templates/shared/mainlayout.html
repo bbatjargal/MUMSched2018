@@ -81,7 +81,13 @@
             <i class="fa fa-fw fa-th-large"></i>
             <span class="nav-link-text">Blocks</span>
           </a>
-        </li>  
+        </li> 
+          <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item" data-toggle="tooltip" data-placement="right" title="Profile">
+          <a class="nav-link" href="/courses/">
+            <i class="fa fa-fw fa-th-list"></i>
+            <span class="nav-link-text">Courses</span>
+          </a>
+        </li>   
           <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item" data-toggle="tooltip" data-placement="right" title="Profile">
           <a class="nav-link" href="/section/">
             <i class="fa fa-fw fa-book"></i>
