@@ -12,6 +12,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -46,7 +48,9 @@ public class Faculty {
 		this.monthEnums = monthEnums;
 	}
 
-	@OneToMany
+	@ManyToMany()
+	@JoinTable(name = "faculty_course", joinColumns = @JoinColumn(name = "faculty_id"), 
+		inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private List<Course> courses;
 
 	public List<Course> getCourses() {

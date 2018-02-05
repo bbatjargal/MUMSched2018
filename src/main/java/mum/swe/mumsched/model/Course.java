@@ -22,7 +22,7 @@ public class Course {
 	private String code;
 	
 	@NotEmpty
-	@Size(max=10)
+	@Size(max=200)
 	private String name;
 
 	@Size(max=50)
