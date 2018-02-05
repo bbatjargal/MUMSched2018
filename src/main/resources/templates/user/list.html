@@ -28,15 +28,12 @@
 				<tr th:each="user : ${users}">
 					<td th:text="@{${user.firstName} + ' ' + ${user.lastName}}" class="text-center"></td>
 					<td th:text="${user.username}" class="text-center"></td>
-					<td class="text-center">						
-						<th:block th:each="role, iter : ${user.roles}" >	
-							<span>
-								<th:block th:if="${ role.name == T(mum.swe.mumsched.enums.RoleEnum).ROLE_ADMIN.toString() } " th:text="#{role.admin}"></th:block>	
-								<th:block th:if="${ role.name == T(mum.swe.mumsched.enums.RoleEnum).ROLE_FACULTY.toString()  } " th:text="#{role.faculty}"></th:block>	
-								<th:block th:if="${ role.name == T(mum.swe.mumsched.enums.RoleEnum).ROLE_STUDENT.toString()  } " th:text="#{role.student}"></th:block>					
-							<th:block th:text="@{${iter.count != iter.size} ? ', ' : ''}"></th:block>
-							</span>
-						</th:block>
+					<td class="text-center">							
+						<span>
+							<th:block th:if="${ user.role == T(mum.swe.mumsched.enums.RoleEnum).ROLE_ADMIN } " th:text="#{role.admin}"></th:block>	
+							<th:block th:if="${ user.role == T(mum.swe.mumsched.enums.RoleEnum).ROLE_FACULTY  } " th:text="#{role.faculty}"></th:block>	
+							<th:block th:if="${ user.role == T(mum.swe.mumsched.enums.RoleEnum).ROLE_STUDENT  } " th:text="#{role.student}"></th:block>					
+						</span>
 					</td>
 					<td class="text-center">
 						<a role="button" class="btn btn-primary"

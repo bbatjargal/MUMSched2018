@@ -1,8 +1,5 @@
 package mum.swe.mumsched.controller;
 
-import java.util.Arrays;
-import java.util.HashSet;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import mum.swe.mumsched.enums.RoleEnum;
-import mum.swe.mumsched.model.Role;
 import mum.swe.mumsched.model.User;
-import mum.swe.mumsched.service.RoleService;
 import mum.swe.mumsched.service.SecurityServices;
 import mum.swe.mumsched.service.UserService;
 import mum.swe.mumsched.validator.UserValidator;
@@ -32,8 +27,6 @@ public class LoginController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private RoleService roleService;
 
     @Autowired
     private UserValidator userValidator;
@@ -62,10 +55,8 @@ public class LoginController {
         if (bindingResult.hasErrors()) {
 			model.addAttribute("user", user);
             return "login/signup";			
-		}
-		
-		Role role = roleService.findByName(RoleEnum.ROLE_STUDENT.toString());		
-		user.setRoles(new HashSet<Role>(Arrays.asList(role)) );
+		}	
+		user.setRole(RoleEnum.ROLE_STUDENT);
         userService.save(user);
 
         securityService.autologin(user.getUsername(), user.getPasswordConfirm());
@@ -92,26 +83,4 @@ public class LoginController {
 
         return "login/forgotpasswordSent";
     }	
-    
-//    private boolean hasError(BindingResult bindingResult, User user) {
-//    	
-//    	if(bindingResult.hasErrors()) return true;
-//
-//        if(user.getPassword() == null || user.getPassword().trim().isEmpty()) { 
-//			bindingResult.rejectValue("password", "error.user", "Please provide password.");
-//			return true;
-//        }
-//    	
-//        if(!user.getPassword().equals(user.getPasswordConfirm())) { 
-//			bindingResult.rejectValue("passwordConfirm", "error.user", "The passwords are not match.");
-//			return true;
-//        }
-//        
-//		User userExists = userService.findByUsername(user.getUsername());
-//		if (userExists != null) {
-//			bindingResult.rejectValue("username", "error.user", "User name is already registered.");
-//        	return true;
-//		}
-//		return false;
-//    }
 }

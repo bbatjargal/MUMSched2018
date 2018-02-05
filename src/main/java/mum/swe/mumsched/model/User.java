@@ -1,19 +1,18 @@
 package mum.swe.mumsched.model;
 
-import java.util.Set;
-
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import mum.swe.mumsched.enums.RoleEnum;
 
 /**
  * @author Batjargal Bayarsaikhan (Alex)
@@ -38,10 +37,9 @@ public class User {
     
     @Transient
     private String passwordConfirm;
-        
-    @ManyToMany
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    
+    @Enumerated(EnumType.STRING)
+    private RoleEnum role;
 
 	public Long getId() {
 		return id;
@@ -75,14 +73,6 @@ public class User {
 		this.passwordConfirm = passwordConfirm;
 	}
 
-	public Set<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
-
 	public String getFirstName() {
 		return firstName;
 	}
@@ -98,4 +88,12 @@ public class User {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+
+	public RoleEnum getRole() {
+		return role;
+	}
+
+	public void setRole(RoleEnum role) {
+		this.role = role;
+	}	
 }

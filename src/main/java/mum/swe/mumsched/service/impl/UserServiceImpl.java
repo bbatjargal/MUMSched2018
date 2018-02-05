@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import mum.swe.mumsched.enums.RoleEnum;
 import mum.swe.mumsched.model.Faculty;
-import mum.swe.mumsched.model.Role;
 import mum.swe.mumsched.model.Student;
 import mum.swe.mumsched.model.User;
 import mum.swe.mumsched.repository.FacultyRepository;
@@ -40,17 +39,15 @@ public class UserServiceImpl  implements UserService {
     	
 		if(user.getId() == null)
 		{
-			for(Role role : user.getRoles()) {
-				if(role.getName().equals(RoleEnum.ROLE_FACULTY.toString())){
-					if(faculty == null) {
-						faculty = new Faculty();
-						//TODO: set properties
-					}
-				}else if(role.getName().equals(RoleEnum.ROLE_STUDENT.toString())) {
-					if(student == null) {
-						student = new Student();
-						//TODO: set properties
-					}
+			if(user.getRole().equals(RoleEnum.ROLE_FACULTY)){
+				if(faculty == null) {
+					faculty = new Faculty();
+					//TODO: set properties
+				}
+			}else if(user.getRole().equals(RoleEnum.ROLE_STUDENT)) {
+				if(student == null) {
+					student = new Student();
+					//TODO: set properties
 				}
 			}
 		}

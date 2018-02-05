@@ -28,11 +28,11 @@
 								    <label class="col-sm-3 col-form-label">Role:</label>
 							    	<div class="col-sm-8">
 								    
-									    <select th:field="*{roles}" class="form-control col-sm-12">
-									       <option th:each="role: ${T(mum.swe.mumsched.enums.RoleEnum).values()}" th:value="${role.code}" 
+									    <select th:field="*{role}" class="form-control col-sm-12">
+									       <option th:each="role: ${T(mum.swe.mumsched.enums.RoleEnum).values()}" th:value="${role}" 
 									       	th:text="${role}"></option>
 									    </select>									    
-									     <label th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}" class="validation-message"></label>
+									     <label th:if="${#fields.hasErrors('role')}" th:errors="*{role}" class="validation-message"></label>
 									    </div>
 				       	  		</div>
 						
