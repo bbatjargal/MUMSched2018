@@ -42,7 +42,7 @@ public class Entry {
 	private long id;
 	
 	@NotEmpty
-	@Size(max=10)
+	@Size(max=100)
 	private String name;
 
 	@NotNull
@@ -78,7 +78,7 @@ public class Entry {
 	
 	public String getFacutiesName() {
 		return getFacultyList().stream()
-				.map(m->m.getName())
+				.map(m->m.getUser().getFirstName())
 				.collect(Collectors.joining(", "));
 	}
 	
@@ -157,5 +157,13 @@ public class Entry {
 
 	public void setCourseList(Set<Course> courseList) {
 		this.courseList = courseList;
+	}
+
+	public Schedule getSchedule() {
+		return schedule;
+	}
+
+	public void setSchedule(Schedule schedule) {
+		this.schedule = schedule;
 	}
 }
