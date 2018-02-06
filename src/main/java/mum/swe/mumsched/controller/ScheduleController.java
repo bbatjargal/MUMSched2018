@@ -30,10 +30,12 @@ import mum.swe.mumsched.enums.RoleEnum;
 import mum.swe.mumsched.model.Course;
 import mum.swe.mumsched.model.Entry;
 import mum.swe.mumsched.model.Faculty;
+import mum.swe.mumsched.model.Schedule;
 import mum.swe.mumsched.model.Section;
 import mum.swe.mumsched.model.User;
 import mum.swe.mumsched.service.CourseService;
 import mum.swe.mumsched.service.FacultyService;
+import mum.swe.mumsched.service.ScheduleService;
 import mum.swe.mumsched.service.UserService;
 import mum.swe.mumsched.validator.UserValidator;
 
@@ -58,6 +60,8 @@ public class ScheduleController {
 	@Autowired
 	private CourseService courseService;
 	@Autowired
+	private ScheduleService scheduleService;
+	@Autowired
 	private UserValidator userValidator;
 
 	@GetMapping("/generate/{id}")
@@ -69,7 +73,8 @@ public class ScheduleController {
 
 		List<Course> courseList = entry.getCourseList().stream().sorted(Comparator.comparing(Course::getCode))
 				.collect(Collectors.toList());
-		Set<Faculty> facultyList = entry.getFacultyList();
+
+		List<Faculty> facultyList = entry.getFacultyList().stream().collect(Collectors.toList());
 		int fppCpt = entry.getFppCPT();
 		int fppOpt = entry.getFppOPT();
 		int mppCpt = entry.getMppCPT();
@@ -77,6 +82,7 @@ public class ScheduleController {
 
 		// Calculate number of Blocks
 		int numberOfBlocks;
+		
 		if (fppOpt > 0) {
 			numberOfBlocks = 7;
 		} else if (fppCpt > 0 || mppOpt > 0) {
@@ -85,58 +91,43 @@ public class ScheduleController {
 			numberOfBlocks = 5;
 		}
 
+		int numberOfFppSection = (int) (Math.ceil((double) (fppCpt + fppOpt) / (double) maxEnrollment));
+		int numberOfMppSection = (int) (Math.ceil((double) (mppCpt + mppOpt) / (double) maxEnrollment));
+
 		// Start B1
-		Block B1 = new Block();
-		B1.setMonth(MonthEnum.November);
-		// TODO: get all faculties available for the Block's Month
-		List<Faculty> facultiesB1 = facultyList.stream().filter(f -> f.getMonthEnums().contains(B1.getMonth()))
+		List<Faculty> facultiesB1 = facultyList.stream().filter(f -> f.getMonthEnums().contains(MonthEnum.November))
 				.collect(Collectors.toList());
-		// B1 for FPP
-		int numberOfFppSection = (int)(Math.ceil( (double)(fppCpt + fppOpt) / (double)maxEnrollment));
-		Set<Section> fppSections = new HashSet<Section>();
-		for (int i = 0; i < numberOfFppSection; i++) {
-			Section s = new Section();
-			Course FPP = courseService.findOneByCode("CS390");
-			courseList.remove(FPP);
-			s.setCourse(FPP);
-			List<Faculty> availableFacultiesForCourse = facultiesB1.stream().filter(f -> f.getCourses().contains(FPP))
-					.collect(Collectors.toList());
-			if (availableFacultiesForCourse.size() > 0) {
-				s.setFaculty(availableFacultiesForCourse.get(0));
-				facultiesB1.remove(availableFacultiesForCourse.get(0));
-			}
-			fppSections.add(s);
-		}
+		Block B1FPP = scheduleService.generateSpecificCourseBlock(MonthEnum.November, numberOfFppSection, facultiesB1,
+				courseService.findOneByCode("CS390"));
+		Block B1MPP = scheduleService.generateSpecificCourseBlock(MonthEnum.November, numberOfMppSection, facultiesB1,
+				courseService.findOneByCode("CS401"));
 
+		// Start B2
+		List<Faculty> facultiesB2 = facultyList.stream().filter(f -> f.getMonthEnums().contains(MonthEnum.December))
+				.collect(Collectors.toList());
 		
+		Block B2FPP = scheduleService.generateSpecificCourseBlock(MonthEnum.December, numberOfFppSection, facultiesB2,
+				courseService.findOneByCode("CS401"));
+		Block B2MPP = scheduleService.generateBlock(MonthEnum.December, numberOfMppSection, facultiesB2, courseList);
 
-		// B1 for MPP
-		int numberOfMppSection = (int)(Math.ceil((double)(mppCpt + mppOpt) / (double)maxEnrollment));
-		Set<Section> mppSections = new HashSet<Section>();
-		// TODO: get all faculties available for the Block's Month
-		int falmpp = 0;
-		for (int i = 0; i < numberOfMppSection; i++) {
-			Section s = new Section();
-			Course MPP = courseService.findOneByCode("CS401");
-			courseList.remove(MPP);
-			s.setCourse(MPP);
-			List<Faculty> availableFacultiesForCourse = facultiesB1.stream().filter(f -> f.getCourses().contains(MPP))
-					.collect(Collectors.toList());
-			falmpp = availableFacultiesForCourse.size();
-			if (availableFacultiesForCourse.size() > 0) {
-				s.setFaculty(availableFacultiesForCourse.get(0));
-				facultiesB1.remove(availableFacultiesForCourse.get(0));
-			}
-			mppSections.add(s);
-		}
-		//fppSections.addAll(mppSections);
-		//B1.setSectionList(fppSections);
+		//Start B3
+		List<Faculty> facultiesB3 = facultyList.stream().filter(f -> f.getMonthEnums().contains(MonthEnum.January))
+				.collect(Collectors.toList());
+		Block B3 = scheduleService.generateBlock(MonthEnum.January, numberOfFppSection + numberOfMppSection,
+				facultiesB3, courseList);
 
-		
-		model.addAttribute("numberOfFaculties", numberOfFppSection);
-		model.addAttribute("fppSections", fppSections);
-		model.addAttribute("mppSections", mppSections);
-		//model.addAttribute("times", B1.getSectionList().size());
+		// final
+		Schedule schedule = new Schedule();
+		schedule.setBlockList(new HashSet<Block>() {
+			{
+				add(B1FPP);
+				add(B1MPP);
+				add(B2FPP);
+				add(B2MPP);
+				add(B3);			}
+		});
+
+		model.addAttribute("schedule", schedule);
 		return "schedule/schedule";
 	}
 
