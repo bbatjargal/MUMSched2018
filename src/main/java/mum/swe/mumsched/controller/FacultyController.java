@@ -43,6 +43,7 @@ public class FacultyController {
 		facultyDB.getUser().setLastName(faculty.getUser().getLastName());
 		facultyDB.setCourses(faculty.getCourses());
 		facultyDB.setMonthEnums(faculty.getMonthEnums());
+		facultyDB.setNumberOfSectionPerEntry(faculty.getNumberOfSectionPerEntry());
 		facultyService.save(facultyDB);
 		return "redirect:/facultyprofile";
 	}

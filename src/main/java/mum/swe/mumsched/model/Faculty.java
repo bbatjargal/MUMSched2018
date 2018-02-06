@@ -39,6 +39,24 @@ public class Faculty {
 	@Enumerated(EnumType.STRING)
 	@ElementCollection
 	private List<MonthEnum> monthEnums;
+	
+	@ManyToMany()
+	@JoinTable(name = "faculty_course", joinColumns = @JoinColumn(name = "faculty_id"), 
+		inverseJoinColumns = @JoinColumn(name = "course_id"))
+	private List<Course> courses;
+	
+	@ManyToMany(mappedBy = "facultyList", cascade = CascadeType.ALL)
+	private Set<Entry> entryList;
+	
+	private int numberOfSectionPerEntry;
+
+	public int getNumberOfSectionPerEntry() {
+		return numberOfSectionPerEntry;
+	}
+
+	public void setNumberOfSectionPerEntry(int numberOfSectionPerEntry) {
+		this.numberOfSectionPerEntry = numberOfSectionPerEntry;
+	}
 
 	public List<MonthEnum> getMonthEnums() {
 		return monthEnums;
@@ -48,11 +66,6 @@ public class Faculty {
 		this.monthEnums = monthEnums;
 	}
 
-	@ManyToMany()
-	@JoinTable(name = "faculty_course", joinColumns = @JoinColumn(name = "faculty_id"), 
-		inverseJoinColumns = @JoinColumn(name = "course_id"))
-	private List<Course> courses;
-
 	public List<Course> getCourses() {
 		return courses;
 	}
@@ -60,9 +73,6 @@ public class Faculty {
 	public void setCourses(List<Course> courses) {
 		this.courses = courses;
 	}
-
-	@ManyToMany(mappedBy = "facultyList", cascade = CascadeType.ALL)
-	private Set<Entry> entryList;
 
 	@OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL)
 	private Set<Section> sectionList = new HashSet<Section>(0);
