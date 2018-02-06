@@ -41,8 +41,8 @@ public class EntryServiceImpl implements EntryService {
 	}
 	
 	@Override
-	public boolean hasSectionRef(Entry entry) {
-		return false;
+	public boolean hasScheduleRef(Entry entry) {
+		return entry.getSchedule() != null;
 	}
 	
 	@Override

@@ -62,7 +62,7 @@ public class Entry {
 	private int fppCPT;
 	private int fppOPT;
 	
-	@OneToOne
+	@OneToOne(mappedBy="entry")
 	private Schedule schedule;
 	
 	@ManyToMany()
@@ -74,7 +74,7 @@ public class Entry {
 	private Set<Course> courseList;
 	
 	@OneToMany(mappedBy="entry", cascade=CascadeType.ALL)
-	private Set<Block> blockList;
+	private Set<Student> studentList;
 	
 	public String getFacutiesName() {
 		return getFacultyList().stream()
@@ -165,5 +165,13 @@ public class Entry {
 
 	public void setSchedule(Schedule schedule) {
 		this.schedule = schedule;
+	}
+
+	public Set<Student> getStudentList() {
+		return studentList;
+	}
+
+	public void setStudentList(Set<Student> studentList) {
+		this.studentList = studentList;
 	}
 }

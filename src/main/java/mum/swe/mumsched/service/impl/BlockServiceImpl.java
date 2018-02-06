@@ -21,7 +21,7 @@ public class BlockServiceImpl implements BlockService {
 	
 	@Override
 	public Iterable<Block> getList(){
-		return blockRepo.fillAllWithSort(new Sort(Direction.DESC, "entry"));
+		return blockRepo.fillAllWithSort(new Sort(Direction.DESC, "month"));
 	}
 	
 	@Override
@@ -30,13 +30,13 @@ public class BlockServiceImpl implements BlockService {
 	}
 	
 	@Override
-	public boolean hasExistsBlock(long entryId, MonthEnum month, long excludedId) {
-		return blockRepo.hasExistsBlock(entryId, month, excludedId);
+	public boolean hasExistsBlock(long scheduleId, MonthEnum month, long excludedId) {
+		return blockRepo.hasExistsBlock(scheduleId, month, excludedId);
 	}
 	
 	@Override
 	public boolean hasSectionRef(Block block) {
-		return false;
+		return block.getSectionList().size() > 0;
 	}
 	
 	@Override

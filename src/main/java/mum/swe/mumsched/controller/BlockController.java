@@ -21,6 +21,7 @@ import mum.swe.mumsched.service.BlockService;
 import mum.swe.mumsched.service.EntryService;
 import mum.swe.mumsched.service.BlockService;
 import mum.swe.mumsched.service.MessageByLocaleService;
+import mum.swe.mumsched.service.ScheduleService;
 import mum.swe.mumsched.service.impl.MessageByLocaleServiceImpl;
 
 /**
@@ -35,7 +36,7 @@ public class BlockController {
 	BlockService service;
 	
 	@Autowired
-	EntryService entryService;
+	ScheduleService scheduleService;
 	
 	@Autowired
 	MessageByLocaleService msgService;
@@ -48,14 +49,14 @@ public class BlockController {
 	
 	@GetMapping("/add")
 	public String newBlock(Model model) {
-		model.addAttribute("allEntryList", entryService.getList());
+		model.addAttribute("allSchedule", scheduleService.findAll());
 		model.addAttribute("block", new Block());
 		return "block/update";
 	}
 	
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("allEntryList", entryService.getList());
+		model.addAttribute("allSchedule", scheduleService.findAll());
 		model.addAttribute("block", service.findBlockById(id));
 		return "block/update";
 	}
@@ -81,7 +82,7 @@ public class BlockController {
 			}
 			
 			//valid unique block name
-			if(service.hasExistsBlock(block.getEntry().getId(), block.getMonth(), block.getId())) {
+			if(service.hasExistsBlock(block.getSchedule().getId(), block.getMonth(), block.getId())) {
 				bindingResult.rejectValue("month", null, msgService.getMessage("validate.alreadyExists"));
 				hasError = true;
 			}
@@ -90,7 +91,7 @@ public class BlockController {
 		// has error
 		if(hasError)
 		{
-			model.addAttribute("allEntryList", entryService.getList());
+			model.addAttribute("allSchedule", scheduleService.findAll());
 			model.addAttribute("block", block);
 			return "block/update"; 
 		}
@@ -111,10 +112,15 @@ public class BlockController {
 		Block block = service.findBlockById(id);
 		
 		if(block == null) {
-			return AjaxResult.fail(msgService.getMessage(MessageByLocaleService.NOT_FOUND_MESSAGE, new Object[] {msgService.getMessage("field.block")}));
+			return AjaxResult.fail(msgService.getMessage(MessageByLocaleService.NOT_FOUND_MESSAGE, 
+					new Object[] {msgService.getMessage("field.block")}));
 		}
 		
-		// TODO valid reference
+		// has section ref
+		if(service.hasSectionRef(block)) {
+			return AjaxResult.fail(msgService.getMessage(MessageByLocaleService.HAS_REF_MESSAGE, 
+					new Object[] {msgService.getMessage("field.section")}));
+		}
 		
 		service.delete(block);
 		

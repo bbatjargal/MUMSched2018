@@ -20,5 +20,5 @@ public interface EntryService {
 
 	boolean hasStudentRef(Entry entry);
 
-	boolean hasSectionRef(Entry entry);
+	boolean hasScheduleRef(Entry entry);
 }

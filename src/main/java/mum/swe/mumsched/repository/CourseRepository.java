@@ -16,5 +16,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 	
 	@Query("SELECT c FROM Course c")
 	public Iterable<Course> courseList(Sort sort);
+	
+	public Course findOneByCode(String code);
 }
 

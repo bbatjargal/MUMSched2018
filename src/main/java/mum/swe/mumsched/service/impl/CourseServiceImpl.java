@@ -37,8 +37,14 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
+	public Course findOneByCode(String code) {
+		return courseRepository.findOneByCode(code);
+	}
+	
+	@Override
 	public void delete(Long id) {
 		courseRepository.delete(id);
 	}
 
+	
 }
