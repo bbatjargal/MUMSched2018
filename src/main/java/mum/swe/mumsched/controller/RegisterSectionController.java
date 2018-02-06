@@ -22,6 +22,6 @@ public class RegisterSectionController {
 	@RequestMapping(value="/registerforsection", method=RequestMethod.GET)
 	public String registerForSection(Model model, Pageable pageable, Principal currentUser) {
 		model.addAttribute("sections",sectionService.getList());
-		return "section/sectionList";
+		return "section/registersectionlist";
 	}
 }
