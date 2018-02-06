@@ -23,8 +23,6 @@ public class Section {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
-	private String roomLocation;
-	
 	@ManyToOne
 	@JoinColumn(name="block_id")
 	private Block block;
