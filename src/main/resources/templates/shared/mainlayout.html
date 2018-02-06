@@ -58,6 +58,13 @@
             <span class="nav-link-text">My profile</span>
           </a>
         </li> 
+         </li>  
+          <li sec:authorize="hasRole('ROLE_STUDENT')" class="nav-item" data-toggle="tooltip" data-placement="right" title="Profile">
+          <a class="nav-link" href="/registerforsection">
+            <i class="fa fa-fw fa-user"></i>
+            <span class="nav-link-text">Register for Section</span>
+          </a>
+        </li> 
         <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
           <a class="nav-link" href="/users">
             <i class="fa fa-fw fa-users"></i>

@@ -23,8 +23,6 @@ public class Section {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
-	private String roomLocation;
-	
 	@ManyToOne
 	@JoinColumn(name="block_id")
 	private Block block;
@@ -74,11 +72,4 @@ public class Section {
 		this.course = course;
 	}
 
-	public String getRoomLocation() {
-		return roomLocation;
-	}
-
-	public void setRoomLocation(String roomLocation) {
-		this.roomLocation = roomLocation;
-	}
 }

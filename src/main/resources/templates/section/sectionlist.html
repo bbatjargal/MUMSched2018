@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html layout:decorator="shared/mainlayout"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Section list</title>
+</head>
+<body>
+	<th:block layout:fragment="content">
+		<legend>Users</legend>
+		<div class="mb-1" >&nbsp;</div>
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th class="text-center">Full name</th>
+					<th class="text-center">Email</th>
+					<th class="text-center">Role</th>
+					<th class="text-center">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+						<tr th:if="${#lists.size(sections) == 0}">
+					<td colspan="9">No Section</td>
+				</tr>
+				<tr th:each="user : ${users}">
+					<td th:text="@{${user.firstName} + ' ' + ${user.lastName}}" class="text-center"></td>
+					<td th:text="${user.username}" class="text-center"></td>
+					<td class="text-center">							
+						<span>
+							<th:block th:if="${ user.role == T(mum.swe.mumsched.enums.RoleEnum).ROLE_ADMIN } " th:text="#{role.admin}"></th:block>	
+							<th:block th:if="${ user.role == T(mum.swe.mumsched.enums.RoleEnum).ROLE_FACULTY  } " th:text="#{role.faculty}"></th:block>	
+							<th:block th:if="${ user.role == T(mum.swe.mumsched.enums.RoleEnum).ROLE_STUDENT  } " th:text="#{role.student}"></th:block>					
+						</span>
+					</td>
+					<td class="text-center">
+						<a role="button" class="btn btn-primary"
+							th:href="${user.username == username ? '/adminprofile' : '/user/' + user.id }"
+							><span class="fa fa-pencil" aria-hidden="true"></span></a>
+						&nbsp;
+						<a th:if="${user.username != username }" role="button" class="btn btn-primary"
+							th:href="@{/user/delete/{id}(id=${user.id})}">
+							<span class="fa fa-trash-o" aria-hidden="true"></span></a>
+					</td>
+				</tr>
+			</tbody>
+			</table>
+			</th:block>
+</body>
+</html>

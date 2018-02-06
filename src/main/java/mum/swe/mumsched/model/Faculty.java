@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -48,6 +49,7 @@ public class Faculty {
 	@ManyToMany(mappedBy = "facultyList", cascade = CascadeType.ALL)
 	private Set<Entry> entryList;
 	
+	@Column(nullable = false, columnDefinition = "int default 4")
 	private int numberOfSectionPerEntry;
 
 	public int getNumberOfSectionPerEntry() {
