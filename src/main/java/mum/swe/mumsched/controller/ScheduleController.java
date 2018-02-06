@@ -92,7 +92,7 @@ public class ScheduleController {
 		List<Faculty> facultiesB1 = facultyList.stream().filter(f -> f.getMonthEnums().contains(B1.getMonth()))
 				.collect(Collectors.toList());
 		// B1 for FPP
-		int numberOfFppSection = (fppCpt + fppOpt) / maxEnrollment;
+		int numberOfFppSection = (int)(Math.ceil( (double)(fppCpt + fppOpt) / (double)maxEnrollment));
 		Set<Section> fppSections = new HashSet<Section>();
 		for (int i = 0; i < numberOfFppSection; i++) {
 			Section s = new Section();
@@ -111,29 +111,32 @@ public class ScheduleController {
 		
 
 		// B1 for MPP
-		int numberOfMppSection = (mppCpt + mppOpt) / maxEnrollment;
+		int numberOfMppSection = (int)(Math.ceil((double)(mppCpt + mppOpt) / (double)maxEnrollment));
 		Set<Section> mppSections = new HashSet<Section>();
 		// TODO: get all faculties available for the Block's Month
-
-		for (int i = 0; i < numberOfFppSection; i++) {
+		int falmpp = 0;
+		for (int i = 0; i < numberOfMppSection; i++) {
 			Section s = new Section();
 			Course MPP = courseService.findOneByCode("CS401");
 			courseList.remove(MPP);
 			s.setCourse(MPP);
 			List<Faculty> availableFacultiesForCourse = facultiesB1.stream().filter(f -> f.getCourses().contains(MPP))
 					.collect(Collectors.toList());
+			falmpp = availableFacultiesForCourse.size();
 			if (availableFacultiesForCourse.size() > 0) {
 				s.setFaculty(availableFacultiesForCourse.get(0));
 				facultiesB1.remove(availableFacultiesForCourse.get(0));
 			}
 			mppSections.add(s);
 		}
-		fppSections.addAll(mppSections);
-		B1.setSectionList(fppSections);
+		//fppSections.addAll(mppSections);
+		//B1.setSectionList(fppSections);
 
-
-		model.addAttribute("B1", B1);
-		model.addAttribute("times", B1.getSectionList().size());
+		
+		model.addAttribute("numberOfFaculties", numberOfFppSection);
+		model.addAttribute("fppSections", fppSections);
+		model.addAttribute("mppSections", mppSections);
+		//model.addAttribute("times", B1.getSectionList().size());
 		return "schedule/schedule";
 	}
 
