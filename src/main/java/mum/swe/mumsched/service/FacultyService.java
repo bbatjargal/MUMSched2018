@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import mum.swe.mumsched.enums.MonthEnum;
 import mum.swe.mumsched.model.Faculty;
 
 /**
@@ -22,5 +23,6 @@ public interface FacultyService {
 	 * @author Brian Nguyen
 	 * @return
 	 */
-	List<Faculty> findAll();  
+	List<Faculty> findAll();
+	List<Faculty> findAllByMonth(MonthEnum month);  
 }

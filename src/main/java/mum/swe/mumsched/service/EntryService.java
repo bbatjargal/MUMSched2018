@@ -1,5 +1,7 @@
 package mum.swe.mumsched.service;
 
+import java.util.List;
+
 import mum.swe.mumsched.model.Entry;
 
 /**
@@ -8,7 +10,7 @@ import mum.swe.mumsched.model.Entry;
  */
 public interface EntryService {
 
-	Iterable<Entry> getList();
+	List<Entry> getList();
 
 	Entry save(Entry entry);
 

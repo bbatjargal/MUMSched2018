@@ -1,5 +1,12 @@
 package mum.swe.mumsched.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +21,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import mum.swe.mumsched.enums.MonthEnum;
 import mum.swe.mumsched.helper.AjaxResult;
+import mum.swe.mumsched.model.Block;
+import mum.swe.mumsched.model.Course;
+import mum.swe.mumsched.model.Entry;
+import mum.swe.mumsched.model.Faculty;
 import mum.swe.mumsched.model.Section;
+import mum.swe.mumsched.repository.FacultyRepository;
 import mum.swe.mumsched.service.SectionService;
+import mum.swe.mumsched.service.BlockService;
+import mum.swe.mumsched.service.CourseService;
 import mum.swe.mumsched.service.EntryService;
+import mum.swe.mumsched.service.FacultyService;
 import mum.swe.mumsched.service.MessageByLocaleService;
+import mum.swe.mumsched.service.ScheduleService;
 
 /**
  * @author Brian Nguyen
@@ -32,7 +49,16 @@ public class SectionController {
 	SectionService service;
 	
 	@Autowired
-	EntryService entryService;
+	ScheduleService scheduleService;
+	
+	@Autowired
+	BlockService blockService;
+	
+	@Autowired
+	FacultyService facultyService;
+	
+	@Autowired
+	CourseService courseService;
 	
 	@Autowired
 	MessageByLocaleService msgService;
@@ -45,16 +71,50 @@ public class SectionController {
 	
 	@GetMapping("/add")
 	public String newSection(Model model) {
-		//model.addAttribute("allEntryList", entryService.getListHadSchedule());
+		model.addAttribute("allSchedule", scheduleService.findAll());
 		model.addAttribute("section", new Section());
 		return "section/update";
 	}
 	
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, Model model) {
-		//model.addAttribute("allEntryList", entryService.getListHadSchedule());
 		model.addAttribute("section", service.findSectionById(id));
 		return "section/update";
+	}
+	
+	@PostMapping("/getBlockList/{scheduleId}")
+    @ResponseBody
+    public Map<Long, MonthEnum> getBlockList(@PathVariable("scheduleId") Long scheduleId){
+		return scheduleService.findOneById(scheduleId).getBlockList().stream()
+			.collect(Collectors.toMap(Block::getId, Block::getMonth));
+	}
+	
+	@PostMapping("/getFacultyList/{scheduleId}/{blockId}")
+    @ResponseBody
+    public Map<Long, String> getFacultyListByScheduleId(@PathVariable("scheduleId") Long scheduleId, @PathVariable("blockId") Long blockId){
+		// entry's faculties
+		Set<Faculty> entryFaculties = scheduleService.findOneById(scheduleId).getEntry().getFacultyList();
+		
+		// selected block month
+		MonthEnum month = blockService.findBlockById(blockId).getMonth();
+		
+		// get available faculties on selected month
+		List<Faculty> monthFaculties = facultyService.findAllByMonth(month);
+		
+		return entryFaculties.stream()
+			.filter(m->monthFaculties.contains(m))
+			.collect(Collectors.toMap(Faculty::getId, f->f.getUser().getFullname()));
+	}
+	
+	@PostMapping("/getCourseList/{scheduleId}/{facultyId}")
+    @ResponseBody
+    public Map<Long, String> getCourseList(@PathVariable("scheduleId") Long scheduleId, @PathVariable("facultyId") Long facultyId){
+		Set<Course> entryCourses = scheduleService.findOneById(scheduleId).getEntry().getCourseList();
+		List<Course> facultyCourses = facultyService.findOne(facultyId).getCourses();
+		
+		return entryCourses.stream()
+			.filter(m->facultyCourses.contains(m))
+			.collect(Collectors.toMap(Course::getId, Course::getName));
 	}
 	
 	@PostMapping("/save")

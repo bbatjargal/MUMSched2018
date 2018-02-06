@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html layout:decorator="shared/mainlayout"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Section</title>
+</head>
+<body>
+	<th:block layout:fragment="content">
+		<form action="#" th:action="@{/section/save}" th:object="${section}" method="post">
+			<input type="hidden" th:field="*{id}"/>
+			<fieldset>
+		         <legend><span th:text="${section.id == 0} ? #{cmd.new} : #{cmd.view}"></span> <span th:text="#{field.section}">Section</span></legend>
+				  <div class="form-row">
+				   	<div class="col-md-6 mb-3">
+					  	<label for="schedule">Entry</label>
+					  	 <select class="form-control" id="schedule" name="schedule" >
+					  	 	  <option value="0">[Please select one]</option>
+	                          <option th:each="val : ${allSchedule}" 
+	                                  th:value="${val.id}" 
+	                                  th:text="${val?.entry?.name}"></option>
+	                      </select>
+                      </div>
+				  </div>
+				  <div class="form-row">
+				   	<div class="col-md-6 mb-3">
+					  	<label for="blockList" >Block</label>
+					  	 <select class="form-control" id="block" name="block" 
+	                          th:field="*{block}">
+	                          <option value="0">[Please select an Entry]</option>
+	                      </select>
+                      </div>
+				  </div>
+				  <div class="form-row">
+				   	<div class="col-md-6 mb-3">
+					  	<label for="faculty" >Faculty</label>
+					  	 <select class="form-control" id="faculty" name="faculty" 
+	                          th:field="*{faculty}">
+	                          <option value="0">[Please select a Block]</option>
+	                      </select>
+                      </div>
+				  </div>
+				  <div class="form-row">
+				   	<div class="col-md-6 mb-3">
+					  	<label for="course" >Course</label>
+					  	 <select class="form-control" id="course" name="course" 
+	                          th:field="*{course}">
+	                          <option value="0">[Please select a Block and Faculty]</option>
+	                      </select>
+                      </div>
+				  </div>
+				  <div class="form-row">
+		         	<button type="submit" class="btn btn-primary" th:text="#{cmd.save}">Save</button>
+		         	&nbsp;
+		         	<a class="btn btn-primary" href="/section/"  th:text="#{cmd.backToList}">Back to List</a>
+		         </div>
+		    </fieldset>
+		</form>
+	</th:block>
+	<th:block layout:fragment="footer">
+		<script>
+			$(document).ready(function(e){
+				$("#schedule").change(function(e){
+					changeLoad(e, $("#block"), "/section/getBlockList/" + $(e.target).val());
+				});
+				
+				$("#block").change(function(e){
+					changeLoad(e, $("#faculty"), '/section/getFacultyList/' + $("#schedule").val() + '/' + $(e.target).val());
+				});
+				
+				
+				$("#faculty").change(function(e){
+					changeLoad(e, $("#course"), '/section/getCourseList/' + $("#schedule").val() + '/' + $(e.target).val());
+				});
+				
+				function changeLoad(e, selectObj, url){
+					if( $(e.target).val() == 0)
+						return;
+					
+					post(url, function(data){
+						buildOptions(selectObj, data);
+					});
+				}
+				
+				function buildOptions(selectObj, data){
+					$(selectObj).find('option').remove();
+					$(selectObj).append('<option value="0">[Please select one]</option>');
+
+					$.each(data, function(key, val){
+						$(selectObj).append('<option value="' + key + '">' + val + '</option>');
+					});
+				}
+			});
+		</script>
+	</th:block>
+</body>
+</html>

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import mum.swe.mumsched.enums.MonthEnum;
 import mum.swe.mumsched.model.Faculty;
 import mum.swe.mumsched.repository.FacultyRepository;
 import mum.swe.mumsched.service.FacultyService;
@@ -33,6 +34,11 @@ public class FacultyServiceImpl  implements FacultyService {
 	@Override
 	public List<Faculty> findAll() {
 		return facultyRepository.findAll();
+	}
+	
+	@Override
+	public List<Faculty> findAllByMonth(MonthEnum month) {
+		return facultyRepository.findAllByMonth(month);
 	}
 
 	@Override

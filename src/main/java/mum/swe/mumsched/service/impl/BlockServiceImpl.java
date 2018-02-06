@@ -48,4 +48,9 @@ public class BlockServiceImpl implements BlockService {
 	public void delete(Block Block) {
 		blockRepo.delete(Block);
 	}
+
+	@Override
+	public Iterable<Block> findAll() {
+		return blockRepo.findAll();
+	}
 }

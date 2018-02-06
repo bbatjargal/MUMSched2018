@@ -25,7 +25,7 @@ public class SectionServiceImpl implements SectionService {
 	
 	@Override
 	public Iterable<Section> getList(){
-		return sectionRepo.fillAllWithSort(new Sort(Direction.DESC, "SectionDate"));
+		return sectionRepo.fillAllWithSort(new Sort(Direction.DESC, "id"));
 	}
 	
 	@Override

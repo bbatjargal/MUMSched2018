@@ -20,4 +20,6 @@ public interface BlockService {
 	void delete(Block Block);
 
 	boolean hasSectionRef(Block block);
+
+	Iterable<Block> findAll();
 }
