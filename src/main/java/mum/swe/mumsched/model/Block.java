@@ -13,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -35,10 +37,6 @@ public class Block {
 	private long id;
 	
 	@ManyToOne()
-	@JoinColumn(name="entry_id")
-	private Entry entry;
-	
-	@ManyToOne()
 	@JoinColumn(name="schedule_id")
 	private Schedule schedule;
 	
@@ -57,20 +55,13 @@ public class Block {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate toDate;
 
+
 	public long getId() {
 		return id;
 	}
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public Entry getEntry() {
-		return entry;
-	}
-
-	public void setEntry(Entry entry) {
-		this.entry = entry;
 	}
 
 	public Set<Section> getSectionList() {

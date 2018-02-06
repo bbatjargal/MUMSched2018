@@ -28,10 +28,10 @@
 			</thead>
 			<tbody>
 				<tr th:if="${blockList.empty}">
-					<td colspan="9">No Block</td>
+					<td colspan="5">No Block</td>
 				</tr>
 				<tr th:each="item : ${blockList}">
-					<td th:text="${item.entry.name}" class="text-center"></td>
+					<td th:text="${item.schedule?.entry?.name}" class="text-center"></td>
 					<td th:text="${item.month}" class="text-center"></td>
 					<td th:text="${item.fromDate}" class="text-center"></td>
 					<td th:text="${item.toDate}" class="text-center"></td>

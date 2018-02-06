@@ -1,10 +1,14 @@
 package mum.swe.mumsched.model;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -19,6 +23,8 @@ public class Section {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
+	private String roomLocation;
+	
 	@ManyToOne
 	@JoinColumn(name="block_id")
 	private Block block;
@@ -31,7 +37,10 @@ public class Section {
 	@JoinColumn(name="course_id")
 	private Course course;
 	
-	private String roomLocation;
+	@ManyToMany()
+	@JoinTable(name = "section_student", joinColumns = @JoinColumn(name = "section_id"), 
+		inverseJoinColumns = @JoinColumn(name = "student_id"))
+	private Set<Student> studentList;
 
 	public long getId() {
 		return id;

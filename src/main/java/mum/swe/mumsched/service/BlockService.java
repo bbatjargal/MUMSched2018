@@ -13,7 +13,7 @@ public interface BlockService {
 
 	Block findBlockById(Long id);
 
-	boolean hasExistsBlock(long entryId, MonthEnum month, long excludedId);
+	boolean hasExistsBlock(long scheduleId, MonthEnum month, long excludedId);
 
 	Block save(Block Block);
 

@@ -26,7 +26,7 @@ public class Schedule {
     @Column(columnDefinition = "smallint")
 	private ScheduleStatusEnum status;
 	
-	@OneToOne(mappedBy="schedule")
+	@OneToOne
 	private Entry entry;
 	
 	@OneToMany(mappedBy="schedule", cascade=CascadeType.ALL)

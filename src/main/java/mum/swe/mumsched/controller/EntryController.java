@@ -125,10 +125,11 @@ public class EntryController {
 			return AjaxResult.fail(msgService.getMessage(MessageByLocaleService.NOT_FOUND_MESSAGE, new Object[] {msgService.getMessage("field.entry")}));
 		}
 		
-//		// TODO valid reference
-//		if(service.hasBlockByRef(entry)) {
-//			return AjaxResult.fail(msgService.getMessage(MessageByLocaleService.HAS_REF_MESSAGE, new Object[] {msgService.getMessage("field.block")}));
-//		}
+		//  valid reference
+		if(service.hasScheduleRef(entry)) {
+			return AjaxResult.fail(msgService.getMessage(MessageByLocaleService.HAS_REF_MESSAGE, 
+					new Object[] {msgService.getMessage("field.schedule")}));
+		}
 		
 		service.delete(entry);
 		

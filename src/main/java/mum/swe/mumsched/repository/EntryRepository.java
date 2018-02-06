@@ -18,6 +18,9 @@ public interface EntryRepository extends CrudRepository<Entry, Long> {
 	@Query("SELECT e FROM Entry e")
 	public Iterable<Entry> fillAllWithSort(Sort sort);
 	
+	@Query("SELECT e FROM Entry e WHERE e.schedule.id > 0 ORDER BY e.entryDate")
+	public Iterable<Entry> fillAllHadSchedule();
+	
 	@Query("SELECT CASE WHEN count(e)> 0 THEN true ELSE false END FROM Entry e WHERE e.name = :name AND e.id <> :excludedId")
 	public boolean hasExistsEntryName(@Param("name") String name, @Param("excludedId") Long excludedId);
 }

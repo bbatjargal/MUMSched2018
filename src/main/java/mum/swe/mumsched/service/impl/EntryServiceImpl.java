@@ -26,6 +26,11 @@ public class EntryServiceImpl implements EntryService {
 	}
 	
 	@Override
+	public Iterable<Entry> getListHadSchedule(){
+		return entryRepo.fillAllHadSchedule();
+	}
+	
+	@Override
 	public boolean hasExistsEntryName(String name, long excludedId) {
 		return entryRepo.hasExistsEntryName(name, excludedId);
 	}
@@ -41,8 +46,8 @@ public class EntryServiceImpl implements EntryService {
 	}
 	
 	@Override
-	public boolean hasSectionRef(Entry entry) {
-		return false;
+	public boolean hasScheduleRef(Entry entry) {
+		return entry.getSchedule() != null;
 	}
 	
 	@Override

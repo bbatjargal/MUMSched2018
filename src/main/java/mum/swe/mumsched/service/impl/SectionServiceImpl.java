@@ -16,11 +16,16 @@ import mum.swe.mumsched.service.SectionService;
 @Service
 public class SectionServiceImpl implements SectionService {
 	@Autowired
-	SectionRepository SectionRepo;
+	SectionRepository sectionRepo;
+	
+	@Override
+	public Section findSectionById(Long id) {
+		return sectionRepo.findOne(id);
+	}
 	
 	@Override
 	public Iterable<Section> getList(){
-		return SectionRepo.fillAllWithSort(new Sort(Direction.DESC, "SectionDate"));
+		return sectionRepo.fillAllWithSort(new Sort(Direction.DESC, "SectionDate"));
 	}
 	
 	@Override
@@ -35,11 +40,11 @@ public class SectionServiceImpl implements SectionService {
 	
 	@Override
 	public Section save(Section Section) {
-		return SectionRepo.save(Section);
+		return sectionRepo.save(Section);
 	}
 	
 	@Override
 	public void delete(Section Section) {
-		SectionRepo.delete(Section);
+		sectionRepo.delete(Section);
 	}
 }
