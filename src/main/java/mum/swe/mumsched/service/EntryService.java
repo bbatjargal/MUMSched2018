@@ -20,7 +20,5 @@ public interface EntryService {
 
 	boolean hasStudentRef(Entry entry);
 
-	Iterable<Entry> getListHadSchedule();
-
 	boolean hasScheduleRef(Entry entry);
 }

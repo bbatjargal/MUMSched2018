@@ -45,14 +45,14 @@ public class SectionController {
 	
 	@GetMapping("/add")
 	public String newSection(Model model) {
-		model.addAttribute("allEntryList", entryService.getListHadSchedule());
+		//model.addAttribute("allEntryList", entryService.getListHadSchedule());
 		model.addAttribute("section", new Section());
 		return "section/update";
 	}
 	
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("allEntryList", entryService.getListHadSchedule());
+		//model.addAttribute("allEntryList", entryService.getListHadSchedule());
 		model.addAttribute("section", service.findSectionById(id));
 		return "section/update";
 	}
@@ -80,7 +80,7 @@ public class SectionController {
 		// has error
 		if(hasError)
 		{
-			model.addAttribute("allEntryList", entryService.getListHadSchedule());
+			//model.addAttribute("allEntryList", entryService.getListHadSchedule());
 			model.addAttribute("section", section);
 			return "section/update"; 
 		}

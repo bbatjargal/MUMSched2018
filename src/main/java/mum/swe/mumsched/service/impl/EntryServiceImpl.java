@@ -26,11 +26,6 @@ public class EntryServiceImpl implements EntryService {
 	}
 	
 	@Override
-	public Iterable<Entry> getListHadSchedule(){
-		return entryRepo.fillAllHadSchedule();
-	}
-	
-	@Override
 	public boolean hasExistsEntryName(String name, long excludedId) {
 		return entryRepo.hasExistsEntryName(name, excludedId);
 	}

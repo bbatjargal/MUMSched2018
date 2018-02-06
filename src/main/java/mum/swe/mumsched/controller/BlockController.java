@@ -21,6 +21,7 @@ import mum.swe.mumsched.service.BlockService;
 import mum.swe.mumsched.service.EntryService;
 import mum.swe.mumsched.service.BlockService;
 import mum.swe.mumsched.service.MessageByLocaleService;
+import mum.swe.mumsched.service.ScheduleService;
 import mum.swe.mumsched.service.impl.MessageByLocaleServiceImpl;
 
 /**
@@ -35,7 +36,7 @@ public class BlockController {
 	BlockService service;
 	
 	@Autowired
-	EntryService entryService;
+	ScheduleService scheduleService;
 	
 	@Autowired
 	MessageByLocaleService msgService;
@@ -48,14 +49,14 @@ public class BlockController {
 	
 	@GetMapping("/add")
 	public String newBlock(Model model) {
-		model.addAttribute("allEntryList", entryService.getListHadSchedule());
+		model.addAttribute("allSchedule", scheduleService.findAll());
 		model.addAttribute("block", new Block());
 		return "block/update";
 	}
 	
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("allEntryList", entryService.getListHadSchedule());
+		model.addAttribute("allSchedule", scheduleService.findAll());
 		model.addAttribute("block", service.findBlockById(id));
 		return "block/update";
 	}
@@ -90,7 +91,7 @@ public class BlockController {
 		// has error
 		if(hasError)
 		{
-			model.addAttribute("allEntryList", entryService.getListHadSchedule());
+			model.addAttribute("allSchedule", scheduleService.findAll());
 			model.addAttribute("block", block);
 			return "block/update"; 
 		}

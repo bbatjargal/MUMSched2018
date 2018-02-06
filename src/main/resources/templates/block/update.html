@@ -14,12 +14,12 @@
 		          
 				  <div class="form-row">
 				   	<div class="col-md-6 mb-3">
-					  	<label for="entry">Entry</label>
-					  	 <select class="form-control" id="entry" name="entry" 
-	                          th:field="*{entry}" th:classappend="${#fields.hasErrors('month')}? 'is-invalid'">
-	                          <option th:each="val : ${allEntryList}" 
+					  	<label for="schedule">Entry</label>
+					  	 <select class="form-control" id="schedule" name="schedule" 
+	                          th:field="*{schedule}" th:classappend="${#fields.hasErrors('month')}? 'is-invalid'">
+	                          <option th:each="val : ${allSchedule}" 
 	                                  th:value="${val.id}" 
-	                                  th:text="${val.name}"></option>
+	                                  th:text="${val?.entry?.name}"></option>
 	                      </select>
                       </div>
 				  </div>
