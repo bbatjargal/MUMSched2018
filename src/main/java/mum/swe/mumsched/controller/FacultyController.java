@@ -36,7 +36,7 @@ public class FacultyController {
 	}
 	
 	@RequestMapping(value= {"/updateFaculty"}, method = RequestMethod.POST)
-	public String registerStudent(@ModelAttribute("faculty") Faculty faculty, Model model) {
+	public String updateFacultyProfile(@ModelAttribute("faculty") Faculty faculty, Model model) {
 		
 		Faculty facultyDB = facultyService.findOne(faculty.getId());
 		facultyDB.getUser().setFirstName(faculty.getUser().getFirstName());
