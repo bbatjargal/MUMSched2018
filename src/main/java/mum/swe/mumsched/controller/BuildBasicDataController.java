@@ -93,7 +93,7 @@ public class BuildBasicDataController {
 		// CS 425 Software Engineering
 		Course CS425 = new Course();
 		CS425.setCode("CS425");
-		CS425.setName("Database Management Systems");
+		CS425.setName("Software Engineering");
 		CS425.setDescription("");
 		courseService.save(CS425);
 
@@ -291,6 +291,7 @@ public class BuildBasicDataController {
 		guthrie.setUser(guthrieUser);
 		guthrie.setCourses(listAllCourse);
 		guthrie.setMonthEnums(listAllMonth);
+		guthrie.setNumberOfSectionPerEntry(4);
 		facultyService.save(guthrie);
 
 		// Keith Levi
@@ -307,6 +308,7 @@ public class BuildBasicDataController {
 		levi.setUser(leviUser);
 		levi.setCourses(listAllCourse);
 		levi.setMonthEnums(listAllMonth);
+		levi.setNumberOfSectionPerEntry(4);
 		facultyService.save(levi);
 
 		// Steve Nolle
@@ -323,6 +325,7 @@ public class BuildBasicDataController {
 		nolle.setUser(nolleUser);
 		nolle.setCourses(listAllCourse);
 		nolle.setMonthEnums(listAllMonth);
+		nolle.setNumberOfSectionPerEntry(4);
 		facultyService.save(nolle);
 
 		// Bruce Leste
@@ -339,6 +342,7 @@ public class BuildBasicDataController {
 		leste.setUser(lesteUser);
 		leste.setCourses(listAllCourse);
 		leste.setMonthEnums(listAllMonth);
+		leste.setNumberOfSectionPerEntry(4);
 		facultyService.save(leste);
 
 		// Paul Corazza
@@ -355,6 +359,7 @@ public class BuildBasicDataController {
 		corazza.setUser(corazzaUser);
 		corazza.setCourses(listAllCourse);
 		corazza.setMonthEnums(listAllMonth);
+		corazza.setNumberOfSectionPerEntry(4);
 		facultyService.save(corazza);
 
 		// Premchand Nair
@@ -371,6 +376,7 @@ public class BuildBasicDataController {
 		nair.setUser(nairUser);
 		nair.setCourses(listAllCourse);
 		nair.setMonthEnums(listAllMonth);
+		nair.setNumberOfSectionPerEntry(4);
 		facultyService.save(nair);
 
 		// Emdad Khan
@@ -387,6 +393,7 @@ public class BuildBasicDataController {
 		khan.setUser(khanUser);
 		khan.setCourses(listAllCourse);
 		khan.setMonthEnums(listAllMonth);
+		khan.setNumberOfSectionPerEntry(4);
 		facultyService.save(khan);
 
 		// Joe Bruen
@@ -403,6 +410,7 @@ public class BuildBasicDataController {
 		bruen.setUser(bruenUser);
 		bruen.setCourses(listAllCourse);
 		bruen.setMonthEnums(listAllMonth);
+		bruen.setNumberOfSectionPerEntry(4);
 		facultyService.save(bruen);
 
 		// Ralph Bunker
@@ -419,6 +427,7 @@ public class BuildBasicDataController {
 		bunker.setUser(bunkerUser);
 		bunker.setCourses(listAllCourse);
 		bunker.setMonthEnums(listAllMonth);
+		bunker.setNumberOfSectionPerEntry(4);
 		facultyService.save(bunker);
 		
 		// Clyde Ruby
@@ -435,22 +444,31 @@ public class BuildBasicDataController {
 		ruby.setUser(rubyUser);
 		ruby.setCourses(listAllCourse);
 		ruby.setMonthEnums(listAllMonth);
+		ruby.setNumberOfSectionPerEntry(4);
 		facultyService.save(ruby);
 		
 		
 		//Entry
 		Entry Oct2017 = new Entry();
 		
-		Oct2017.setCourseList(new HashSet<Course>() {
+		Oct2017.setCourseList(new HashSet<Course>(listAllCourse) {
 			{
-				add(CS390);
-				add(CS401);
 				add(CS422);
 				add(CS425);
+				add(CS435);
+				add(CS440);
+				add(CS465);
+				add(CS466);
+				add(CS471);
 				add(CS505);
 				add(CS522);
-				//add(CS572);
-				//add(CS582);
+				add(CS523);
+				add(CS525);
+				add(CS544);
+				add(CS545);
+				add(CS572);
+				add(CS582);
+				
 			}
 		});
 		Oct2017.setFacultyList(new HashSet<Faculty>() {
@@ -463,6 +481,7 @@ public class BuildBasicDataController {
 				add(bruen);
 				add(ruby);
 				add(bunker);
+				add(khan);
 			}
 		});
 		
