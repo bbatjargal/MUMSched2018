@@ -72,11 +72,4 @@ public class Section {
 		this.course = course;
 	}
 
-	public String getRoomLocation() {
-		return roomLocation;
-	}
-
-	public void setRoomLocation(String roomLocation) {
-		this.roomLocation = roomLocation;
-	}
 }
