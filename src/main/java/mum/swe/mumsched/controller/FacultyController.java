@@ -19,7 +19,6 @@ import mum.swe.mumsched.service.FacultyService;
  * @date Jan 26, 2018
  */
 
-
 @Controller
 public class FacultyController {
 	@Autowired
