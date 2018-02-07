@@ -1,7 +1,6 @@
 package mum.swe.mumsched.controller;
 
 import java.util.Comparator;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,23 +25,9 @@ public class ScheduleViewController {
 	@Autowired
 	private ScheduleViewService scheduleViewService;
 	
-//	@RequestMapping(value="/scheduleView", method=RequestMethod.GET)
-//	public String scheduleView() {
-//		return "schedule/viewschedule";
-//	}
-
 	@GetMapping("/scheduleView")
-	public String list(Model model) {
-		System.out.println("*** Schedule ***");
-		List<Schedule> schedules = scheduleViewService.findAll();
-		model.addAttribute("schedules", schedules);
-		return "schedule/list";
-	}
-
-	@RequestMapping(value="/scheduleView/{id}", method = RequestMethod.GET)
-	public String view(@PathVariable Long id, Model model){	
-		System.out.println("*** Schedule ***");
-		Schedule schedule = scheduleViewService.findOneByEntryId(id);
+	public String view(Model model) {
+		Schedule schedule = scheduleViewService.findOneByEntryId(1L);
 		schedule.getBlockList().stream().sorted(Comparator.comparing(Block::getMonth));
 		model.addAttribute("schedule", schedule);
 		return "schedule/viewschedule";
