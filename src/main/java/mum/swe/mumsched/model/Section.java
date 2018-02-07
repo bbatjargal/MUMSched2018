@@ -40,6 +40,7 @@ public class Section {
 		inverseJoinColumns = @JoinColumn(name = "student_id"))
 	private Set<Student> studentList;
 	
+
 	public long getId() {
 		return id;
 	}
