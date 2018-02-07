@@ -57,4 +57,12 @@ public class Student {
 	public void setEntry(Entry entry) {
 		this.entry = entry;
 	}
+
+	public Set<Section> getSectionList() {
+		return sectionList;
+	}
+
+	public void setSectionList(Set<Section> sectionList) {
+		this.sectionList = sectionList;
+	}	
 }

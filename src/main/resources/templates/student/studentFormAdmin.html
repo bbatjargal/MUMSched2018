@@ -3,15 +3,15 @@
 	xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Faculty Profile</title>
+<title>Student Profile</title>
 </head>
 <body>
 	<th:block layout:fragment="content">
-		<form th:action="@{/facultyprofile}" th:object="${faculty}" method="post">
+		<form th:action="@{/student}" th:object="${student}" method="post">
 			<input type="hidden" th:field="*{id}" />
 			<input type="hidden" th:field="*{user.id}" />
 			<fieldset>
-				<legend>Faculty profile</legend>
+				<legend>Student profile</legend>
 				<div class="form-row">
 					<div class="col-md-6">
 						<div class="form-group row">
@@ -38,40 +38,53 @@
 				<div class="form-row">
 					<div class="col-md-6">
 						<div class="form-group row">
-							<label class=" col-sm-3 col-form-label">First name:</label>
-							<div class="col-sm-8">	
-							    <select th:field="*{monthEnums}" class="form-control col-sm-12" multiple>
-							       <option th:each="monthEnum: ${T(mum.swe.mumsched.enums.MonthEnum).values()}" th:value="${monthEnum}" 
-							       	th:text="${monthEnum}"></option>
-							    </select>						
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group row">
-							<label class="col-sm-3 col-form-label">Courses:</label>
+							<label class=" col-sm-3 col-form-label">Email address:</label>
 							<div class="col-sm-8">
-								<select class="form-control" id="courseCmbId" name="courseCmbName" th:field="*{courses}" multiple>
-									<option th:each="course : ${courses}" th:value="${course.id}"
-										th:text="${course.code}+' : '+${course.name}"></option>
-								</select>  
+								<input class="form-control" id="txtUserName" type="text"
+									   placeholder="Enter email" th:field="*{user.username}"
+								/>
 							</div>
 						</div>
 					</div>
-				</div>	
-					<div class="form-row">
 					<div class="col-md-6">
 						<div class="form-group row">
-							<label class=" col-sm-3 col-form-label">Number of sections:</label>
-							<div class="col-sm-8">	
-							    		<input class="form-control" id="txtNumberOfSectionsPerE" type="number"
-									aria-describedby="nameHelp" 
-									th:field="*{numberOfSectionPerEntry}"  />				
+							<label class=" col-sm-3 col-form-label">Entry:</label>
+							<div class="col-sm-8">
+								<select class="form-control" th:field="*{entry}">
+									<option th:each="entry : ${entries}" th:value="${entry.id}"
+										th:text="${entry.name}"></option>
+								</select> 
 							</div>
 						</div>
 					</div>
-				</div>	
-			<button type="submit" class="btn btn-primary">Save</button>
+				</div>
+				<div class="form-row">
+					<div class="col-md-6">
+						<div class="form-group row">
+							<label class="col-sm-3 col-form-label">Password:</label>
+							<div class="col-sm-8">
+								<input class="form-control" id="txtPassword" type="password"  placeholder="Password" th:field="*{user.password}" />
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group row">
+							<label class="col-sm-3 col-form-label">Confirm password:</label>
+							<div class="col-sm-8">
+								<input class="form-control" id="txtConfirmPassword" type="password"  placeholder="Password" th:field="*{user.passwordConfirm}" />
+							</div>
+						</div>
+					</div>
+				</div>
+				  <div class="form-row">
+    				<div class="offset-sm-10 col-sm-2">
+						<div class="form-group row">
+				         	<button type="submit" class="btn btn-primary pull-right">Save</button>
+				         	&nbsp;
+				         	<a class="btn btn-primary" href="/students/" >Back to List</a>
+				         	</div>
+		         	</div>
+		         </div>
 			</fieldset>
 		</form>
 	</th:block>

@@ -1,13 +1,16 @@
 package mum.swe.mumsched.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import mum.swe.mumsched.model.Student;
+import mum.swe.mumsched.model.User;
 import mum.swe.mumsched.repository.StudentRepository;
 import mum.swe.mumsched.service.StudentService;
+import mum.swe.mumsched.service.UserService;
 
 /**
  * @author Batjargal Bayarsaikhan (Alex)
@@ -17,15 +20,31 @@ import mum.swe.mumsched.service.StudentService;
 public class StudentServiceImpl  implements StudentService {
     @Autowired
     private StudentRepository studentRepository;
-
+    @Autowired
+    private UserService userService;
+    
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    
     @Override
     public Student save(Student student) {
+    	User user = student.getUser();       	
+    	if(student.getId() == null)
+    	{
+    		user = userService.save(user);
+    		student.setUser(user);
+    	}
+    	else {
+			if(user.getPasswordConfirm() != null && !user.getPasswordConfirm().isEmpty())
+				user.setPassword(bCryptPasswordEncoder.encode(user.getPasswordConfirm()));
+    	}
+        	//userService.setUserPassword(student.getUser());	
 		return studentRepository.save(student);		
     }
 
 	@Override
-	public Page<Student> findAll(Pageable pageable) {
-		return studentRepository.findAll(pageable);
+	public List<Student> findAll() {
+		return studentRepository.findAll();
 	}
 
 	@Override

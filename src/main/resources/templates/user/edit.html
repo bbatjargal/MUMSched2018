@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>New Entry</title>
+<title>Admin Info</title>
 </head>
 <body>
 	<th:block layout:fragment="content">
@@ -11,7 +11,7 @@
 		<form th:action="@{/user}" th:object="${user}" method="post">
 			<input type="hidden" th:field="*{id}"/>
 			<fieldset>
-		         <legend th:text="${user.id == null ? 'New User' : 'Update User'}"></legend>
+		         <legend th:text="${user.id == null ? 'New Admin' : 'Update Admin'}"></legend>
 	
 			            <div class="form-row">
 			              <div class="col-md-6">
@@ -23,21 +23,7 @@
 							    </div>
 				       		</div>
 				       	  </div>
-			              <div class="col-md-6">
-	         					<div class="form-group row">
-								    <label class="col-sm-3 col-form-label">Role:</label>
-							    	<div class="col-sm-8">
-								    
-									    <select th:field="*{role}" class="form-control col-sm-12">
-									       <option th:each="role: ${T(mum.swe.mumsched.enums.RoleEnum).values()}" th:value="${role}" 
-									       	th:text="${role}"></option>
-									    </select>									    
-									     <label th:if="${#fields.hasErrors('role')}" th:errors="*{role}" class="validation-message"></label>
-									    </div>
-				       	  		</div>
-						
-		    				</div>
-		    				</div>
+		    			</div>
 			          
 	         			<div class="form-row">
 			              <div class="col-md-6">
@@ -82,10 +68,12 @@
 			              </div>
 			          </div>
 				  <div class="form-row">
-    				<div class="offset-sm-8 col-sm-3">
-			         	<button type="submit" class="btn btn-primary">Save</button>
+    				<div class="offset-sm-10 col-sm-2 ">
+						<div class="form-group row">
+			         	<button type="submit" class="btn btn-primary  pull-right">Save</button>
 			         	&nbsp;
-			         	<a class="btn btn-primary" href="/users/" >Back to List</a>
+			         	<a class="btn btn-primary " href="/users/" >Back to List</a>
+			         	</div>
 		         	</div>
 		         </div>
 		    </fieldset>

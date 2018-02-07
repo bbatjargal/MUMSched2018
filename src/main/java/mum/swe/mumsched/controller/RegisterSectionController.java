@@ -1,8 +1,10 @@
 package mum.swe.mumsched.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import mum.swe.mumsched.model.Section;
 import mum.swe.mumsched.model.Student;
-import mum.swe.mumsched.service.RegisterSectionService;
 import mum.swe.mumsched.service.StudentService;
 
 /**
@@ -24,29 +25,62 @@ import mum.swe.mumsched.service.StudentService;
  */
 @Controller
 public class RegisterSectionController {
-	@Autowired
-	private RegisterSectionService registerSectionService;
 
 	@Autowired
 	private StudentService studentService;
+	@Autowired
+	private mum.swe.mumsched.subsystem.sectionreg.ISectionRegSubsystem ISectionRegSubsystem;
 
 	@RequestMapping(value = "/registerforsection", method = RequestMethod.GET)
 	public String registerForSection(Model model, Pageable pageable, Principal currentUser) {
-		model.addAttribute("sectionList", registerSectionService.getList());
+		Student student = studentService.findByUsername(currentUser.getName());		
+		
+		model.addAttribute("sectionList", ISectionRegSubsystem.getSections(student.getEntry().getId()));
+
+		List<Long> mySections = student.getSectionList().stream()
+				.mapToLong(x->x.getId()).boxed()
+				.collect(Collectors.toList());
+		
+		model.addAttribute("mySections", mySections);
 		return "section/registersectionlist";
 	}
 
 	@RequestMapping(value = "/registerforsectionpost/{id}", method = RequestMethod.GET)
 	public String registerForSectionPost(@ModelAttribute("section") Section section, Model model, Principal currentUser,
 			@PathVariable Long id) {
-		Section sectionDB = registerSectionService.findSectionById(section.getId());
-		Student studentDB = studentService.findByUsername(currentUser.getName());
+
+		Student student = studentService.findByUsername(currentUser.getName());		
+		Section sectionDB = ISectionRegSubsystem.signInSection(student, section.getId());
+
+		if (student.getSectionList() == null)
+			student.setSectionList(new HashSet<Section>());
 		
-		if (sectionDB.getStudentList() == null)
-			sectionDB.setStudentList(new HashSet<Student>());
+		student.getSectionList().add(sectionDB);
+		studentService.save(student);
 		
-		sectionDB.getStudentList().add(studentDB);
-		registerSectionService.save(sectionDB);
+		return "redirect:/registerforsection";
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(value = "/registerforsection/signout/{id}", method = RequestMethod.GET)
+	public String registerForSectionSignout(@ModelAttribute("section") Section section, Model model, Principal currentUser,
+			@PathVariable Long id) {
+		
+		Student student = studentService.findByUsername(currentUser.getName());		
+		ISectionRegSubsystem.signOutSection(student, section.getId());
+		
+		if (student.getSectionList() != null) {
+			List<Section> sections = new ArrayList<Section>(student.getSectionList());
+			int len = student.getSectionList().size();
+			for(int i = len-1; i >= 0; i--) {
+				if(sections.get(i).getId() == section.getId() ) {
+					sections.remove(i);
+				}
+			}
+			student.setSectionList(new HashSet(sections));
+		}
+		studentService.save(student);	
+		
 		return "redirect:/registerforsection";
 	}
 }

@@ -68,13 +68,19 @@
         <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
           <a class="nav-link" href="/users">
             <i class="fa fa-fw fa-users"></i>
-            <span class="nav-link-text">Users</span>
+            <span class="nav-link-text">Admins</span>
           </a>
         </li>
         <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="/users">
+          <a class="nav-link" href="/faculties">
             <i class="fa fa-fw fa-address-card-o"></i>
             <span class="nav-link-text">Faculties</span>
+          </a>
+        </li> 
+        <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+          <a class="nav-link" href="/students">
+            <i class="fa fa-fw fa-list-alt"></i>
+            <span class="nav-link-text">Students</span>
           </a>
         </li> 
           <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item" data-toggle="tooltip" data-placement="right" title="Profile">
@@ -102,7 +108,7 @@
           </a>
         </li>    
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profile">
-          <a class="nav-link" href="/studentprofile">
+          <a class="nav-link" href="/scheduleView">
             <i class="fa fa-fw fa-calendar"></i>
             <span class="nav-link-text">Schedules</span>
           </a>

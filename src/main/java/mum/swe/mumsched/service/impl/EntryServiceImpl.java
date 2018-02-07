@@ -37,7 +37,7 @@ public class EntryServiceImpl implements EntryService {
 	
 	@Override
 	public boolean hasStudentRef(Entry entry) {
-		return false;
+		return entry.getStudentList().size() > 0;
 	}
 	
 	@Override

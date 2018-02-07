@@ -3,7 +3,6 @@ package mum.swe.mumsched.controller;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import mum.swe.mumsched.enums.RoleEnum;
 import mum.swe.mumsched.model.User;
 import mum.swe.mumsched.service.UserService;
 import mum.swe.mumsched.validator.UserValidator;
@@ -31,8 +31,8 @@ public class UserController {
     private UserValidator userValidator;
 	
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public String users(Model model, Principal currentUser,  Pageable pageable) {
-		model.addAttribute("users", userService.findAll(pageable));
+    public String users(Model model, Principal currentUser) {
+		model.addAttribute("users", userService.findByRole(RoleEnum.ROLE_ADMIN));
 		model.addAttribute("username", currentUser.getName());
 		return "user/list";
     }
@@ -60,6 +60,7 @@ public class UserController {
 			model.addAttribute("user", user);
 			return "user/edit";
 		}
+        user.setRole(RoleEnum.ROLE_ADMIN);
 		user = userService.save(user);
 		return "redirect:/users";
 	}	

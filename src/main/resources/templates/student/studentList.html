@@ -7,11 +7,11 @@
 <body>
 	<th:block layout:fragment="content">
 		<div class="row">
-			<div class="col"><h2>Faculties</h2></div>
+			<div class="col"><h2>Students</h2></div>
 			<div class="col text-right">
 				<div class="button-margin">
-					<a role="button" class="btn btn-primary" th:href="@{/faculty}"><span
-						class="fa fa-plus" aria-hidden="true"></span>&nbsp;Create	a faculty</a>
+					<a role="button" class="btn btn-primary" th:href="@{/student}"><span
+						class="fa fa-plus" aria-hidden="true"></span>&nbsp;Create a student</a>
 				</div>
 			</div>
 		</div>
@@ -20,23 +20,23 @@
 			<thead>
 				<tr>
 					<th class="text-center">Id</th>
-					<th class="text-center">faculty name</th>
+					<th class="text-center">Student name</th>
 					<th class="text-center">Email</th>
                     <th class="text-center">Actions</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="faculty : ${faculties}">
-                    <td class="text-center" th:text="${faculty.id}"></td>
-                    <td class="text-center" th:text="${faculty.user.firstName}"></td>
-                    <td class="text-center" th:text="${faculty.user.username}"></td>
+				<tr th:each="student : ${students}">
+                    <td class="text-center" th:text="${student.id}"></td>
+                    <td class="text-center" th:text="@{${student.user.firstName} + ' '+ ${student.user.lastName}}"></td>
+                    <td class="text-center" th:text="${student.user.username}"></td>
                     <td class="text-center">
                         <a role="button" class="btn btn-primary"
-                           th:href="@{'/faculty/' + ${faculty.id}}"
+                           th:href="@{'/student/' + ${student.id}}"
                         ><span class="fa fa-pencil" aria-hidden="true"></span></a>
                         &nbsp;
                         <a role="button" class="btn btn-primary"
-                           th:href="@{'/faculty/delete/' + ${faculty.id}}">
+                           th:href="@{'/student/delete/' + ${student.id}}">
                             <span class="fa fa-trash-o" aria-hidden="true"></span></a>
                     </td>
 				</tr>

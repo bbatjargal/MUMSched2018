@@ -82,19 +82,19 @@ public class EntryController {
 			
 			// check total fpp
 			if(entry.getFpp() != entry.getFppCPT() + entry.getFppOPT()){
-				bindingResult.reject("fpp", null, msgService.getMessage("validate.invalid"));
+				bindingResult.reject("fpp", null, msgService.getMessage(MessageByLocaleService.INVALID_MESSAGE));
 				hasError = true;
 			}
 			
 			// check total mpp
 			if(entry.getMpp() != entry.getMppCPT() + entry.getMppOPT()){
-				bindingResult.reject("mpp", null, msgService.getMessage("validate.invalid"));
+				bindingResult.reject("mpp", null, msgService.getMessage(MessageByLocaleService.INVALID_MESSAGE));
 				hasError = true;
 			}
 			
 			//valid unique entry name
 			if(service.hasExistsEntryName(entry.getName(), entry.getId())) {
-				bindingResult.rejectValue("name", null, msgService.getMessage("validate.alreadyExists"));
+				bindingResult.rejectValue("name", null,  msgService.getMessage(MessageByLocaleService.ALREADY_EXISTS_MESSAGE));
 				hasError = true;
 			}
 		}
