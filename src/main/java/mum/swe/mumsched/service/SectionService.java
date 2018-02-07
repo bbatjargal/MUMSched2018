@@ -1,5 +1,8 @@
 package mum.swe.mumsched.service;
 
+import java.util.List;
+import java.util.Set;
+
 import mum.swe.mumsched.model.Section;
 
 /**
@@ -19,4 +22,6 @@ public interface SectionService {
 	void delete(Section Section);
 
 	Section findSectionById(Long id);
+
+	List<Section> saveAll(List<Section> Sections);
 }

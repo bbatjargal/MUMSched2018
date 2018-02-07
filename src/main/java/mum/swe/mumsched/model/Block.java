@@ -47,11 +47,9 @@ public class Block {
     @Column(columnDefinition = "smallint")
 	private MonthEnum month;
 	
-	@NotNull
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate fromDate;
 	
-	@NotNull
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate toDate;
 
