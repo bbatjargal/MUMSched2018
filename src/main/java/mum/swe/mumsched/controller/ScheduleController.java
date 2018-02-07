@@ -104,7 +104,7 @@ public class ScheduleController {
 	public String view(@PathVariable("id") Long id, Model model) {
 
 		Schedule schedule = scheduleService.findOneById(id);
-		LinkedHashSet<Block> reOrderedBlock = new LinkedHashSet<Block>(schedule.getBlockList().stream().sorted(Comparator.comparing(Block::getMonth)).collect(Collectors.toList()));
+		LinkedHashSet<Block> reOrderedBlock = new LinkedHashSet<Block>(schedule.getBlockList().stream().sorted(Comparator.comparing(Block::getId)).collect(Collectors.toList()));
 		schedule.setBlockList(reOrderedBlock);
 		model.addAttribute("schedule", schedule);
 		return "schedule/schedule";

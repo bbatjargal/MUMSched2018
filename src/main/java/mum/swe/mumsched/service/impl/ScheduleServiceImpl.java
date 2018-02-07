@@ -175,7 +175,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 		List<Faculty> facultiesB1 = facultyList.stream().filter(f -> f.getMonthEnums().contains(month.nextMonth()))
 				.filter(f -> f.getNumberOfSectionPerEntry() > 0)
-				.sorted(Comparator.comparing(Faculty::getNumberOfSectionPerEntry)).collect(Collectors.toList());
+				.sorted(Comparator.comparing(Faculty::getNumberOfSectionPerEntry).reversed()).collect(Collectors.toList());
 		Block B1FPP = this.generateSpecificCourseBlock(month, numberOfFppSection, facultiesB1,
 				courseService.findOneByCode("CS390"));
 		Block B1MPP = this.generateSpecificCourseBlock(month, numberOfMppSection, facultiesB1,
@@ -188,7 +188,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 		month = month.nextMonth();
 		List<Faculty> facultiesB2 = facultyList.stream().filter(f -> f.getMonthEnums().contains(month))
 				.filter(f -> f.getNumberOfSectionPerEntry() > 0)
-				.sorted(Comparator.comparing(Faculty::getNumberOfSectionPerEntry)).collect(Collectors.toList());
+				.sorted(Comparator.comparing(Faculty::getNumberOfSectionPerEntry).reversed()).collect(Collectors.toList());
 
 		Block B2FPP = this.generateSpecificCourseBlock(month, numberOfFppSection, facultiesB2,
 				courseService.findOneByCode("CS401"));
