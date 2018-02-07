@@ -455,22 +455,8 @@ public class BuildBasicDataController {
 		
 		Oct2017.setCourseList(new HashSet<Course>(listAllCourse) {
 			{
-				add(CS422);
-				add(CS425);
-				add(CS435);
-				add(CS440);
-				add(CS465);
-				add(CS466);
-				add(CS471);
-				add(CS505);
-				add(CS522);
-				add(CS523);
-				add(CS525);
-				add(CS544);
-				add(CS545);
-				add(CS572);
-				add(CS582);
-				
+				remove(CS390);
+				remove(CS401);
 			}
 		});
 		Oct2017.setFacultyList(new HashSet<Faculty>() {
