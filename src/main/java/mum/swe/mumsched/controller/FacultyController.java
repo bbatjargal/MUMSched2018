@@ -42,7 +42,6 @@ public class FacultyController {
 	@RequestMapping(value="/faculties", method=RequestMethod.GET)
 	public String facultyProfile(Model model,Pageable pageable, Principal currentUser) {
 		model.addAttribute("faculties", facultyService.findAll());
-		//model.addAttribute("courses",courseService.findAll());
 		return "faculty/facultyList";
 	}
 
@@ -55,10 +54,6 @@ public class FacultyController {
 
     @RequestMapping(value="/faculty/delete/{id}",method = RequestMethod.GET)
     public String delete(@PathVariable Long id, Model model){
-
-	    //System.out.println(facultyService.findOne(id).getUser().getId());
-
-	   // userService.delete(facultyService.findOne(id).getUser().getId());
         facultyService.delete(id);
         return "redirect:/faculties";
     }
@@ -104,5 +99,25 @@ public class FacultyController {
         facultyService.save(facultyDB);
 
 		return "redirect:/faculties";
+	}
+	
+	@RequestMapping(value="/facultyprofile", method=RequestMethod.GET)
+	public String facultyProfileM(Model model,Pageable pageable, Principal currentUser) {	
+		model.addAttribute("faculty", facultyService.findByUsername(currentUser.getName()));
+		model.addAttribute("courses",courseService.findAll());
+		return "faculty/facultyForm";
+	}
+	
+	@RequestMapping(value= {"/facultyprofile"}, method = RequestMethod.POST)
+	public String updateFacultyProfile(@ModelAttribute("faculty") Faculty faculty, Model model) {
+		
+		Faculty facultyDB = facultyService.findOne(faculty.getId());
+		facultyDB.getUser().setFirstName(faculty.getUser().getFirstName());
+		facultyDB.getUser().setLastName(faculty.getUser().getLastName());
+		facultyDB.setCourses(faculty.getCourses());
+		facultyDB.setMonthEnums(faculty.getMonthEnums());
+		facultyDB.setNumberOfSectionPerEntry(faculty.getNumberOfSectionPerEntry());
+		facultyService.save(facultyDB);
+		return "redirect:/facultyprofile";
 	}
 }

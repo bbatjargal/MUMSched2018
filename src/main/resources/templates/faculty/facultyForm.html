@@ -7,7 +7,7 @@
 </head>
 <body>
 	<th:block layout:fragment="content">
-		<form th:action="@{/updateFaculty}" th:object="${faculty}" method="post">
+		<form th:action="@{/facultyprofile}" th:object="${faculty}" method="post">
 			<input type="hidden" th:field="*{id}" />
 			<input type="hidden" th:field="*{user.id}" />
 			<fieldset>
