@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import mum.swe.mumsched.model.Faculty;
 import mum.swe.mumsched.model.Student;
-import mum.swe.mumsched.model.User;
 import mum.swe.mumsched.service.EntryService;
 import mum.swe.mumsched.service.RegisterSectionService;
 import mum.swe.mumsched.service.StudentService;

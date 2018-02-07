@@ -287,7 +287,7 @@ public class BuildBasicDataController {
 		guthrieUser.setRole(RoleEnum.ROLE_FACULTY);
 		userService.save(guthrieUser);
 
-		Faculty guthrie =  facultyService.findByUsername(guthrieUser.getUsername());
+		Faculty guthrie =  new Faculty();
 		guthrie.setUser(guthrieUser);
 		guthrie.setCourses(listAllCourse);
 		guthrie.setMonthEnums(listAllMonth);
@@ -304,7 +304,7 @@ public class BuildBasicDataController {
 		leviUser.setRole(RoleEnum.ROLE_FACULTY);
 		userService.save(leviUser);
 
-		Faculty levi = facultyService.findByUsername(leviUser.getUsername());
+		Faculty levi =  new Faculty();
 		levi.setUser(leviUser);
 		levi.setCourses(listAllCourse);
 		levi.setMonthEnums(listAllMonth);
@@ -321,7 +321,7 @@ public class BuildBasicDataController {
 		nolleUser.setRole(RoleEnum.ROLE_FACULTY);
 		userService.save(nolleUser);
 
-		Faculty nolle = facultyService.findByUsername(nolleUser.getUsername());
+		Faculty nolle =  new Faculty();
 		nolle.setUser(nolleUser);
 		nolle.setCourses(listAllCourse);
 		nolle.setMonthEnums(listAllMonth);
@@ -338,7 +338,7 @@ public class BuildBasicDataController {
 		lesteUser.setRole(RoleEnum.ROLE_FACULTY);
 		userService.save(lesteUser);
 
-		Faculty leste =  facultyService.findByUsername(lesteUser.getUsername());
+		Faculty leste =   new Faculty();
 		leste.setUser(lesteUser);
 		leste.setCourses(listAllCourse);
 		leste.setMonthEnums(new ArrayList<MonthEnum>() {{
@@ -357,7 +357,7 @@ public class BuildBasicDataController {
 		corazzaUser.setRole(RoleEnum.ROLE_FACULTY);
 		userService.save(corazzaUser);
 
-		Faculty corazza = facultyService.findByUsername(corazzaUser.getUsername());
+		Faculty corazza =  new Faculty();
 		corazza.setUser(corazzaUser);
 		corazza.setCourses(listAllCourse);
 		corazza.setMonthEnums(listAllMonth);
@@ -374,7 +374,7 @@ public class BuildBasicDataController {
 		nairUser.setRole(RoleEnum.ROLE_FACULTY);
 		userService.save(nairUser);
 
-		Faculty nair = facultyService.findByUsername(nairUser.getUsername());
+		Faculty nair =  new Faculty();
 		nair.setUser(nairUser);
 		nair.setCourses(listAllCourse);
 		nair.setMonthEnums(listAllMonth);
@@ -391,7 +391,7 @@ public class BuildBasicDataController {
 		khanUser.setRole(RoleEnum.ROLE_FACULTY);
 		userService.save(khanUser);
 
-		Faculty khan = facultyService.findByUsername(khanUser.getUsername());
+		Faculty khan =  new Faculty();
 		khan.setUser(khanUser);
 		khan.setCourses(listAllCourse);
 		khan.setMonthEnums(listAllMonth);
@@ -408,7 +408,7 @@ public class BuildBasicDataController {
 		bruenUser.setRole(RoleEnum.ROLE_FACULTY);
 		userService.save(bruenUser);
 
-		Faculty bruen =  facultyService.findByUsername(bruenUser.getUsername());
+		Faculty bruen = new Faculty();
 		bruen.setUser(bruenUser);
 		bruen.setCourses(listAllCourse);
 		bruen.setMonthEnums(listAllMonth);
@@ -425,7 +425,7 @@ public class BuildBasicDataController {
 		bunkerUser.setRole(RoleEnum.ROLE_FACULTY);
 		userService.save(bunkerUser);
 
-		Faculty bunker = facultyService.findByUsername(bunkerUser.getUsername());
+		Faculty bunker = new Faculty();
 		bunker.setUser(bunkerUser);
 		bunker.setCourses(listAllCourse);
 		bunker.setMonthEnums(listAllMonth);
@@ -442,7 +442,7 @@ public class BuildBasicDataController {
 		rubyUser.setRole(RoleEnum.ROLE_FACULTY);
 		userService.save(rubyUser);
 
-		Faculty ruby = facultyService.findByUsername(rubyUser.getUsername());
+		Faculty ruby = new Faculty();
 		ruby.setUser(rubyUser);
 		ruby.setCourses(listAllCourse);
 		ruby.setMonthEnums(listAllMonth);

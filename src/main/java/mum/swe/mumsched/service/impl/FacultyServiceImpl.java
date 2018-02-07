@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import mum.swe.mumsched.enums.MonthEnum;
 import mum.swe.mumsched.model.Faculty;
+import mum.swe.mumsched.model.User;
 import mum.swe.mumsched.repository.FacultyRepository;
 import mum.swe.mumsched.service.FacultyService;
+import mum.swe.mumsched.service.UserService;
 
 /**
  * @author Batjargal Bayarsaikhan (Alex)
@@ -20,9 +22,19 @@ import mum.swe.mumsched.service.FacultyService;
 public class FacultyServiceImpl  implements FacultyService {
     @Autowired
     private FacultyRepository facultyRepository;
+    @Autowired
+    private UserService userService;
 
     @Override
     public Faculty save(Faculty faculty) {
+    	User user = faculty.getUser();    	
+    	if(faculty.getId() == null)
+    	{
+    		user = userService.save(user);
+    		faculty.setUser(user);
+    	}
+    	else
+    		userService.setUserPassword(faculty.getUser());
 		return facultyRepository.save(faculty);	
     }
 
