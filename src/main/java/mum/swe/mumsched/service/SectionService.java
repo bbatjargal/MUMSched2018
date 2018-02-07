@@ -10,13 +10,15 @@ public interface SectionService {
 
 	Iterable<Section> getList();
 
-	boolean hasExistsSection(long blockId, long courseId, long facultyId);
-
-	boolean hasStudentRef(Section Section);
+	boolean hasStudentRef(Section section);
 
 	Section save(Section Section);
 
 	void delete(Section Section);
 
 	Section findSectionById(Long id);
+
+	boolean hasExistsSection(long blockId, long facultyId, long courseId, long excludedId);
+
+	boolean hasExistsFacultyBlock(long blockId, long facultyId, long excludedId);
 }

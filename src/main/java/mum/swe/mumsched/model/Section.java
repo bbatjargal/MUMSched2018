@@ -39,7 +39,7 @@ public class Section {
 	@JoinTable(name = "section_student", joinColumns = @JoinColumn(name = "section_id"), 
 		inverseJoinColumns = @JoinColumn(name = "student_id"))
 	private Set<Student> studentList;
-
+	
 	public long getId() {
 		return id;
 	}
@@ -70,6 +70,14 @@ public class Section {
 
 	public void setCourse(Course course) {
 		this.course = course;
+	}
+
+	public Set<Student> getStudentList() {
+		return studentList;
+	}
+
+	public void setStudentList(Set<Student> studentList) {
+		this.studentList = studentList;
 	}
 
 }
