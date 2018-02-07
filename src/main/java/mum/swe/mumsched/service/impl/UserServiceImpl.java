@@ -60,7 +60,7 @@ public class UserServiceImpl  implements UserService {
 	@Override
 	public void setUserPassword(User user) {
 		if(user != null) {
-			if(!user.getPassword().isEmpty())
+			if(user!=null && user.getPassword() != null && !user.getPassword().isEmpty())
 				user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 			else if(user.getId() != null) {
 				User userdb = userRepository.findOne(user.getId());

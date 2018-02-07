@@ -77,6 +77,7 @@ public class FacultyController {
             user.setUsername(faculty.getUser().getUsername());
             user.setFirstName(faculty.getUser().getFirstName());
             user.setLastName(faculty.getUser().getLastName());
+            user.setPassword(faculty.getUser().getPassword());
             user.setPasswordConfirm(faculty.getUser().getPasswordConfirm());
             user.setRole(RoleEnum.ROLE_FACULTY);
             //user = userService.save(user);

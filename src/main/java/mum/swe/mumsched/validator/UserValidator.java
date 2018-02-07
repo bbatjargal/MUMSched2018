@@ -75,7 +75,7 @@ public class UserValidator implements Validator {
         //ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty");
         //ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "NotEmpty");
 
-        if (!user.getPasswordConfirm().equals(user.getPassword())) {
+        if (user.getPassword() != null && user.getPasswordConfirm() != null && !user.getPasswordConfirm().equals(user.getPassword())) {
             errors.rejectValue("user.passwordConfirm", "form.signup.passwordConfirm");
         }
     }
@@ -85,7 +85,7 @@ public class UserValidator implements Validator {
         //ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty");
         //ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "NotEmpty");
 
-        if (!user.getPasswordConfirm().equals(user.getPassword())) {
+        if (user.getPassword() != null && user.getPasswordConfirm() != null && !user.getPasswordConfirm().equals(user.getPassword())) {
             errors.rejectValue("user.passwordConfirm", "form.signup.passwordConfirm");
         }
     }
