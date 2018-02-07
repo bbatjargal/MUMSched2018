@@ -29,7 +29,7 @@ public class SectionServiceImpl implements SectionService {
 	
 	@Override
 	public Iterable<Section> getList(){
-		return sectionRepo.fillAllWithSort(new Sort(Direction.DESC, "id"));
+		return sectionRepo.fillAllWithSort(new Sort(Direction.ASC, "block.schedule.entry.name").and(new Sort(Direction.ASC, "block.month")));
 	}
 	
 	@Override

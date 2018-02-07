@@ -69,4 +69,24 @@ public class UserValidator implements Validator {
             errors.rejectValue("passwordConfirm", "form.signup.passwordConfirm");
         }
     }
+    public void validateStuden(Object o, Errors errors) {
+        User user = (User) o;
+
+        //ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty");
+        //ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "NotEmpty");
+
+        if (!user.getPasswordConfirm().equals(user.getPassword())) {
+            errors.rejectValue("user.passwordConfirm", "form.signup.passwordConfirm");
+        }
+    }
+    public void validateFaculty(Object o, Errors errors) {
+        User user = (User) o;
+
+        //ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty");
+        //ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "NotEmpty");
+
+        if (!user.getPasswordConfirm().equals(user.getPassword())) {
+            errors.rejectValue("user.passwordConfirm", "form.signup.passwordConfirm");
+        }
+    }
 }

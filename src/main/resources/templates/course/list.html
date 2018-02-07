@@ -6,11 +6,16 @@
 </head>
 <body>
 	<th:block layout:fragment="content">
-		<legend>Courses</legend>
-		<div class="button-margin">
-			<a role="button" class="btn btn-primary"
-				th:href="@{/course}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Create a Course</a>
+		<div class="row">
+			<div class="col"><h2>Courses</h2></div>
+			<div class="col text-right">
+				<div class="button-margin">
+					<a role="button" class="btn btn-primary"
+						th:href="@{/course}"><span class="fa fa-plus" aria-hidden="true"></span>&nbsp;Create a Course</a>
+				</div>
+			</div>
 		</div>
+		
 		<div class="mb-1" >&nbsp;</div>
 		<table class="table table-bordered table-striped">
 			<thead>

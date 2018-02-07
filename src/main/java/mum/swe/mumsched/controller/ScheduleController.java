@@ -1,44 +1,28 @@
 package mum.swe.mumsched.controller;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
-
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import mum.swe.mumsched.helper.AjaxResult;
 import mum.swe.mumsched.model.Block;
-import mum.swe.mumsched.service.BlockService;
-import mum.swe.mumsched.service.EntryService;
-import mum.swe.mumsched.enums.MonthEnum;
-import mum.swe.mumsched.enums.RoleEnum;
-import mum.swe.mumsched.model.Course;
 import mum.swe.mumsched.model.Entry;
-import mum.swe.mumsched.model.Faculty;
 import mum.swe.mumsched.model.Schedule;
 import mum.swe.mumsched.model.Section;
-import mum.swe.mumsched.model.User;
+import mum.swe.mumsched.service.BlockService;
 import mum.swe.mumsched.service.CourseService;
+import mum.swe.mumsched.service.EntryService;
 import mum.swe.mumsched.service.FacultyService;
 import mum.swe.mumsched.service.ScheduleService;
 import mum.swe.mumsched.service.SectionService;
@@ -104,7 +88,7 @@ public class ScheduleController {
 	public String view(@PathVariable("id") Long id, Model model) {
 
 		Schedule schedule = scheduleService.findOneById(id);
-		LinkedHashSet<Block> reOrderedBlock = new LinkedHashSet<Block>(schedule.getBlockList().stream().sorted(Comparator.comparing(Block::getMonth)).collect(Collectors.toList()));
+		LinkedHashSet<Block> reOrderedBlock = new LinkedHashSet<Block>(schedule.getBlockList().stream().sorted(Comparator.comparing(Block::getId)).collect(Collectors.toList()));
 		schedule.setBlockList(reOrderedBlock);
 		model.addAttribute("schedule", schedule);
 		return "schedule/schedule";

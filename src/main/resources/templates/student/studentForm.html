@@ -67,6 +67,13 @@
 							</div>
 							</div>
 			          </div>
+					
+					<div class="row">
+						<div class="col"><h4>My sections</h4></div>
+						<div class="col text-right">
+						</div>
+					</div>
+					<div class="mb-1" >&nbsp;</div>
 			          <div class="form-row">
 			          <table class="table table-bordered table-striped">
 							<thead>
@@ -78,16 +85,25 @@
 								</tr>
 							</thead>
 							<tbody>
+								<tr th:if="${student.sectionList == null or #lists.size(student.sectionList) == 0}">
+									<td colspan="5" class="text-center">No Section</td>
+								</tr>
+								<tr th:each="item : ${student.sectionList}">
+									<td th:text="${item.block.schedule.entry.name}" class="text-center"></td>
+									<td th:text="${item.block.month}" class="text-center"></td>
+									<td th:text="${item.faculty.user.firstName}" class="text-center"></td>
+									<td th:text="${item.course.name}" class="text-right"></td>
+								</tr>
 							
 								
 							</tbody>
 						</table>
 			          </div>
-				  <div class="form-row">
-    				<div class="offset-sm-8 col-sm-3">
-			         	<button type="submit" class="btn btn-primary">Save</button>
-		         	</div>
-		         </div>
+			            <div class="form-row">
+	    				<div class="offset-sm-1 col-sm-2">
+				         	<button type="submit" class="btn btn-primary">Save</button>
+			         	</div>
+			         </div>
 		    </fieldset>
 		</form>
 	</th:block>

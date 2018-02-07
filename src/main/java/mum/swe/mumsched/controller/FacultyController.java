@@ -2,10 +2,6 @@ package mum.swe.mumsched.controller;
 
 import java.security.Principal;
 
-import mum.swe.mumsched.enums.RoleEnum;
-import mum.swe.mumsched.model.User;
-import mum.swe.mumsched.service.UserService;
-import mum.swe.mumsched.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -16,11 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import mum.swe.mumsched.enums.RoleEnum;
 import mum.swe.mumsched.model.Faculty;
+import mum.swe.mumsched.model.User;
 import mum.swe.mumsched.service.CourseService;
 import mum.swe.mumsched.service.FacultyService;
-
-import javax.persistence.CascadeType;
+import mum.swe.mumsched.validator.UserValidator;
 
 /**
  * @author Mandakh Nyamdavaa
@@ -31,8 +28,6 @@ import javax.persistence.CascadeType;
 public class FacultyController {
 	@Autowired
 	private FacultyService facultyService;
-    @Autowired
-    private UserService userService;
     @Autowired
     private UserValidator userValidator;
 
@@ -68,7 +63,7 @@ public class FacultyController {
 	@RequestMapping(value= {"/updateFaculty"}, method = RequestMethod.POST)
 	public String updateFacultyProfile(@ModelAttribute("faculty") Faculty faculty, BindingResult result, Model model) {
 
-        userValidator.validateAdmin(faculty.getUser(), result);
+        userValidator.validateFaculty(faculty.getUser(), result);
 
         if (result.hasErrors()) {
             model.addAttribute("faculty", faculty);
@@ -82,16 +77,18 @@ public class FacultyController {
             user.setUsername(faculty.getUser().getUsername());
             user.setFirstName(faculty.getUser().getFirstName());
             user.setLastName(faculty.getUser().getLastName());
-            user.setPassword(faculty.getUser().getPassword());
+            user.setPasswordConfirm(faculty.getUser().getPasswordConfirm());
             user.setRole(RoleEnum.ROLE_FACULTY);
-            user = userService.save(user);
+            //user = userService.save(user);
 
-            facultyDB = facultyService.findByUsername(faculty.getUser().getUsername());
+            facultyDB = new Faculty();
+            //facultyDB = facultyService.findByUsername(faculty.getUser().getUsername());
             facultyDB.setUser(user);
         }else {
             facultyDB = facultyService.findOne(faculty.getId());
             facultyDB.getUser().setFirstName(faculty.getUser().getFirstName());
             facultyDB.getUser().setLastName(faculty.getUser().getLastName());
+            facultyDB.getUser().setPasswordConfirm(facultyDB.getUser().getPasswordConfirm());
         }
         facultyDB.setCourses(faculty.getCourses());
         facultyDB.setMonthEnums(faculty.getMonthEnums());
@@ -109,11 +106,18 @@ public class FacultyController {
 	}
 	
 	@RequestMapping(value= {"/facultyprofile"}, method = RequestMethod.POST)
-	public String updateFacultyProfile(@ModelAttribute("faculty") Faculty faculty, Model model) {
-		
+	public String updateFacultyProfile(@ModelAttribute("faculty") Faculty faculty, Model model, BindingResult result) {
+
+		userValidator.validateFaculty(faculty.getUser(), result);
+    	
+        if (result.hasErrors()) {
+			model.addAttribute("faculty", faculty);
+			return "faculty/facultyFormAdmin";
+		}
 		Faculty facultyDB = facultyService.findOne(faculty.getId());
 		facultyDB.getUser().setFirstName(faculty.getUser().getFirstName());
 		facultyDB.getUser().setLastName(faculty.getUser().getLastName());
+		facultyDB.getUser().setPasswordConfirm(faculty.getUser().getPasswordConfirm());
 		facultyDB.setCourses(faculty.getCourses());
 		facultyDB.setMonthEnums(faculty.getMonthEnums());
 		facultyDB.setNumberOfSectionPerEntry(faculty.getNumberOfSectionPerEntry());
