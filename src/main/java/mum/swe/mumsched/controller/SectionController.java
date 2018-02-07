@@ -100,7 +100,7 @@ public class SectionController {
 	
 	@PostMapping("/getFacultyList/{scheduleId}/{blockId}")
     @ResponseBody
-    public Map<Long, String> getFacultyListByScheduleId(@PathVariable("scheduleId") Long scheduleId, @PathVariable("blockId") Long blockId){
+    public Map<Long, String> getFacultyList(@PathVariable("scheduleId") Long scheduleId, @PathVariable("blockId") Long blockId){
 		
 		return getFaculties(scheduleId, blockId)
 			.collect(Collectors.toMap(Faculty::getId, f->f.getUser().getFullname()));
@@ -166,12 +166,13 @@ public class SectionController {
     public AjaxResult delete(@PathVariable Long id) {
 		Section section = service.findSectionById(id);
 		
+		// section not found
 		if(section == null) {
 			return AjaxResult.fail(msgService.getMessage(MessageByLocaleService.NOT_FOUND_MESSAGE, 
 					new Object[] {msgService.getMessage("field.section")}));
 		}
 		
-		// has section ref
+		// has student
 		if(service.hasStudentRef(section)) {
 			return AjaxResult.fail(msgService.getMessage(MessageByLocaleService.HAS_REF_MESSAGE, 
 					new Object[] {msgService.getMessage("field.student")}));
@@ -181,7 +182,6 @@ public class SectionController {
 		
         return AjaxResult.success(msgService.getRemoveSuccess());
     }
-	
 	
 	
 	/**
@@ -211,6 +211,7 @@ public class SectionController {
 	private Stream<Course> getCourses(Long scheduleId, Long facultyId){
 		// get courses of entry
 		Set<Course> entryCourses = scheduleService.findOneById(scheduleId).getEntry().getCourseList();
+		
 		// get courses can teach by faculty
 		List<Course> facultyCourses = facultyService.findOne(facultyId).getCourses();
 		

@@ -13,7 +13,7 @@
 		         <legend><span th:text="${section.id == 0} ? #{cmd.new} : #{cmd.update}"></span> <span th:text="#{field.section}">Section</span></legend>
 				  <div class="form-row">
 				   	<div class="col-md-6 mb-3">
-					  	<label for="schedule">Entry</label>
+					  	<label for="schedule"><label for="schedule">Entry(Had Schedule)</label></label>
 					  	 <select class="form-control" id="schedule" name="schedule" >
 					  	 	 <option value="0">[Please select one]</option>
 	                          <option th:each="s : ${allSchedule}" 
