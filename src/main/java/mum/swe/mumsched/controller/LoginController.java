@@ -1,8 +1,12 @@
 package mum.swe.mumsched.controller;
 
+import java.util.UUID;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,8 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import mum.swe.mumsched.enums.RoleEnum;
 import mum.swe.mumsched.model.User;
+import mum.swe.mumsched.service.EmailService;
 import mum.swe.mumsched.service.SecurityServices;
 import mum.swe.mumsched.service.UserService;
+import mum.swe.mumsched.util.MUtils;
 import mum.swe.mumsched.validator.UserValidator;
 import mum.swe.mumsched.view.ForgotPasswordView;
 
@@ -23,16 +29,22 @@ import mum.swe.mumsched.view.ForgotPasswordView;
  * @date Jan 24, 2018
  */
 @Controller
+//@Configuration
 public class LoginController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private EmailService emailService;
 
     @Autowired
     private UserValidator userValidator;
     
     @Autowired
     private SecurityServices securityService;
+
+	@Value("${mumshced.appaddress}")
+	private String appAddress;
 
 	@RequestMapping(value="/login", method = RequestMethod.GET)
 	public ModelAndView signin(){
@@ -79,6 +91,24 @@ public class LoginController {
             return "login/forgotpassword";			
 		}
 
+		User user = userService.findByUsername(formView.getEmail());
+		if(user != null)
+		{
+			String newPasswod = MUtils.newPassword(6);
+			user.setPassword(newPasswod);
+			userService.save(user);
+			
+			String msg = String.format("Dear %s, <br/><br/>"
+					+ "You have changed your Password on MUMSched App.<br/><br/> "
+					+ "Please login using the following information:<br/>"
+					+ "Web Address: %s<br/>"
+					+ "Username: %s<br/>"
+					+ "Password: %s<br/><br/>"
+					+ "Sincerely,<br/>"
+					+ "MUMSched App<br/>", user.getFirstName(), appAddress, formView.getEmail(), newPasswod);
+			
+			emailService.sendMessage(formView.getEmail(), "MUMSched App: Your new password", msg);
+		}
 		model.addAttribute("email", formView.getEmail());
 
         return "login/forgotpasswordSent";

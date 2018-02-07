@@ -97,28 +97,21 @@ public class ScheduleController {
 		scheduleService.save(scheduleGen);
 
 		model.addAttribute("schedule", scheduleGen);
-		return "schedule/schedule";
+		return "redirect:/schedule/view/" + scheduleGen.getId();
 	}
 
 	@GetMapping("/view/{id}")
-	public String view(@PathVariable("id") Long entryId, Model model) {
+	public String view(@PathVariable("id") Long id, Model model) {
 
-		Schedule schedule = scheduleService.findOneByEntryId(entryId);
-		schedule.getBlockList().stream().sorted(Comparator.comparing(Block::getMonth));
+		Schedule schedule = scheduleService.findOneById(id);
+		LinkedHashSet<Block> reOrderedBlock = new LinkedHashSet<Block>(schedule.getBlockList().stream().sorted(Comparator.comparing(Block::getMonth)).collect(Collectors.toList()));
+		schedule.setBlockList(reOrderedBlock);
 		model.addAttribute("schedule", schedule);
 		return "schedule/schedule";
 	}
 	
-//	@GetMapping("/edit/{id}")
-//	public String edit(@PathVariable("id") Long entryId, Model model) {
-//		Schedule schedule = scheduleService.findOneByEntryId(entryId);
-//		
-//		model.addAttribute("schedule", schedule);
-//		return "schedule/schedule";
-//	}
-//	
 	
-	@RequestMapping(value = "/schedule/edit/", method = RequestMethod.POST)
+	@RequestMapping(value = "/edit/", method = RequestMethod.POST)
 	public String edit(@ModelAttribute("schedule") Schedule schedule, 
 			BindingResult result, Model model)  {
 		Schedule scheduleDB = scheduleService.findOneByEntryId(schedule.getId());

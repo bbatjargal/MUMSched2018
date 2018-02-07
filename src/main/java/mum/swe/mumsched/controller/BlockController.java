@@ -83,7 +83,7 @@ public class BlockController {
 			
 			//valid unique block name
 			if(service.hasExistsBlock(block.getSchedule().getId(), block.getMonth(), block.getId())) {
-				bindingResult.rejectValue("month", null, msgService.getMessage("validate.alreadyExists"));
+				bindingResult.rejectValue("month", null, msgService.getMessage(MessageByLocaleService.ALREADY_EXISTS_MESSAGE));
 				hasError = true;
 			}
 		}

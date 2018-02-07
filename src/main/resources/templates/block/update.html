@@ -14,7 +14,7 @@
 		          
 				  <div class="form-row">
 				   	<div class="col-md-6 mb-3">
-					  	<label for="schedule">Entry</label>
+					  	<label for="schedule">Entry(Had Schedule)</label>
 					  	 <select class="form-control" id="schedule" name="schedule" 
 	                          th:field="*{schedule}" th:classappend="${#fields.hasErrors('month')}? 'is-invalid'">
 	                          <option th:each="val : ${allSchedule}" 

@@ -21,18 +21,18 @@
         <td th:text="${block.month}"></td>
         <td>
             <ul th:each="section : ${block.sectionList}">
-                <li><span th:text="${section.course.name} +' '+${section.course.code}"></span> - <span th:text="${section.faculty.user.firstName} + ' ' + ${section.faculty.user.lastName} + ' ' + ${section.faculty.numberOfSectionPerEntry}"></span></li>
+                <li><span th:text="${section.course.name} +' '+${section.course.code}"></span> - <span th:text="${section.faculty.user.firstName} + ' ' + ${section.faculty.user.lastName}"></span></li>
             </ul>
         </td>
       </tr>
     </tbody>
   </table>
-<p th:text="${schedule.status}"></p><br/>
-  <form th:action="@{/schedule/edit}" method="post">
+  
+  <form th:action="@{/schedule/edit/}" method="post">
   <input type="hidden" th:field="${schedule.id}"/>
-	  <input th:selected="${schedule.status}=='PENDING' ? 'checked'" value="PENDING" type="radio" name="status" id="PENDING"/><label for="PENDING">PENDING</label>
-	  <input th:selected="${schedule.status}=='DRAFT' ? 'checked'" value="DRAFT" type="radio" name="status"  id="DRAFT"/><label  for="DRAFT">DRAFT</label>
-	  <input th:selected="${schedule.status}=='APPROVED' ? 'checked'" value="APPROVED" type="radio" name="status"  id="APPROVED"/><label for="APPROVED">APPROVED</label>
+	  <input th:checked="${#strings.toString(schedule.status)}=='PENDING'" value="PENDING" type="radio" name="status" id="PENDING"/><label for="PENDING">PENDING</label>
+	  <input th:checked="${#strings.toString(schedule.status)}=='DRAFT'" value="DRAFT" type="radio" name="status"  id="DRAFT"/><label  for="DRAFT">DRAFT</label>
+	  <input th:checked="${#strings.toString(schedule.status)}=='APPROVED'" value="APPROVED" type="radio" name="status"  id="APPROVED"/><label for="APPROVED">APPROVED</label>
 	  <Button type="submit">Save</Button>
   </form>
 </div>

@@ -18,6 +18,8 @@ public interface MessageByLocaleService {
 	public static final String NOT_FOUND_MESSAGE = "validate.notFoundP";
 	public static final String HAS_REF_MESSAGE = "validate.hasRefP";
 	public static final String MUST_BE_GREATER_THAN_MESSAGE = "validate.mustBeGreaterThanP";
+	public static final String INVALID_MESSAGE = "validate.invalid";
+	public static final String ALREADY_EXISTS_MESSAGE = "validate.alreadyExists";
 
     public String getMessage(String id);
 
