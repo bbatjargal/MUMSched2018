@@ -341,8 +341,10 @@ public class BuildBasicDataController {
 		Faculty leste = new Faculty();
 		leste.setUser(lesteUser);
 		leste.setCourses(listAllCourse);
-		leste.setMonthEnums(listAllMonth);
-		leste.setNumberOfSectionPerEntry(4);
+		leste.setMonthEnums(new ArrayList<MonthEnum>() {{
+			add(MonthEnum.January);
+		}});
+		leste.setNumberOfSectionPerEntry(1);
 		facultyService.save(leste);
 
 		// Paul Corazza

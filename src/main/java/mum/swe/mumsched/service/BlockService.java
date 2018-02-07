@@ -1,5 +1,8 @@
 package mum.swe.mumsched.service;
 
+import java.util.List;
+import java.util.Set;
+
 import mum.swe.mumsched.enums.MonthEnum;
 import mum.swe.mumsched.model.Block;
 
@@ -20,6 +23,10 @@ public interface BlockService {
 	void delete(Block Block);
 
 	boolean hasSectionRef(Block block);
+	
+	Block combine2Blocks(Block b1, Block b2);
+
+	List<Block> saveAll(List<Block> Blocks);
 
 	Iterable<Block> findAll();
 }

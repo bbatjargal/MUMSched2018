@@ -1,5 +1,8 @@
 package mum.swe.mumsched.service;
 
+import java.util.List;
+import java.util.Set;
+
 import mum.swe.mumsched.model.Section;
 
 /**
@@ -18,6 +21,7 @@ public interface SectionService {
 
 	Section findSectionById(Long id);
 
+	List<Section> saveAll(List<Section> Sections);
 	boolean hasExistsSection(long blockId, long facultyId, long courseId, long excludedId);
 
 	boolean hasExistsFacultyBlock(long blockId, long facultyId, long excludedId);
