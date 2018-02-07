@@ -74,7 +74,7 @@
 	                          th:field="*{facultyList}">
 	                          <option th:each="val : ${allFacultyList}" 
 	                                  th:value="${val.id}" 
-	                                  th:text="${val.user.firstName}"></option>
+	                                  th:text="${val.user.getFullname()}"></option>
 	                      </select>
                       </div>
 				  </div>

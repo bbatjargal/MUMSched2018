@@ -21,7 +21,7 @@ public class EntryServiceImpl implements EntryService {
 	EntryRepository entryRepo;
 	
 	@Override
-	public Iterable<Entry> getList(){
+	public List<Entry> getList(){
 		return entryRepo.fillAllWithSort(new Sort(Direction.DESC, "entryDate"));
 	}
 	

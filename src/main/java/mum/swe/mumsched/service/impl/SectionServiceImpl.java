@@ -29,17 +29,17 @@ public class SectionServiceImpl implements SectionService {
 	
 	@Override
 	public Iterable<Section> getList(){
-		return sectionRepo.fillAllWithSort(new Sort(Direction.DESC, "SectionDate"));
+		return sectionRepo.fillAllWithSort(new Sort(Direction.DESC, "id"));
 	}
 	
 	@Override
-	public boolean hasExistsSection(long blockId, long courseId, long facultyId) {
-		return false; 
+	public boolean hasExistsSection(long blockId, long facultyId, long courseId, long excludedId) {
+		return sectionRepo.hasExistsSection(blockId, facultyId, courseId, excludedId); 
 	}
 	
 	@Override
-	public boolean hasStudentRef(Section Section) {
-		return false;
+	public boolean hasStudentRef(Section section) {
+		return section.getStudentList().size() > 0;
 	}
 	
 	@Override
@@ -55,5 +55,10 @@ public class SectionServiceImpl implements SectionService {
 	@Override
 	public void delete(Section Section) {
 		sectionRepo.delete(Section);
+	}
+
+	@Override
+	public boolean hasExistsFacultyBlock(long blockId, long facultyId, long excludedId) {
+		return sectionRepo.hasExistsFacultyBlock(blockId, facultyId, excludedId); 
 	}
 }

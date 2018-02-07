@@ -69,4 +69,8 @@ public class BlockServiceImpl implements BlockService {
 
 		return block;
 	}
+
+	public Iterable<Block> findAll() {
+		return blockRepo.findAll();
+	}
 }

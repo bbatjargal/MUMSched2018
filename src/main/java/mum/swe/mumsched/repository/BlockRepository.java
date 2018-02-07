@@ -21,4 +21,7 @@ public interface BlockRepository extends CrudRepository<Block, Long> {
 	
 	@Query("SELECT CASE WHEN count(e)> 0 THEN true ELSE false END FROM Block e WHERE e.schedule.id = :scheduleId AND e.month=:month AND e.id <> :excludedId")
 	public boolean hasExistsBlock(@Param("scheduleId") Long scheduleId, @Param("month") MonthEnum month, @Param("excludedId") Long excludedId);
+	
+//	@Query("SELECT e FROM Block e WHERE e.schedule.id = :scheduleId")
+//	public Iterable<Block> findAllByScheduleId(@Param("scheduleId") Long scheduleId);
 }

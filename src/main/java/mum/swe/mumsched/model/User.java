@@ -40,6 +40,15 @@ public class User {
     
     @Enumerated(EnumType.STRING)
     private RoleEnum role;
+    
+    
+    /**
+     * @return
+     * @author brian
+     */
+    public String getFullname() {
+    		return String.format("%s %s", getFirstName(), getLastName());
+    }
 
 	public Long getId() {
 		return id;

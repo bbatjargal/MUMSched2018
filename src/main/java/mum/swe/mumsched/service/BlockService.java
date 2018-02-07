@@ -27,4 +27,6 @@ public interface BlockService {
 	Block combine2Blocks(Block b1, Block b2);
 
 	List<Block> saveAll(List<Block> Blocks);
+
+	Iterable<Block> findAll();
 }

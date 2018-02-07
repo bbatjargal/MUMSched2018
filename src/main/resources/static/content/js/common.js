@@ -75,6 +75,23 @@ function post(url,fnSuccess, fnError){
 	});
 }
 
+function postJson(url, data, fnSuccess, fnError){
+	$.post({
+		contentType : 'application/json; charset=utf-8',
+		url : url,
+		data: JSON.stringify(data),
+		dataType: 'json',
+		beforeSend : function(xhr) {
+			// authen token
+			xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"),$("meta[name='_csrf']").attr("content"));
+			xhr.setRequestHeader("Accept","application/json");
+			xhr.setRequestHeader("Content-Type","application/json");
+		},
+		success : fnSuccess,
+		error: fnError
+	});
+}
+
 function addDelete(selector){
 	$(selector).click(function(event) {
 		dialog.confirmDefault(function () {

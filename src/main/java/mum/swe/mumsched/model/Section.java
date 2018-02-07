@@ -74,4 +74,12 @@ public class Section {
 		this.course = course;
 	}
 
+	public Set<Student> getStudentList() {
+		return studentList;
+	}
+
+	public void setStudentList(Set<Student> studentList) {
+		this.studentList = studentList;
+	}
+
 }
