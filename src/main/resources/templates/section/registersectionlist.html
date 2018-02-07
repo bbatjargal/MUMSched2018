@@ -23,7 +23,7 @@
 			</thead>
 			<tbody>
 				<tr th:if="${sectionList.empty}">
-					<td colspan="5">No Section</td>
+					<td colspan="5" class="text-center">No Section</td>
 				</tr>
 				<tr th:each="item : ${sectionList}">
 					<td th:text="${item.block.schedule.entry.name}" class="text-center"></td>
@@ -32,9 +32,13 @@
 					<td th:text="${item.course.name}" class="text-right"></td>
 					
 					<td class="text-center">
-						<a role="button" class="btn btn-primary"
+						<a th:unless="${#lists.contains(mySections, item.id)}" role="button" class="btn btn-primary"
 							th:href="@{/registerforsectionpost/{id}(id=${item.id})}">
 							<i class="fa fa-sign-in" aria-hidden="true"></i></a>
+							
+						<a th:if="${#lists.contains(mySections, item.id)}" role="button" class="btn btn-success"
+							th:href="@{/registerforsection/signout/{id}(id=${item.id})}">
+							<i class="fa  fa-times" aria-hidden="true"></i></a>
 					</td>
 				</tr>
 			</tbody>

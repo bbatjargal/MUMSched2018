@@ -42,8 +42,10 @@ public class StudentController {
 
 	@RequestMapping(value = "/studentprofile", method = RequestMethod.GET)
 	public String studentProfile(Model model, Pageable pageable, Principal currentUser) {
-		model.addAttribute("student", studentService.findByUsername(currentUser.getName()));
+		Student student =  studentService.findByUsername(currentUser.getName());
+		model.addAttribute("student", student);
 		model.addAttribute("entries", entryService.getList());
+		model.addAttribute("sections", student.getSectionList());
 		return "student/studentForm";
 	}
 
@@ -58,12 +60,11 @@ public class StudentController {
 		}
 		
 		Student studentDB = studentService.findOne(student.getId());
-		studentDB.getUser().setFirstName(studentDB.getUser().getFirstName());
-		studentDB.getUser().setLastName(studentDB.getUser().getLastName());
-		studentDB.getUser().setPassword(studentDB.getUser().getPassword());
+		studentDB.getUser().setFirstName(student.getUser().getFirstName());
+		studentDB.getUser().setLastName(student.getUser().getLastName());
+		studentDB.getUser().setPassword(student.getUser().getPassword());
 		studentDB.setEntry(student.getEntry());
 		studentService.save(studentDB);
-		//model.addAttribute("user", userRecord);
 		return "redirect:/studentprofile";
 	}
 }

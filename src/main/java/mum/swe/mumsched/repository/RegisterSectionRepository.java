@@ -1,9 +1,13 @@
 package mum.swe.mumsched.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
+import mum.swe.mumsched.enums.RoleEnum;
 import mum.swe.mumsched.model.Section;
 
 /**

@@ -3,11 +3,13 @@ package mum.swe.mumsched.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import mum.swe.mumsched.model.Student;
 import mum.swe.mumsched.model.User;
 import mum.swe.mumsched.repository.StudentRepository;
+import mum.swe.mumsched.repository.UserRepository;
 import mum.swe.mumsched.service.StudentService;
 import mum.swe.mumsched.service.UserService;
 
@@ -21,6 +23,11 @@ public class StudentServiceImpl  implements StudentService {
     private StudentRepository studentRepository;
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
+    
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     
     @Override
     public Student save(Student student) {
@@ -30,8 +37,15 @@ public class StudentServiceImpl  implements StudentService {
     		user = userService.save(user);
     		student.setUser(user);
     	}
-    	else
-        	userService.setUserPassword(student.getUser());	
+    	else {
+			if(!user.getPassword().isEmpty())
+				user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+			else if(user.getId() != null) {
+				User userdb = userRepository.findOne(user.getId());
+				student.getUser().setPassword(userdb.getPassword());
+			}
+    	}
+        	//userService.setUserPassword(student.getUser());	
 		return studentRepository.save(student);		
     }
 

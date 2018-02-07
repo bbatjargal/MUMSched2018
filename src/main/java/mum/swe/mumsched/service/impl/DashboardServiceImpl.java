@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import mum.swe.mumsched.repository.CourseRepository;
 import mum.swe.mumsched.repository.FacultyRepository;
+import mum.swe.mumsched.repository.SectionRepository;
 import mum.swe.mumsched.repository.StudentRepository;
 import mum.swe.mumsched.service.DashboardService;
 
@@ -20,8 +21,8 @@ public class DashboardServiceImpl implements DashboardService {
     @Autowired
     private StudentRepository studentRepository;
     
-    //@Autowired
-    //private SectionRepository sectionRepository;
+    @Autowired
+    private SectionRepository sectionRepository;
 	
 	@Override
 	public Long countStudents() {
@@ -40,8 +41,7 @@ public class DashboardServiceImpl implements DashboardService {
 
 	@Override
 	public Long countSections() {
-		return (long)0;
-		//return sectionRepository.count();
+		return sectionRepository.count();
 	}
 
 }

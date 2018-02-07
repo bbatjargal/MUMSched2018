@@ -5,12 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import mum.swe.mumsched.enums.MonthEnum;
 import mum.swe.mumsched.model.Faculty;
 import mum.swe.mumsched.model.User;
 import mum.swe.mumsched.repository.FacultyRepository;
+import mum.swe.mumsched.repository.UserRepository;
 import mum.swe.mumsched.service.FacultyService;
 import mum.swe.mumsched.service.UserService;
 
@@ -24,6 +26,11 @@ public class FacultyServiceImpl  implements FacultyService {
     private FacultyRepository facultyRepository;
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
+    
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public Faculty save(Faculty faculty) {
@@ -33,8 +40,16 @@ public class FacultyServiceImpl  implements FacultyService {
     		user = userService.save(user);
     		faculty.setUser(user);
     	}
-    	else
-    		userService.setUserPassword(faculty.getUser());
+    	else {
+
+			if(!user.getPassword().isEmpty())
+				user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+			else if(user.getId() != null) {
+				User userdb = userRepository.findOne(user.getId());
+				faculty.getUser().setPassword(userdb.getPassword());
+			}
+    	}
+    		//userService.setUserPassword(faculty.getUser());
 		return facultyRepository.save(faculty);	
     }
 

@@ -1,5 +1,7 @@
 package mum.swe.mumsched.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,11 @@ public class ScheduleViewServiceImpl implements ScheduleViewService{
 	
 	@Override
 	public Schedule findOneByEntryId(Long entryId) {
-		// TODO Auto-generated method stub
 		return repo.findOneByEntryId(entryId);
+	}
+
+	@Override
+	public List<Schedule> findAll() {
+		return repo.findAll();
 	}
 }
