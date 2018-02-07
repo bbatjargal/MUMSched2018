@@ -62,7 +62,8 @@ var dialog = new function() {
 
 // common funcs
 function post(url,fnSuccess, fnError){
-	$.post({
+	$.ajax({
+		type: "POST",
 		url : url,
 		beforeSend : function(xhr) {
 			// authen token
@@ -76,7 +77,8 @@ function post(url,fnSuccess, fnError){
 }
 
 function postJson(url, data, fnSuccess, fnError){
-	$.post({
+	$.ajax({
+		type: "POST",
 		contentType : 'application/json; charset=utf-8',
 		url : url,
 		data: JSON.stringify(data),
@@ -94,11 +96,21 @@ function postJson(url, data, fnSuccess, fnError){
 
 function addDelete(selector){
 	$(selector).click(function(event) {
+		var target = $(event.target);
+		
+		// click on a tag
+		var url = target.attr("href");
+		
+		// click on icon
+		if(url == undefined){
+			url = target.closest("a").attr("href");
+		}
+		
 		dialog.confirmDefault(function () {
-		    	post($(selector).attr("href"), function(ajaxResult) {
+		    	post(url, function(ajaxResult) {
 		    		if(ajaxResult.isSuccess){
 		    			// remove deleted row
-					$(event.target).closest("tr").remove();
+		    			target.closest("tr").remove();
 		    		}
 		    		
 				dialog.showAjaxMessage(ajaxResult);

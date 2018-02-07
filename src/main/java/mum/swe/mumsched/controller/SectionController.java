@@ -227,6 +227,6 @@ public class SectionController {
 		List<Course> facultyCourses = facultyService.findOne(facultyId).getCourses();
 		
 		return Stream.concat(entryCourses.stream()
-				.filter(m->facultyCourses.contains(m)), facultyCourses.stream());
+				.filter(m->facultyCourses.contains(m)), mppFppCourses.stream());
 	}
 }
