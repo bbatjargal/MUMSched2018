@@ -34,4 +34,9 @@ public class RegisterSectionServiceImp implements RegisterSectionService{
 	public Section save(Section Section) {
 		return registerSectionRepo.save(Section);
 	}
+
+	@Override
+	public Iterable<Section> getStudentSectionList() {
+		return registerSectionRepo.fillAllWithSort(new Sort(Direction.DESC,""));
+	}
 }

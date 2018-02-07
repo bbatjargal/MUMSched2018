@@ -12,4 +12,6 @@ public interface RegisterSectionService {
 	Section save(Section Section);
 
 	Section findSectionById(Long id);
+	
+	Iterable<Section> getStudentSectionList();
 }
