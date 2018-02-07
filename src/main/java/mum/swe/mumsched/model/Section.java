@@ -39,7 +39,6 @@ public class Section {
 	@JoinTable(name = "section_student", joinColumns = @JoinColumn(name = "section_id"), 
 		inverseJoinColumns = @JoinColumn(name = "student_id"))
 	private Set<Student> studentList;
-	
 
 	public long getId() {
 		return id;
