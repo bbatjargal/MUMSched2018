@@ -21,7 +21,7 @@
         <td th:text="${block.month}"></td>
         <td>
             <ul th:each="section : ${block.sectionList}">
-                <li><span th:text="${section.course.name} +' '+${section.course.code}"></span> - <span th:text="${section.faculty.user.firstName} + ' ' + ${section.faculty.user.lastName} + ' ' + ${section.faculty.numberOfSectionPerEntry}"></span></li>
+                <li><a th:href="@{/section/edit/{id}(id=${section.id})}"><span th:text="${section.course.name} +' '+${section.course.code}"></span> - <span th:text="${section.faculty.user.firstName} + ' ' + ${section.faculty.user.lastName}"></span></a></li>
             </ul>
         </td>
       </tr>
