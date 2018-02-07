@@ -74,6 +74,7 @@ public class StudentAdminController {
             user.setFirstName(student.getUser().getFirstName());
             user.setLastName(student.getUser().getLastName());
             user.setPassword(student.getUser().getPassword());
+            user.setPasswordConfirm(student.getUser().getPasswordConfirm());
             user.setRole(RoleEnum.ROLE_STUDENT);
 
             studentDB = new Student();
@@ -84,6 +85,7 @@ public class StudentAdminController {
         	studentDB.getUser().setFirstName(student.getUser().getFirstName());
         	studentDB.getUser().setLastName(student.getUser().getLastName());
         	studentDB.getUser().setPassword(student.getUser().getPassword());
+    		studentDB.getUser().setPasswordConfirm(student.getUser().getPasswordConfirm());
         }
 	    
 	    studentDB.setEntry(student.getEntry());

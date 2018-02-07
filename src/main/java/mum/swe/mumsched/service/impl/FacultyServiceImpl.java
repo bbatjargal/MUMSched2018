@@ -12,7 +12,6 @@ import mum.swe.mumsched.enums.MonthEnum;
 import mum.swe.mumsched.model.Faculty;
 import mum.swe.mumsched.model.User;
 import mum.swe.mumsched.repository.FacultyRepository;
-import mum.swe.mumsched.repository.UserRepository;
 import mum.swe.mumsched.service.FacultyService;
 import mum.swe.mumsched.service.UserService;
 
@@ -26,8 +25,6 @@ public class FacultyServiceImpl  implements FacultyService {
     private FacultyRepository facultyRepository;
     @Autowired
     private UserService userService;
-    @Autowired
-    private UserRepository userRepository;
     
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -41,13 +38,8 @@ public class FacultyServiceImpl  implements FacultyService {
     		faculty.setUser(user);
     	}
     	else {
-
-			if(!user.getPassword().isEmpty())
+			if(!user.getPassword().isEmpty() && !user.getPasswordConfirm().isEmpty())
 				user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-			else if(user.getId() != null) {
-				User userdb = userRepository.findOne(user.getId());
-				faculty.getUser().setPassword(userdb.getPassword());
-			}
     	}
     		//userService.setUserPassword(faculty.getUser());
 		return facultyRepository.save(faculty);	

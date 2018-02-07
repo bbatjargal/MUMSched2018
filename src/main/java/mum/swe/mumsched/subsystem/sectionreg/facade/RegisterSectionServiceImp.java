@@ -1,4 +1,4 @@
-package mum.swe.mumsched.service.impl;
+package mum.swe.mumsched.subsystem.sectionreg.facade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 
 import mum.swe.mumsched.model.Schedule;
 import mum.swe.mumsched.model.Section;
-import mum.swe.mumsched.repository.RegisterSectionRepository;
-import mum.swe.mumsched.service.RegisterSectionService;
 import mum.swe.mumsched.service.ScheduleService;
 
 /**
@@ -20,7 +18,7 @@ import mum.swe.mumsched.service.ScheduleService;
  * @date Feb 04, 2018
  */
 @Service
-public class RegisterSectionServiceImp implements RegisterSectionService{
+class RegisterSectionServiceImp implements RegisterSectionService{
 	@Autowired
 	RegisterSectionRepository registerSectionRepo;
 	@Autowired

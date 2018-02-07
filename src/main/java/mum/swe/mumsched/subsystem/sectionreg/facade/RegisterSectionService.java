@@ -1,4 +1,4 @@
-package mum.swe.mumsched.service;
+package mum.swe.mumsched.subsystem.sectionreg.facade;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import mum.swe.mumsched.model.Section;
  * @author Mandakh Nyamdavaa
  * @date Feb 04, 2018
  */
-public interface RegisterSectionService {
+interface RegisterSectionService {
 	Iterable<Section> getList();
 
 	Section save(Section Section);

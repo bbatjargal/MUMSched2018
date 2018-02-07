@@ -78,6 +78,7 @@ public class FacultyController {
             user.setFirstName(faculty.getUser().getFirstName());
             user.setLastName(faculty.getUser().getLastName());
             user.setPassword(faculty.getUser().getPassword());
+            user.setPasswordConfirm(faculty.getUser().getPasswordConfirm());
             user.setRole(RoleEnum.ROLE_FACULTY);
             //user = userService.save(user);
 
@@ -89,6 +90,7 @@ public class FacultyController {
             facultyDB.getUser().setFirstName(faculty.getUser().getFirstName());
             facultyDB.getUser().setLastName(faculty.getUser().getLastName());
             facultyDB.getUser().setPassword(faculty.getUser().getPassword());
+            facultyDB.getUser().setPasswordConfirm(facultyDB.getUser().getPasswordConfirm());
         }
         facultyDB.setCourses(faculty.getCourses());
         facultyDB.setMonthEnums(faculty.getMonthEnums());

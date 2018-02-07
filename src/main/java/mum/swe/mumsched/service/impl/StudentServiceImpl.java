@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import mum.swe.mumsched.model.Student;
 import mum.swe.mumsched.model.User;
 import mum.swe.mumsched.repository.StudentRepository;
-import mum.swe.mumsched.repository.UserRepository;
 import mum.swe.mumsched.service.StudentService;
 import mum.swe.mumsched.service.UserService;
 
@@ -23,8 +22,6 @@ public class StudentServiceImpl  implements StudentService {
     private StudentRepository studentRepository;
     @Autowired
     private UserService userService;
-    @Autowired
-    private UserRepository userRepository;
     
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -38,12 +35,8 @@ public class StudentServiceImpl  implements StudentService {
     		student.setUser(user);
     	}
     	else {
-			if(!user.getPassword().isEmpty())
+			if(!user.getPassword().isEmpty() && !user.getPasswordConfirm().isEmpty())
 				user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-			else if(user.getId() != null) {
-				User userdb = userRepository.findOne(user.getId());
-				student.getUser().setPassword(userdb.getPassword());
-			}
     	}
         	//userService.setUserPassword(student.getUser());	
 		return studentRepository.save(student);		

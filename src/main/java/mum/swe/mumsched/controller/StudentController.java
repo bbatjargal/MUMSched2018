@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import mum.swe.mumsched.model.Student;
 import mum.swe.mumsched.service.EntryService;
-import mum.swe.mumsched.service.RegisterSectionService;
 import mum.swe.mumsched.service.StudentService;
-import mum.swe.mumsched.service.UserService;
 import mum.swe.mumsched.validator.UserValidator;
 
 /**
@@ -25,17 +23,11 @@ import mum.swe.mumsched.validator.UserValidator;
 
 @Controller
 public class StudentController {
-
-	@Autowired
-	private UserService userService;
 	@Autowired
 	private StudentService studentService;
 
 	@Autowired
 	private UserValidator userValidator;
-	
-	@Autowired
-	private RegisterSectionService registerSectionService;
 	
 	@Autowired
 	private EntryService entryService;
@@ -63,6 +55,7 @@ public class StudentController {
 		studentDB.getUser().setFirstName(student.getUser().getFirstName());
 		studentDB.getUser().setLastName(student.getUser().getLastName());
 		studentDB.getUser().setPassword(student.getUser().getPassword());
+		studentDB.getUser().setPasswordConfirm(student.getUser().getPasswordConfirm());
 		studentDB.setEntry(student.getEntry());
 		studentService.save(studentDB);
 		return "redirect:/studentprofile";
