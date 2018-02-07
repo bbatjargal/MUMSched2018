@@ -18,7 +18,6 @@ public class ScheduleViewServiceImpl implements ScheduleViewService{
 	
 	@Override
 	public Schedule findOneByEntryId(Long entryId) {
-		// TODO Auto-generated method stub
 		return repo.findOneByEntryId(entryId);
 	}
 }

@@ -25,15 +25,8 @@ public class ScheduleViewController {
 	@Autowired
 	private ScheduleViewService scheduleViewService;
 	
-//	@RequestMapping(value="/scheduleView", method=RequestMethod.GET)
-//	public String scheduleView() {
-//		return "schedule/viewschedule";
-//	}
-	
-	
 	@GetMapping("/scheduleView")
 	public String view(Model model) {
-		System.out.println("*** Schedule ***");
 		Schedule schedule = scheduleViewService.findOneByEntryId(1L);
 		schedule.getBlockList().stream().sorted(Comparator.comparing(Block::getMonth));
 		model.addAttribute("schedule", schedule);
