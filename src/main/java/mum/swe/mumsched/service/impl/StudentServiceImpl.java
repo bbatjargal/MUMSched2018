@@ -35,7 +35,7 @@ public class StudentServiceImpl  implements StudentService {
     		student.setUser(user);
     	}
     	else {
-			if(!user.getPassword().isEmpty() && !user.getPasswordConfirm().isEmpty())
+			if(!user.getPassword().isEmpty() && user.getPasswordConfirm() != null && !user.getPasswordConfirm().isEmpty())
 				user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
     	}
         	//userService.setUserPassword(student.getUser());	

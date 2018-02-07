@@ -38,7 +38,7 @@ public class FacultyServiceImpl  implements FacultyService {
     		faculty.setUser(user);
     	}
     	else {
-			if(!user.getPassword().isEmpty() && !user.getPasswordConfirm().isEmpty())
+			if(!user.getPassword().isEmpty() && user.getPasswordConfirm() != null && !user.getPasswordConfirm().isEmpty())
 				user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
     	}
     		//userService.setUserPassword(faculty.getUser());
