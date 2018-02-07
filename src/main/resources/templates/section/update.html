@@ -14,7 +14,7 @@
 				  <div class="form-row">
 				   	<div class="col-md-6 mb-3">
 					  	<label for="schedule"><label for="schedule">Entry(Had Schedule)</label></label>
-					  	 <select class="form-control" id="schedule" name="schedule" >
+					  	 <select class="form-control" id="schedule" name="schedule" th:disabled="${section.id > 0}">
 					  	 	 <option value="0">[Please select one]</option>
 	                          <option th:each="s : ${allSchedule}" 
 	                                  th:value="${s.id}" 
@@ -100,6 +100,7 @@
 				});
 				
 				$("#block").change(function(e){
+					restSelect($("#course"));
 					changeLoad(e, $("#faculty"), '/section/getFacultyList/' + $("#schedule").val() + '/' + $(e.target).val());
 				});
 				
@@ -118,12 +119,16 @@
 				}
 				
 				function buildOptions(selectObj, data){
-					$(selectObj).find('option').remove();
-					$(selectObj).append('<option value="0">[Please select one]</option>');
+					restSelect(selectObj);
 
 					$.each(data, function(key, val){
 						$(selectObj).append('<option value="' + key + '">' + val + '</option>');
 					});
+				}
+				
+				function restSelect(selectObj){
+					$(selectObj).find('option').remove();
+					$(selectObj).append('<option value="0">[Please select one]</option>');
 				}
 			});
 		</script>
