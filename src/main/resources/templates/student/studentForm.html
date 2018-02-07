@@ -89,8 +89,8 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:if="${student.sectionList.empty}">
-									<td colspan="5">No Section</td>
+								<tr th:if="${student.sectionList == null or #lists.size(student.sectionList) == 0}">
+									<td colspan="5" class="text-center">No Section</td>
 								</tr>
 								<tr th:each="item : ${student.sectionList}">
 									<td th:text="${item.block.schedule.entry.name}" class="text-center"></td>

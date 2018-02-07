@@ -58,7 +58,7 @@ public class StudentAdminController {
 	@RequestMapping(value= {"/student"}, method = RequestMethod.POST)
 	public String edit(@ModelAttribute("student") Student student, BindingResult result, Model model) {
 
-        userValidator.validateAdmin(student.getUser(), result);
+        userValidator.validateStuden(student.getUser(), result);
 
         if (result.hasErrors()) {
             model.addAttribute("student", student);

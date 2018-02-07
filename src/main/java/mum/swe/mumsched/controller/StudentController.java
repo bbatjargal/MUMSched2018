@@ -44,9 +44,12 @@ public class StudentController {
 	@RequestMapping(value = "/updateStudent", method = RequestMethod.POST)
 	public String adminProfile(@ModelAttribute("student") Student student, BindingResult result, Principal currentUser,
 			Model model) {
-		userValidator.validateAdmin(student.getUser(), result);
-    	
+		userValidator.validateStuden(student.getUser(), result);
+
         if (result.hasErrors()) {
+        	Student studentDB = studentService.findOne(student.getId());        	
+        	student.setSectionList(studentDB.getSectionList());
+    		model.addAttribute("entries", entryService.getList());
 			model.addAttribute("student", student);
 			return "student/studentForm";
 		}
@@ -54,7 +57,6 @@ public class StudentController {
 		Student studentDB = studentService.findOne(student.getId());
 		studentDB.getUser().setFirstName(student.getUser().getFirstName());
 		studentDB.getUser().setLastName(student.getUser().getLastName());
-		studentDB.getUser().setPassword(student.getUser().getPassword());
 		studentDB.getUser().setPasswordConfirm(student.getUser().getPasswordConfirm());
 		studentDB.setEntry(student.getEntry());
 		studentService.save(studentDB);

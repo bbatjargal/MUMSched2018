@@ -63,7 +63,7 @@ public class FacultyController {
 	@RequestMapping(value= {"/updateFaculty"}, method = RequestMethod.POST)
 	public String updateFacultyProfile(@ModelAttribute("faculty") Faculty faculty, BindingResult result, Model model) {
 
-        userValidator.validateAdmin(faculty.getUser(), result);
+        userValidator.validateFaculty(faculty.getUser(), result);
 
         if (result.hasErrors()) {
             model.addAttribute("faculty", faculty);
@@ -77,7 +77,6 @@ public class FacultyController {
             user.setUsername(faculty.getUser().getUsername());
             user.setFirstName(faculty.getUser().getFirstName());
             user.setLastName(faculty.getUser().getLastName());
-            user.setPassword(faculty.getUser().getPassword());
             user.setPasswordConfirm(faculty.getUser().getPasswordConfirm());
             user.setRole(RoleEnum.ROLE_FACULTY);
             //user = userService.save(user);
@@ -89,7 +88,6 @@ public class FacultyController {
             facultyDB = facultyService.findOne(faculty.getId());
             facultyDB.getUser().setFirstName(faculty.getUser().getFirstName());
             facultyDB.getUser().setLastName(faculty.getUser().getLastName());
-            facultyDB.getUser().setPassword(faculty.getUser().getPassword());
             facultyDB.getUser().setPasswordConfirm(facultyDB.getUser().getPasswordConfirm());
         }
         facultyDB.setCourses(faculty.getCourses());
@@ -108,11 +106,18 @@ public class FacultyController {
 	}
 	
 	@RequestMapping(value= {"/facultyprofile"}, method = RequestMethod.POST)
-	public String updateFacultyProfile(@ModelAttribute("faculty") Faculty faculty, Model model) {
-		
+	public String updateFacultyProfile(@ModelAttribute("faculty") Faculty faculty, Model model, BindingResult result) {
+
+		userValidator.validateFaculty(faculty.getUser(), result);
+    	
+        if (result.hasErrors()) {
+			model.addAttribute("faculty", faculty);
+			return "faculty/facultyFormAdmin";
+		}
 		Faculty facultyDB = facultyService.findOne(faculty.getId());
 		facultyDB.getUser().setFirstName(faculty.getUser().getFirstName());
 		facultyDB.getUser().setLastName(faculty.getUser().getLastName());
+		facultyDB.getUser().setPasswordConfirm(faculty.getUser().getPasswordConfirm());
 		facultyDB.setCourses(faculty.getCourses());
 		facultyDB.setMonthEnums(faculty.getMonthEnums());
 		facultyDB.setNumberOfSectionPerEntry(faculty.getNumberOfSectionPerEntry());
