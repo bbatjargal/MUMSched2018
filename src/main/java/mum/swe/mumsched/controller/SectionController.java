@@ -212,10 +212,21 @@ public class SectionController {
 		// get courses of entry
 		Set<Course> entryCourses = scheduleService.findOneById(scheduleId).getEntry().getCourseList();
 		
+		// add fpp and mpp course
+		List<Course> mppFppCourses = new ArrayList<>();
+		Course fpp = courseService.findOneByCode("CS390");
+		Course mpp = courseService.findOneByCode("CS401");
+		
+		if(fpp != null)
+			mppFppCourses.add(fpp);
+		
+		if(mpp != null)
+		mppFppCourses.add(mpp);
+		
 		// get courses can teach by faculty
 		List<Course> facultyCourses = facultyService.findOne(facultyId).getCourses();
 		
-		return entryCourses.stream()
-			.filter(m->facultyCourses.contains(m));
+		return Stream.concat(entryCourses.stream()
+				.filter(m->facultyCourses.contains(m)), facultyCourses.stream());
 	}
 }
